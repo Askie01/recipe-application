@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "category")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Category implements
         LongIdEntity,
