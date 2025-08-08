@@ -1,0 +1,34 @@
+services:
+  recipe-application:
+    image: askie01/recipe-application:latest
+    container_name: recipe-application
+    ports:
+      - 8081:8080
+    env_file:
+      - recipe-application.env
+    networks:
+      - recipe-network
+    depends_on:
+      mysql-database:
+        condition: service_healthy
+
+  mysql-database:
+    image: mysql:latest
+    container_name: recipe-mysql-database
+    ports:
+      - 3306:3306
+    env_file:
+      - mysql.env
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+    networks:
+      - recipe-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  recipe-network:
+    driver: bridge
