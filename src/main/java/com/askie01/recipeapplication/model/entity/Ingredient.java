@@ -21,9 +21,8 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "category")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Category implements
+@Table(name = "ingredient")
+public class Ingredient implements
         LongIdEntity,
         StringNameable,
         LocalDateTimeStringAuditable,
@@ -33,6 +32,10 @@ public class Category implements
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private Double amount;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private MeasureUnit measureUnit;
 
     @CreatedDate
     @Column(updatable = false)
