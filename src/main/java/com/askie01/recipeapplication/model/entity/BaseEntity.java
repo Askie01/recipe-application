@@ -1,4 +1,4 @@
-package com.askie01.recipeapplication.model.common.entity;
+package com.askie01.recipeapplication.model.entity;
 
 import com.askie01.recipeapplication.model.common.Identifiable;
 
