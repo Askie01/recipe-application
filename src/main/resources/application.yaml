@@ -4,3 +4,20 @@ server:
 spring:
   application:
     name: recipe-application
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/recipe_database
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+  docker:
+    compose:
+      enabled: true
+
+  data:
+    jdbc:
+      dialect: mysql
