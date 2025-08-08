@@ -21,9 +21,8 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "category")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Category implements
+@Table(name = "measure_unit")
+public class MeasureUnit implements
         LongIdEntity,
         StringNameable,
         LocalDateTimeStringAuditable,
