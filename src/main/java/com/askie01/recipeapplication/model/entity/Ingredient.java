@@ -34,7 +34,7 @@ public class Ingredient implements
     private String name;
     private Double amount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MeasureUnit measureUnit;
 
     @CreatedDate
