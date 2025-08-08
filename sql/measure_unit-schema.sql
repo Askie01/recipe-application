@@ -5,5 +5,6 @@ CREATE TABLE measure_unit
     created_at TIMESTAMP    NOT NULL,
     created_by VARCHAR(255) NOT NULL,
     updated_at TIMESTAMP    DEFAULT NULL,
-    updated_by VARCHAR(255) DEFAULT NULL
+    updated_by VARCHAR(255) DEFAULT NULL,
+    version    BIGINT       NOT NULl
 );
