@@ -1,5 +1,8 @@
 package com.askie01.recipeapplication.dto;
 
+import com.askie01.recipeapplication.model.common.LongIdentifiable;
+import com.askie01.recipeapplication.model.common.LongVersionable;
+import com.askie01.recipeapplication.model.common.StringNameable;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -12,7 +15,7 @@ import java.util.List;
 @SuperBuilder
 @ToString
 @EqualsAndHashCode
-public class RecipeDTO {
+public class RecipeDTO implements LongIdentifiable, StringNameable, LongVersionable {
     private Long id;
     private byte[] image;
     private String name;
