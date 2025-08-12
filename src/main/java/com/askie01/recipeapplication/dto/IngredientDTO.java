@@ -3,6 +3,7 @@ package com.askie01.recipeapplication.dto;
 import com.askie01.recipeapplication.model.common.LongIdentifiable;
 import com.askie01.recipeapplication.model.common.LongVersionable;
 import com.askie01.recipeapplication.model.common.StringNameable;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,7 @@ public class IngredientDTO implements LongIdentifiable, StringNameable, LongVers
     @DecimalMin(value = "0.1", message = "Amount in `IngredientDTO` have to be at least 0.1")
     private Double amount;
 
+    @Valid
     @NotNull(message = "MeasureUnitDTO in `IngredientDTO` can't be null.")
     private MeasureUnitDTO measureUnitDTO;
 
