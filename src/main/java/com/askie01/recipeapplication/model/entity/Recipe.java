@@ -1,5 +1,8 @@
 package com.askie01.recipeapplication.model.entity;
 
+import com.askie01.recipeapplication.model.common.LocalDateTimeStringAuditable;
+import com.askie01.recipeapplication.model.common.LongVersionable;
+import com.askie01.recipeapplication.model.common.StringNameable;
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +25,11 @@ import java.util.List;
 @Entity
 @Table(name = "recipe")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Recipe {
+public class Recipe implements
+        LongIdEntity,
+        StringNameable,
+        LocalDateTimeStringAuditable,
+        LongVersionable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
