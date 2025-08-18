@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.dto;
 
-import com.askie01.recipeapplication.model.value.LongIdentifiable;
+import com.askie01.recipeapplication.model.value.HasLongId;
 import com.askie01.recipeapplication.model.value.LongVersionable;
 import com.askie01.recipeapplication.model.value.StringNameable;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 @EqualsAndHashCode
-public class CategoryDTO implements LongIdentifiable, StringNameable, LongVersionable {
+public class CategoryDTO implements HasLongId, StringNameable, LongVersionable {
 
     @Positive(message = "Id in 'CategoryDTO' have to be a positive number.")
     private Long id;

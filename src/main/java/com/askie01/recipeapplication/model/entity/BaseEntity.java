@@ -1,7 +1,7 @@
 package com.askie01.recipeapplication.model.entity;
 
-import com.askie01.recipeapplication.model.value.Identifiable;
+import com.askie01.recipeapplication.model.value.HasId;
 
 public interface BaseEntity <ID>
-        extends Identifiable<ID> {
+        extends HasId<ID> {
 }
