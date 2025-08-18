@@ -1,5 +1,6 @@
 package com.askie01.recipeapplication.model.entity;
 
+import com.askie01.recipeapplication.model.value.HasAmount;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.model.value.HasSimpleAudit;
 import com.askie01.recipeapplication.model.value.HasStringName;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 public class Ingredient implements
         LongIdEntity,
         HasStringName,
+        HasAmount,
         HasSimpleAudit,
         HasLongVersion {
 
