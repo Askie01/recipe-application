@@ -1,8 +1,8 @@
 package com.askie01.recipeapplication.dto;
 
-import com.askie01.recipeapplication.model.common.LongIdentifiable;
-import com.askie01.recipeapplication.model.common.LongVersionable;
-import com.askie01.recipeapplication.model.common.StringNameable;
+import com.askie01.recipeapplication.model.value.LongIdentifiable;
+import com.askie01.recipeapplication.model.value.LongVersionable;
+import com.askie01.recipeapplication.model.value.StringNameable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

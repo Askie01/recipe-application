@@ -1,8 +1,8 @@
 package com.askie01.recipeapplication.model.entity;
 
-import com.askie01.recipeapplication.model.common.LocalDateTimeStringAuditable;
-import com.askie01.recipeapplication.model.common.LongVersionable;
-import com.askie01.recipeapplication.model.common.StringNameable;
+import com.askie01.recipeapplication.model.value.LocalDateTimeStringAuditable;
+import com.askie01.recipeapplication.model.value.LongVersionable;
+import com.askie01.recipeapplication.model.value.StringNameable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

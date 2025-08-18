@@ -1,4 +1,4 @@
-package com.askie01.recipeapplication.model.common;
+package com.askie01.recipeapplication.model.value;
 
 public interface Auditable <Time, Auditor> {
     Time getCreatedAt();
