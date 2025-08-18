@@ -1,9 +1,7 @@
 package com.askie01.recipeapplication.model.entity;
 
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
-import com.askie01.recipeapplication.model.value.HasLongVersion;
-import com.askie01.recipeapplication.model.value.HasSimpleAudit;
-import com.askie01.recipeapplication.model.value.HasStringName;
+import com.askie01.recipeapplication.model.value.*;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,6 +25,11 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Recipe implements
         LongIdEntity,
+        HasImage,
+        HasDescription,
+        HasServings,
+        HasCookingTime,
+        HasInstructions,
         HasStringName,
         HasSimpleAudit,
         HasLongVersion {
