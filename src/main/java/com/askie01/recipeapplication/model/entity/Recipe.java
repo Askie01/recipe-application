@@ -1,9 +1,9 @@
 package com.askie01.recipeapplication.model.entity;
 
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
+import com.askie01.recipeapplication.model.value.HasStringName;
 import com.askie01.recipeapplication.model.value.LocalDateTimeStringAuditable;
 import com.askie01.recipeapplication.model.value.LongVersionable;
-import com.askie01.recipeapplication.model.value.StringNameable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,7 +27,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Recipe implements
         LongIdEntity,
-        StringNameable,
+        HasStringName,
         LocalDateTimeStringAuditable,
         LongVersionable {
 
