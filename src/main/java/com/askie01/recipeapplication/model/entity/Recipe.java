@@ -1,9 +1,9 @@
 package com.askie01.recipeapplication.model.entity;
 
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
+import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.model.value.HasStringName;
 import com.askie01.recipeapplication.model.value.LocalDateTimeStringAuditable;
-import com.askie01.recipeapplication.model.value.LongVersionable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,7 +29,7 @@ public class Recipe implements
         LongIdEntity,
         HasStringName,
         LocalDateTimeStringAuditable,
-        LongVersionable {
+        HasLongVersion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

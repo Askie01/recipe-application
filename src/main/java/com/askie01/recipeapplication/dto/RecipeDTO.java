@@ -1,8 +1,8 @@
 package com.askie01.recipeapplication.dto;
 
 import com.askie01.recipeapplication.model.value.HasLongId;
+import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.model.value.HasStringName;
-import com.askie01.recipeapplication.model.value.LongVersionable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.util.List;
 @SuperBuilder
 @ToString
 @EqualsAndHashCode
-public class RecipeDTO implements HasLongId, HasStringName, LongVersionable {
+public class RecipeDTO implements HasLongId, HasStringName, HasLongVersion {
 
     @Positive(message = "Id in 'RecipeDTO' have to be a positive number.")
     private Long id;
