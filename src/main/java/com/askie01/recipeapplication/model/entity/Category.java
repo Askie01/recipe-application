@@ -1,8 +1,8 @@
 package com.askie01.recipeapplication.model.entity;
 
 import com.askie01.recipeapplication.model.value.HasLongVersion;
+import com.askie01.recipeapplication.model.value.HasSimpleAudit;
 import com.askie01.recipeapplication.model.value.HasStringName;
-import com.askie01.recipeapplication.model.value.LocalDateTimeStringAuditable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 public class Category implements
         LongIdEntity,
         HasStringName,
-        LocalDateTimeStringAuditable,
+        HasSimpleAudit,
         HasLongVersion {
 
     @Id

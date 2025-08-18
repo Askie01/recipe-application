@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.model.value;
 
-public interface Auditable <Time, Auditor> {
+public interface HasAudit <Time, Auditor> {
     Time getCreatedAt();
 
     void setCreatedAt(Time createdAt);
