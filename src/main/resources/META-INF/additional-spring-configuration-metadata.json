@@ -8,6 +8,11 @@
       "name": "component.auditor.type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct auditor (AuditorAware implementation)."
+    },
+    {
+      "name": "component.validator",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct validators (Validator implementations)."
     }
   ]
 }
