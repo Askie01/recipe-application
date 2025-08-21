@@ -13,6 +13,11 @@
       "name": "component.validator",
       "type": "java.lang.String",
       "description": "Property used to wire a correct validators (Validator implementations)."
+    },
+    {
+      "name": "component.validator.id-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'id' validator type."
     }
   ]
 }
