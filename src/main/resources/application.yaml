@@ -27,3 +27,5 @@ component:
     type: service
   validator:
     id-type: positive-long-id
+  mapper:
+    id-type: validated-long-id
