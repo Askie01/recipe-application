@@ -62,8 +62,8 @@ class ValidatedLongIdMapperUnitTest {
     @Test
     @DisplayName("map method should throw NullPointerException when source is null")
     void map_whenSourceIsNull_throwNullPointerException() {
-        when(longIdValidator.isValid(source)).thenThrow(NullPointerException.class);
-        assertThrows(NullPointerException.class, () -> mapper.map(source, target));
+        when(longIdValidator.isValid(null)).thenThrow(NullPointerException.class);
+        assertThrows(NullPointerException.class, () -> mapper.map(null, target));
     }
 
     @Test
