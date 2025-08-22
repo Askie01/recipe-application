@@ -20,6 +20,11 @@
       "description": "Property used to wire a correct 'id' validator type."
     },
     {
+      "name": "component.validator.image-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'image' validator type."
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
