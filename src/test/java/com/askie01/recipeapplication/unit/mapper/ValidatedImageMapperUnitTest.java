@@ -66,7 +66,6 @@ class ValidatedImageMapperUnitTest {
         assertThrows(NullPointerException.class, () -> mapper.map(null, target));
     }
 
-
     @Test
     @DisplayName("map method should throw NullPointerException when target is null")
     void map_whenTargetIsNull_throwNullPointerException() {
