@@ -30,3 +30,4 @@ component:
     image-type: five-mega-bytes
   mapper:
     id-type: validated-long-id
+    image-type: validated-image

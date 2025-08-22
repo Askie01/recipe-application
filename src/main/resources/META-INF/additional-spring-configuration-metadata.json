@@ -7,7 +7,8 @@
     {
       "name": "component.auditor.type",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct auditor (AuditorAware implementation)."
+      "description": "Property used to wire a correct auditor (AuditorAware implementation).",
+      "defaultValue": "service"
     },
     {
       "name": "component.validator",
@@ -17,12 +18,14 @@
     {
       "name": "component.validator.id-type",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct 'id' validator type."
+      "description": "Property used to wire a correct 'id' validator type.",
+      "defaultValue": "positive-long-id"
     },
     {
       "name": "component.validator.image-type",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct 'image' validator type."
+      "description": "Property used to wire a correct 'image' validator type.",
+      "defaultValue": "five-mega-bytes"
     },
     {
       "name": "component.mapper",
@@ -32,7 +35,14 @@
     {
       "name": "component.mapper.id-type",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct 'id' mapper type."
+      "description": "Property used to wire a correct 'id' mapper type.",
+      "defaultValue": "validated-long-id"
+    },
+    {
+      "name": "component.mapper.image-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'image' mapper type.",
+      "defaultValue": "validated-image"
     }
   ]
 }
