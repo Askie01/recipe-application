@@ -27,5 +27,6 @@ component:
     type: service
   validator:
     id-type: positive-long-id
+    image-type: five-mega-bytes
   mapper:
     id-type: validated-long-id
