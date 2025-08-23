@@ -34,3 +34,4 @@ component:
     id-type: validated-long-id
     image-type: validated-image
     name-type: validated-string-name
+    servings-type: validated-servings
