@@ -73,6 +73,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'servings' mapper type.",
       "defaultValue": "validated-servings"
+    },
+    {
+      "name": "component.mapper.cooking-time-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `cooking time` mapper type.",
+      "defaultValue": "validated-cooking-time"
     }
   ]
 }
