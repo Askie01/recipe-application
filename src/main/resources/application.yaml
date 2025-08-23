@@ -36,3 +36,4 @@ component:
     image-type: validated-image
     name-type: validated-string-name
     servings-type: validated-servings
+    cooking-time-type: validated-cooking-time
