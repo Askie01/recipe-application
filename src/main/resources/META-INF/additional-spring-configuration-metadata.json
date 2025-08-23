@@ -49,6 +49,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'image' mapper type.",
       "defaultValue": "validated-image"
+    },
+    {
+      "name": "component.mapper.name-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'name' mapper type.",
+      "defaultValue": "validated-string-name"
     }
   ]
 }
