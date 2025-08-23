@@ -28,6 +28,12 @@
       "defaultValue": "five-mega-bytes"
     },
     {
+      "name": "component.validator.name-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'name' validator type.",
+      "defaultValue": "non-blank-string"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
