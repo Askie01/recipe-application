@@ -28,6 +28,8 @@ component:
   validator:
     id-type: positive-long-id
     image-type: five-mega-bytes
+    name-type: non-blank-string
   mapper:
     id-type: validated-long-id
     image-type: validated-image
+    name-type: validated-string-name
