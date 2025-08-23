@@ -34,6 +34,12 @@
       "defaultValue": "non-blank-string"
     },
     {
+      "name": "component.validator.servings-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'servings' validator type.",
+      "defaultValue": "positive-servings"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
@@ -55,6 +61,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'name' mapper type.",
       "defaultValue": "validated-string-name"
+    },
+    {
+      "name": "component.mapper.servings-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'servings' mapper type.",
+      "defaultValue": "validated-servings"
     }
   ]
 }
