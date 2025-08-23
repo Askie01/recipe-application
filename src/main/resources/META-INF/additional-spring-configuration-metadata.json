@@ -61,6 +61,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'name' mapper type.",
       "defaultValue": "validated-string-name"
+    },
+    {
+      "name": "component.mapper.servings-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'servings' mapper type.",
+      "defaultValue": "validated-servings"
     }
   ]
 }
