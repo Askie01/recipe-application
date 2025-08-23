@@ -5,6 +5,7 @@ import com.askie01.recipeapplication.configuration.PositiveLongIdValidatorConfig
 import com.askie01.recipeapplication.model.value.HasLongId;
 import com.askie01.recipeapplication.validator.LongIdValidator;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,11 +23,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = "component.validator.id-type=positive-long-id")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
+@DisplayName("PositiveLongIdValidator integration tests")
 class PositiveLongIdValidatorIntegrationTest {
 
     private final LongIdValidator validator;
 
     @Test
+    @DisplayName("isValid method should return true when id in HasLongId is positive")
     void isValid_whenIdIsPositive_returnsTrue() {
         final HasLongId argument = TestHasLongIdBuilder.builder()
                 .id(1L)
@@ -36,6 +39,7 @@ class PositiveLongIdValidatorIntegrationTest {
     }
 
     @Test
+    @DisplayName("isValid method should return false when id in HasLongId is negative")
     void isValid_whenIdIsNegative_returnsFalse() {
         final HasLongId argument = TestHasLongIdBuilder.builder()
                 .id(-1L)
@@ -45,6 +49,7 @@ class PositiveLongIdValidatorIntegrationTest {
     }
 
     @Test
+    @DisplayName("isValid method should throw NullPointerException if id in HasLongId is null")
     void isValid_whenIdIsNull_throwsNullPointerException() {
         final HasLongId argument = TestHasLongIdBuilder.builder()
                 .id(null)
@@ -53,6 +58,7 @@ class PositiveLongIdValidatorIntegrationTest {
     }
 
     @Test
+    @DisplayName("isValid method should throw NullPointerException if HasLongId is null")
     void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
