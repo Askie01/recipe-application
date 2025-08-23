@@ -40,6 +40,12 @@
       "defaultValue": "positive-servings"
     },
     {
+      "name": "component.validator.cooking-time-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'cooking time' validator type.",
+      "defaultValue": "positive-cooking-time"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
@@ -67,6 +73,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'servings' mapper type.",
       "defaultValue": "validated-servings"
+    },
+    {
+      "name": "component.mapper.cooking-time-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `cooking time` mapper type.",
+      "defaultValue": "validated-cooking-time"
     }
   ]
 }
