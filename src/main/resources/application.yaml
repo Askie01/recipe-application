@@ -40,3 +40,4 @@ component:
     servings-type: validated-servings
     cooking-time-type: validated-cooking-time
     instructions-type: validated-instructions
+    version-type: validated-long-version
