@@ -52,6 +52,12 @@
       "defaultValue": "non-blank-instructions"
     },
     {
+      "name": "component.validator.version-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'version' validator type.",
+      "defaultValue": "positive-long-version"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
