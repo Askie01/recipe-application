@@ -46,6 +46,12 @@
       "defaultValue": "positive-cooking-time"
     },
     {
+      "name": "component.validator.instructions-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `instructions` validator type.",
+      "defaultValue": "non-blank-instructions"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
