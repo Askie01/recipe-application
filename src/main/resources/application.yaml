@@ -32,6 +32,7 @@ component:
     servings-type: positive-servings
     cooking-time-type: positive-cooking-time
     instructions-type: non-blank-instructions
+    version-type: positive-long-version
   mapper:
     id-type: validated-long-id
     image-type: validated-image
