@@ -42,6 +42,7 @@ component:
     cooking-time-type: validated-cooking-time
     instructions-type: validated-instructions
     version-type: validated-long-version
+    amount-type: validated-amount
     difficultyDTO-to-difficulty-type: simple
     categoryDTO-to-category-type: simple
     measureUnitDTO-to-measureUnit-type: simple
