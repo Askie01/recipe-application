@@ -42,3 +42,4 @@ component:
     instructions-type: validated-instructions
     version-type: validated-long-version
     difficultyDTO-to-difficulty-type: simple
+    categoryDTO-to-category-type: simple
