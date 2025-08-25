@@ -109,6 +109,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct `DifficultyDTOToDifficulty` mapper type.",
       "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.categoryDTO-to-category-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CategoryDTOToCategory' mapper type.",
+      "defaultValue": "simple"
     }
   ]
 }
