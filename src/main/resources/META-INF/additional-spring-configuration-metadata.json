@@ -58,6 +58,12 @@
       "defaultValue": "positive-long-version"
     },
     {
+      "name": "component.validator.amount-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'amount' validator type.",
+      "defaultValue": "positive-amount"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
