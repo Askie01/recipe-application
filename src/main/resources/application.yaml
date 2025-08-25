@@ -43,3 +43,4 @@ component:
     version-type: validated-long-version
     difficultyDTO-to-difficulty-type: simple
     categoryDTO-to-category-type: simple
+    measureUnitDTO-to-measureUnit-type: simple
