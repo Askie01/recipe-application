@@ -111,6 +111,12 @@
       "defaultValue": "validated-long-version"
     },
     {
+      "name": "component.mapper.amount-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `amount` mapper type.",
+      "defaultValue": "validated-amount"
+    },
+    {
       "name": "component.mapper.difficultyDTO-to-difficulty-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'DifficultyDTOToDifficulty' mapper type.",
