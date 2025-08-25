@@ -103,6 +103,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'version' mapper type.",
       "defaultValue": "validated-long-version"
+    },
+    {
+      "name": "component.mapper.difficultyDTO-to-difficulty-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `DifficultyDTOToDifficulty` mapper type.",
+      "defaultValue": "simple"
     }
   ]
 }
