@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode
-public class TestHasCookingTimeBuilder implements HasCookingTime {
+public class HasCookingTimeTestBuilder implements HasCookingTime {
     private Integer cookingTime;
 }

@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.builder;
 
-import com.askie01.recipeapplication.model.value.HasImage;
+import com.askie01.recipeapplication.model.value.HasStringName;
 import lombok.*;
 
 @Getter
@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode
-public class TestHasImageBuilder implements HasImage {
-    private byte[] image;
+public class HasStringNameTestBuilder implements HasStringName {
+    private String name;
 }

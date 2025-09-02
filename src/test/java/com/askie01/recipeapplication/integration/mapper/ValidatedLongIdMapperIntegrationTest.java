@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasLongIdBuilder;
+import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
 import com.askie01.recipeapplication.configuration.PositiveLongIdValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedLongIdMapperConfiguration;
 import com.askie01.recipeapplication.mapper.LongIdMapper;
@@ -39,10 +39,10 @@ class ValidatedLongIdMapperIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        this.source = TestHasLongIdBuilder.builder()
+        this.source = HasLongIdTestBuilder.builder()
                 .id(1L)
                 .build();
-        this.target = TestHasLongIdBuilder.builder()
+        this.target = HasLongIdTestBuilder.builder()
                 .id(2L)
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasImageBuilder;
+import com.askie01.recipeapplication.builder.HasImageTestBuilder;
 import com.askie01.recipeapplication.mapper.ImageMapper;
 import com.askie01.recipeapplication.mapper.ValidatedImageMapper;
 import com.askie01.recipeapplication.model.value.HasImage;
@@ -31,10 +31,10 @@ class ValidatedImageMapperUnitTest {
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedImageMapper(imageValidator);
-        this.source = TestHasImageBuilder.builder()
+        this.source = HasImageTestBuilder.builder()
                 .image(new byte[1024])
                 .build();
-        this.target = TestHasImageBuilder.builder()
+        this.target = HasImageTestBuilder.builder()
                 .image(new byte[2 * 1024])
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasImageBuilder;
+import com.askie01.recipeapplication.builder.HasImageTestBuilder;
 import com.askie01.recipeapplication.configuration.FiveMegaBytesImageValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedImageMapperConfiguration;
 import com.askie01.recipeapplication.mapper.ImageMapper;
@@ -39,10 +39,10 @@ class ValidatedImageMapperIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        this.source = TestHasImageBuilder.builder()
+        this.source = HasImageTestBuilder.builder()
                 .image(new byte[1024])
                 .build();
-        this.target = TestHasImageBuilder.builder()
+        this.target = HasImageTestBuilder.builder()
                 .image(new byte[2 * 1024])
                 .build();
     }

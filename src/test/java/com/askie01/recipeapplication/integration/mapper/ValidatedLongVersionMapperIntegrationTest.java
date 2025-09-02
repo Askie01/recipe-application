@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasLongVersionBuilder;
+import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
 import com.askie01.recipeapplication.configuration.PositiveLongVersionValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedLongVersionMapperConfiguration;
 import com.askie01.recipeapplication.mapper.LongVersionMapper;
@@ -39,10 +39,10 @@ class ValidatedLongVersionMapperIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        this.source = TestHasLongVersionBuilder.builder()
+        this.source = HasLongVersionTestBuilder.builder()
                 .version(1L)
                 .build();
-        this.target = TestHasLongVersionBuilder.builder()
+        this.target = HasLongVersionTestBuilder.builder()
                 .version(5L)
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasCookingTimeBuilder;
+import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
 import com.askie01.recipeapplication.mapper.ValidatedCookingTimeMapper;
 import com.askie01.recipeapplication.model.value.HasCookingTime;
@@ -31,10 +31,10 @@ class ValidatedCookingTimeMapperUnitTest {
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedCookingTimeMapper(validator);
-        this.source = TestHasCookingTimeBuilder.builder()
+        this.source = HasCookingTimeTestBuilder.builder()
                 .cookingTime(10)
                 .build();
-        this.target = TestHasCookingTimeBuilder.builder()
+        this.target = HasCookingTimeTestBuilder.builder()
                 .cookingTime(20)
                 .build();
     }

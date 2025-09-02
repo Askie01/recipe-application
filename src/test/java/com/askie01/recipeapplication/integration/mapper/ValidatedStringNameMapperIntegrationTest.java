@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasStringNameBuilder;
+import com.askie01.recipeapplication.builder.HasStringNameTestBuilder;
 import com.askie01.recipeapplication.configuration.NonBlankStringNameValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedStringNameMapperConfiguration;
 import com.askie01.recipeapplication.mapper.StringNameMapper;
@@ -41,10 +41,10 @@ class ValidatedStringNameMapperIntegrationTest {
     @BeforeEach
     void setUp() {
         final Faker faker = new Faker();
-        this.source = TestHasStringNameBuilder.builder()
+        this.source = HasStringNameTestBuilder.builder()
                 .name(faker.funnyName().name())
                 .build();
-        this.target = TestHasStringNameBuilder.builder()
+        this.target = HasStringNameTestBuilder.builder()
                 .name(faker.funnyName().name())
                 .build();
     }

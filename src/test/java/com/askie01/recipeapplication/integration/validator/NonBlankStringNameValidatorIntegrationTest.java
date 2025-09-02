@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.validator;
 
-import com.askie01.recipeapplication.builder.TestHasStringNameBuilder;
+import com.askie01.recipeapplication.builder.HasStringNameTestBuilder;
 import com.askie01.recipeapplication.configuration.NonBlankStringNameValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasStringName;
 import com.askie01.recipeapplication.validator.StringNameValidator;
@@ -33,7 +33,7 @@ class NonBlankStringNameValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should return true when name is non-blank")
     void isValid_whenNameIsNonBlank_returnsTrue() {
-        final HasStringName argument = TestHasStringNameBuilder.builder()
+        final HasStringName argument = HasStringNameTestBuilder.builder()
                 .name("name")
                 .build();
         final boolean result = validator.isValid(argument);
@@ -43,7 +43,7 @@ class NonBlankStringNameValidatorIntegrationTest {
     @ParameterizedTest(name = "isValid method should return false when name is blank")
     @ValueSource(strings = {"", "   "})
     void isValid_whenNameIsBlank_returnsFalse(String name) {
-        final HasStringName argument = TestHasStringNameBuilder.builder()
+        final HasStringName argument = HasStringNameTestBuilder.builder()
                 .name(name)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -53,7 +53,7 @@ class NonBlankStringNameValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should throw NullPointerException if name in HasStringName is null")
     void isValid_whenNameIsNull_throwsNullPointerException() {
-        final HasStringName argument = TestHasStringNameBuilder.builder()
+        final HasStringName argument = HasStringNameTestBuilder.builder()
                 .name(null)
                 .build();
         assertThrows(NullPointerException.class, () -> validator.isValid(argument));

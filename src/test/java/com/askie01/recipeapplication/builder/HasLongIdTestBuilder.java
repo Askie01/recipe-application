@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.builder;
 
-import com.askie01.recipeapplication.model.value.HasLongVersion;
+import com.askie01.recipeapplication.model.value.HasLongId;
 import lombok.*;
 
 @Getter
@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode
-public class TestHasLongVersionBuilder implements HasLongVersion {
-    private Long version;
+public class HasLongIdTestBuilder implements HasLongId {
+    private Long id;
 }

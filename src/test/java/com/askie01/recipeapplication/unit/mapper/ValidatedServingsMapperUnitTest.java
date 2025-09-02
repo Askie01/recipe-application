@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasServingsBuilder;
+import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
 import com.askie01.recipeapplication.mapper.ServingsMapper;
 import com.askie01.recipeapplication.mapper.ValidatedServingsMapper;
 import com.askie01.recipeapplication.model.value.HasServings;
@@ -31,10 +31,10 @@ class ValidatedServingsMapperUnitTest {
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedServingsMapper(validator);
-        this.source = TestHasServingsBuilder.builder()
+        this.source = HasServingsTestBuilder.builder()
                 .servings(1.0)
                 .build();
-        this.target = TestHasServingsBuilder.builder()
+        this.target = HasServingsTestBuilder.builder()
                 .servings(5.0)
                 .build();
     }

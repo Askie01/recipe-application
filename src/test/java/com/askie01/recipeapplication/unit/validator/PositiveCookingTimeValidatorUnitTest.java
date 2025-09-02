@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.validator;
 
-import com.askie01.recipeapplication.builder.TestHasCookingTimeBuilder;
+import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
 import com.askie01.recipeapplication.model.value.HasCookingTime;
 import com.askie01.recipeapplication.validator.CookingTimeValidator;
 import com.askie01.recipeapplication.validator.PositiveCookingTimeValidator;
@@ -25,7 +25,7 @@ class PositiveCookingTimeValidatorUnitTest {
     @Test
     @DisplayName("isValid method should return true when source cooking time is positive")
     void isValid_whenSourceCookingTimeIsPositive_returnsTrue() {
-        final HasCookingTime argument = TestHasCookingTimeBuilder.builder()
+        final HasCookingTime argument = HasCookingTimeTestBuilder.builder()
                 .cookingTime(5)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -35,7 +35,7 @@ class PositiveCookingTimeValidatorUnitTest {
     @Test
     @DisplayName("isValid method should return false when source cooking time is negative")
     void isValid_whenSourceCookingTimeIsNegative_returnsFalse() {
-        final HasCookingTime argument = TestHasCookingTimeBuilder.builder()
+        final HasCookingTime argument = HasCookingTimeTestBuilder.builder()
                 .cookingTime(-5)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -45,7 +45,7 @@ class PositiveCookingTimeValidatorUnitTest {
     @Test
     @DisplayName("isValid method should throw NullPointerException if source cooking time is null")
     void isValid_whenSourceCookingTimeIsNull_throwsNullPointerException() {
-        final HasCookingTime argument = TestHasCookingTimeBuilder.builder()
+        final HasCookingTime argument = HasCookingTimeTestBuilder.builder()
                 .cookingTime(null)
                 .build();
         assertThrows(NullPointerException.class, () -> validator.isValid(argument));

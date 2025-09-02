@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode
-public class TestHasInstructionsBuilder implements HasInstructions {
+public class HasInstructionsTestBuilder implements HasInstructions {
     private String instructions;
 }
