@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.validator;
 
-import com.askie01.recipeapplication.builder.TestHasInstructionsBuilder;
+import com.askie01.recipeapplication.builder.HasInstructionsTestBuilder;
 import com.askie01.recipeapplication.configuration.NonBlankInstructionsValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasInstructions;
 import com.askie01.recipeapplication.validator.InstructionsValidator;
@@ -33,7 +33,7 @@ class NonBlankInstructionsValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should return true when source instructions is non-blank")
     void isValid_whenSourceInstructionsIsNonBlank_returnsTrue() {
-        final HasInstructions argument = TestHasInstructionsBuilder.builder()
+        final HasInstructions argument = HasInstructionsTestBuilder.builder()
                 .instructions("instructions")
                 .build();
         final boolean result = validator.isValid(argument);
@@ -43,7 +43,7 @@ class NonBlankInstructionsValidatorIntegrationTest {
     @ParameterizedTest(name = "isValid method should return false when source instructions is blank")
     @ValueSource(strings = {"", "   "})
     void isValid_whenSourceInstructionsIsBlank_returnsFalse(String instructions) {
-        final HasInstructions argument = TestHasInstructionsBuilder.builder()
+        final HasInstructions argument = HasInstructionsTestBuilder.builder()
                 .instructions(instructions)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -53,7 +53,7 @@ class NonBlankInstructionsValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should throw NullPointerException if source instructions is null")
     void isValid_whenSourceHasNullInstructions_throwsNullPointerException() {
-        final HasInstructions argument = TestHasInstructionsBuilder.builder()
+        final HasInstructions argument = HasInstructionsTestBuilder.builder()
                 .instructions(null)
                 .build();
         assertThrows(NullPointerException.class, () -> validator.isValid(argument));

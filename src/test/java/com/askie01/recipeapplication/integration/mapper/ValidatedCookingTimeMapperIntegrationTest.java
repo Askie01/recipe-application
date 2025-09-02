@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasCookingTimeBuilder;
+import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
 import com.askie01.recipeapplication.configuration.PositiveCookingTimeValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedCookingTimeMapperConfiguration;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
@@ -40,10 +40,10 @@ class ValidatedCookingTimeMapperIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        this.source = TestHasCookingTimeBuilder.builder()
+        this.source = HasCookingTimeTestBuilder.builder()
                 .cookingTime(10)
                 .build();
-        this.target = TestHasCookingTimeBuilder.builder()
+        this.target = HasCookingTimeTestBuilder.builder()
                 .cookingTime(20)
                 .build();
     }

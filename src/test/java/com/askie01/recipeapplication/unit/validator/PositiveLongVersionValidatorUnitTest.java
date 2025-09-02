@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.validator;
 
-import com.askie01.recipeapplication.builder.TestHasLongVersionBuilder;
+import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.validator.LongVersionValidator;
 import com.askie01.recipeapplication.validator.PositiveLongVersionValidator;
@@ -25,7 +25,7 @@ class PositiveLongVersionValidatorUnitTest {
     @Test
     @DisplayName("isValid method should return true when source version is positive")
     void isValid_whenSourceVersionIsPositive_returnsTrue() {
-        final HasLongVersion argument = TestHasLongVersionBuilder.builder()
+        final HasLongVersion argument = HasLongVersionTestBuilder.builder()
                 .version(5L)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -35,7 +35,7 @@ class PositiveLongVersionValidatorUnitTest {
     @Test
     @DisplayName("isValid method should return false when source version is negative")
     void isValid_whenSourceVersionIsNegative_returnsFalse() {
-        final HasLongVersion argument = TestHasLongVersionBuilder.builder()
+        final HasLongVersion argument = HasLongVersionTestBuilder.builder()
                 .version(-5L)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -45,7 +45,7 @@ class PositiveLongVersionValidatorUnitTest {
     @Test
     @DisplayName("isValid method should throw NullPointerException if source version is null")
     void isValid_whenSourceVersionIsNull_throwsNullPointerException() {
-        final HasLongVersion argument = TestHasLongVersionBuilder.builder()
+        final HasLongVersion argument = HasLongVersionTestBuilder.builder()
                 .version(null)
                 .build();
         assertThrows(NullPointerException.class, () -> validator.isValid(argument));

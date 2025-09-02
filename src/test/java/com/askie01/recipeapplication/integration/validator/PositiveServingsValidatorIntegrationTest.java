@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.validator;
 
-import com.askie01.recipeapplication.builder.TestHasServingsBuilder;
+import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
 import com.askie01.recipeapplication.configuration.PositiveServingsValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasServings;
 import com.askie01.recipeapplication.validator.ServingsValidator;
@@ -31,7 +31,7 @@ class PositiveServingsValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should return true when source servings is positive")
     void isValid_whenSourceServingsIsPositive_returnsTrue() {
-        final HasServings argument = TestHasServingsBuilder.builder()
+        final HasServings argument = HasServingsTestBuilder.builder()
                 .servings(5d)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -41,7 +41,7 @@ class PositiveServingsValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should return false when source servings is negative")
     void isValid_whenSourceServingsIsNegative_returnsFalse() {
-        final HasServings argument = TestHasServingsBuilder.builder()
+        final HasServings argument = HasServingsTestBuilder.builder()
                 .servings(-5d)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -51,7 +51,7 @@ class PositiveServingsValidatorIntegrationTest {
     @Test
     @DisplayName("isValid method should throw NullPointerException if source servings is null")
     void isValid_whenSourceServingsIsNull_throwsNullPointerException() {
-        final HasServings argument = TestHasServingsBuilder.builder()
+        final HasServings argument = HasServingsTestBuilder.builder()
                 .servings(null)
                 .build();
         assertThrows(NullPointerException.class, () -> validator.isValid(argument));

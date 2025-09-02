@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.builder;
 
-import com.askie01.recipeapplication.model.value.HasServings;
+import com.askie01.recipeapplication.model.value.HasLongVersion;
 import lombok.*;
 
 @Getter
@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode
-public class TestHasServingsBuilder implements HasServings {
-    private Double servings;
+public class HasLongVersionTestBuilder implements HasLongVersion {
+    private Long version;
 }

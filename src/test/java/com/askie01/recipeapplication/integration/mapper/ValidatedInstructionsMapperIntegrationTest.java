@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasInstructionsBuilder;
+import com.askie01.recipeapplication.builder.HasInstructionsTestBuilder;
 import com.askie01.recipeapplication.configuration.NonBlankInstructionsValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedInstructionsMapperConfiguration;
 import com.askie01.recipeapplication.mapper.InstructionsMapper;
@@ -43,10 +43,10 @@ class ValidatedInstructionsMapperIntegrationTest {
         final Faker faker = new Faker();
         final String sourceInstructions = faker.lorem().paragraph();
         final String targetInstructions = faker.lorem().paragraph();
-        this.source = TestHasInstructionsBuilder.builder()
+        this.source = HasInstructionsTestBuilder.builder()
                 .instructions(sourceInstructions)
                 .build();
-        this.target = TestHasInstructionsBuilder.builder()
+        this.target = HasInstructionsTestBuilder.builder()
                 .instructions(targetInstructions)
                 .build();
     }
