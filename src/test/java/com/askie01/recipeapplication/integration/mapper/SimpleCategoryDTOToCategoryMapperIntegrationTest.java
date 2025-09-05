@@ -2,9 +2,10 @@ package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.CategoryDTO;
+import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
+import com.askie01.recipeapplication.factory.CategoryTestFactory;
 import com.askie01.recipeapplication.mapper.CategoryDTOToCategoryMapper;
 import com.askie01.recipeapplication.model.entity.Category;
-import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         ValidatedStringNameMapperConfiguration.class,
         NonBlankStringNameValidatorConfiguration.class,
         ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class
+        PositiveLongVersionValidatorConfiguration.class,
+        RandomCategoryDTOTestFactoryTestConfiguration.class,
+        RandomCategoryTestFactoryTestConfiguration.class,
+        FakerTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
@@ -44,24 +48,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class SimpleCategoryDTOToCategoryMapperIntegrationTest {
 
     private final CategoryDTOToCategoryMapper mapper;
+    private final CategoryDTOTestFactory categoryDTOFactory;
+    private final CategoryTestFactory categoryFactory;
     private CategoryDTO source;
     private Category target;
 
     @BeforeEach
     void setUp() {
-        final Faker faker = new Faker();
-        final String sourceName = faker.name().firstName();
-        final String targetName = faker.name().lastName();
-        this.source = CategoryDTO.builder()
-                .id(1L)
-                .name(sourceName)
-                .version(2L)
-                .build();
-        this.target = Category.builder()
-                .id(3L)
-                .name(targetName)
-                .version(4L)
-                .build();
+        this.source = categoryDTOFactory.createCategoryDTO();
+        this.target = categoryFactory.createCategory();
     }
 
     @Test
