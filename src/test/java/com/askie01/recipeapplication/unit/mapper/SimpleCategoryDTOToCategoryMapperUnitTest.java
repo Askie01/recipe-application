@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.dto.CategoryDTO;
+import com.askie01.recipeapplication.factory.RandomCategoryDTOTestFactory;
+import com.askie01.recipeapplication.factory.RandomCategoryTestFactory;
 import com.askie01.recipeapplication.mapper.*;
 import com.askie01.recipeapplication.model.entity.Category;
 import com.github.javafaker.Faker;
@@ -24,8 +26,10 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
 
     @Mock
     private LongIdMapper longIdMapper;
+
     @Mock
     private StringNameMapper stringNameMapper;
+
     @Mock
     private LongVersionMapper longVersionMapper;
     private CategoryDTOToCategoryMapper mapper;
@@ -36,18 +40,8 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
     void setUp() {
         this.mapper = new SimpleCategoryDTOToCategoryMapper(longIdMapper, stringNameMapper, longVersionMapper);
         final Faker faker = new Faker();
-        final String sourceName = faker.name().firstName();
-        final String targetName = faker.name().lastName();
-        this.source = CategoryDTO.builder()
-                .id(1L)
-                .name(sourceName)
-                .version(2L)
-                .build();
-        this.target = Category.builder()
-                .id(3L)
-                .name(targetName)
-                .version(4L)
-                .build();
+        this.source = new RandomCategoryDTOTestFactory(faker).createCategoryDTO();
+        this.target = new RandomCategoryTestFactory(faker).createCategory();
     }
 
     @Test
