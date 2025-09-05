@@ -10,6 +10,6 @@ import lombok.*;
 @Builder
 @ToString
 @EqualsAndHashCode
-public class TestHasAmountBuilder implements HasAmount {
+public class HasAmountTestBuilder implements HasAmount {
     private Double amount;
 }
