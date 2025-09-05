@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasAmountBuilder;
+import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
 import com.askie01.recipeapplication.configuration.PositiveAmountValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedAmountMapperConfiguration;
 import com.askie01.recipeapplication.mapper.AmountMapper;
@@ -39,10 +39,10 @@ class ValidatedAmountMapperIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        this.source = TestHasAmountBuilder.builder()
+        this.source = HasAmountTestBuilder.builder()
                 .amount(1.0)
                 .build();
-        this.target = TestHasAmountBuilder.builder()
+        this.target = HasAmountTestBuilder.builder()
                 .amount(2.0)
                 .build();
     }

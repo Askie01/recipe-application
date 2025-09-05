@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasAmountBuilder;
+import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
 import com.askie01.recipeapplication.mapper.AmountMapper;
 import com.askie01.recipeapplication.mapper.ValidatedAmountMapper;
 import com.askie01.recipeapplication.model.value.HasAmount;
@@ -31,10 +31,10 @@ class ValidatedAmountMapperUnitTest {
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedAmountMapper(validator);
-        this.source = TestHasAmountBuilder.builder()
+        this.source = HasAmountTestBuilder.builder()
                 .amount(1.0)
                 .build();
-        this.target = TestHasAmountBuilder.builder()
+        this.target = HasAmountTestBuilder.builder()
                 .amount(2.0)
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.askie01.recipeapplication.unit.validator;
 
-import com.askie01.recipeapplication.builder.TestHasAmountBuilder;
+import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
 import com.askie01.recipeapplication.model.value.HasAmount;
 import com.askie01.recipeapplication.validator.AmountValidator;
 import com.askie01.recipeapplication.validator.PositiveAmountValidator;
@@ -25,7 +25,7 @@ class PositiveAmountValidatorUnitTest {
     @Test
     @DisplayName("isValid method should return true when source amount is positive")
     void isValid_whenSourceAmountIsPositive_returnsTrue() {
-        final HasAmount argument = TestHasAmountBuilder.builder()
+        final HasAmount argument = HasAmountTestBuilder.builder()
                 .amount(5d)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -35,7 +35,7 @@ class PositiveAmountValidatorUnitTest {
     @Test
     @DisplayName("isValid method should return false when source amount is negative")
     void isValid_whenSourceAmountIsNegative_returnsFalse() {
-        final HasAmount argument = TestHasAmountBuilder.builder()
+        final HasAmount argument = HasAmountTestBuilder.builder()
                 .amount(-5d)
                 .build();
         final boolean result = validator.isValid(argument);
@@ -45,7 +45,7 @@ class PositiveAmountValidatorUnitTest {
     @Test
     @DisplayName("isValid method should throw NullPointerException if source amount is null")
     void isValid_whenSourceAmountIsNull_throwsNullPointerException() {
-        final HasAmount argument = TestHasAmountBuilder.builder()
+        final HasAmount argument = HasAmountTestBuilder.builder()
                 .amount(null)
                 .build();
         assertThrows(NullPointerException.class, () -> validator.isValid(argument));
