@@ -3,6 +3,8 @@ package com.askie01.recipeapplication.integration.comparator;
 import com.askie01.recipeapplication.comparator.CategoryCategoryDTOTestComparator;
 import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.CategoryDTO;
+import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
+import com.askie01.recipeapplication.factory.CategoryTestFactory;
 import com.askie01.recipeapplication.factory.RandomCategoryDTOTestFactory;
 import com.askie01.recipeapplication.factory.RandomCategoryTestFactory;
 import com.askie01.recipeapplication.model.entity.Category;
@@ -34,8 +36,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CategoryCategoryDTOValueTestComparatorIntegrationTest {
 
     private final CategoryCategoryDTOTestComparator comparator;
-    private final RandomCategoryTestFactory categoryFactory;
-    private final RandomCategoryDTOTestFactory categoryDTOFactory;
+    private final CategoryTestFactory categoryFactory;
+    private final CategoryDTOTestFactory categoryDTOFactory;
     private Category category;
     private CategoryDTO categoryDTO;
 
