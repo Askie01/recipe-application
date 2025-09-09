@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.dto.MeasureUnitDTO;
+import com.askie01.recipeapplication.factory.RandomMeasureUnitDTOTestFactory;
+import com.askie01.recipeapplication.factory.RandomMeasureUnitTestFactory;
 import com.askie01.recipeapplication.mapper.*;
 import com.askie01.recipeapplication.model.entity.MeasureUnit;
 import com.github.javafaker.Faker;
@@ -40,18 +42,8 @@ class SimpleMeasureUnitDTOToMeasureUnitMapperUnitTest {
     void setUp() {
         this.mapper = new SimpleMeasureUnitDTOToMeasureUnitMapper(longIdMapper, stringNameMapper, longVersionMapper);
         final Faker faker = new Faker();
-        final String sourceName = faker.name().firstName();
-        final String targetName = faker.name().lastName();
-        this.source = MeasureUnitDTO.builder()
-                .id(1L)
-                .name(sourceName)
-                .version(2L)
-                .build();
-        this.target = MeasureUnit.builder()
-                .id(3L)
-                .name(targetName)
-                .version(4L)
-                .build();
+        this.source = new RandomMeasureUnitDTOTestFactory(faker).createMeasureUnitDTO();
+        this.target = new RandomMeasureUnitTestFactory(faker).createMeasureUnit();
     }
 
     @Test
