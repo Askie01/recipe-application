@@ -1,10 +1,12 @@
 package com.askie01.recipeapplication.integration.mapper;
 
+import com.askie01.recipeapplication.comparator.MeasureUnitMeasureUnitDTOTestComparator;
 import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.MeasureUnitDTO;
+import com.askie01.recipeapplication.factory.MeasureUnitDTOTestFactory;
+import com.askie01.recipeapplication.factory.MeasureUnitTestFactory;
 import com.askie01.recipeapplication.mapper.MeasureUnitDTOToMeasureUnitMapper;
 import com.askie01.recipeapplication.model.entity.MeasureUnit;
-import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
@@ -27,7 +28,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         ValidatedStringNameMapperConfiguration.class,
         NonBlankStringNameValidatorConfiguration.class,
         ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class
+        PositiveLongVersionValidatorConfiguration.class,
+        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryTestConfiguration.class,
+        FakerTestConfiguration.class,
+        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
+        LongIdValueTestComparatorTestConfiguration.class,
+        StringNameValueTestComparatorTestConfiguration.class,
+        LongVersionValueTestComparatorTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
@@ -44,24 +52,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class SimpleMeasureUnitDTOToMeasureUnitMapperIntegrationTest {
 
     private final MeasureUnitDTOToMeasureUnitMapper mapper;
+    private final MeasureUnitMeasureUnitDTOTestComparator comparator;
+    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
+    private final MeasureUnitTestFactory measureUnitFactory;
     private MeasureUnitDTO source;
     private MeasureUnit target;
 
     @BeforeEach
     void setUp() {
-        final Faker faker = new Faker();
-        final String sourceName = faker.name().firstName();
-        final String targetName = faker.name().lastName();
-        this.source = MeasureUnitDTO.builder()
-                .id(1L)
-                .name(sourceName)
-                .version(2L)
-                .build();
-        this.target = MeasureUnit.builder()
-                .id(3L)
-                .name(targetName)
-                .version(4L)
-                .build();
+        this.source = measureUnitDTOFactory.createMeasureUnitDTO();
+        this.target = measureUnitFactory.createMeasureUnit();
     }
 
     @Test
@@ -95,15 +95,8 @@ class SimpleMeasureUnitDTOToMeasureUnitMapperIntegrationTest {
     @DisplayName("map method should map source id, name and version to target id, name and version when source is present")
     void map_whenSourceIsPresent_mapsSourceIdNameVersionToTargetIdNameVersion() {
         mapper.map(source, target);
-        final Long sourceId = source.getId();
-        final String sourceName = source.getName();
-        final Long sourceVersion = source.getVersion();
-        final Long targetId = target.getId();
-        final String targetName = target.getName();
-        final Long targetVersion = target.getVersion();
-        assertEquals(sourceId, targetId);
-        assertEquals(sourceName, targetName);
-        assertEquals(sourceVersion, targetVersion);
+        final boolean sourceEqualsTarget = comparator.compare(target, source);
+        assertTrue(sourceEqualsTarget);
     }
 
     @Test
@@ -149,15 +142,8 @@ class SimpleMeasureUnitDTOToMeasureUnitMapperIntegrationTest {
     @DisplayName("mapToEntity method should map source id, name and version to new MeasureUnit id, name and version and return it")
     void mapToEntity_whenSourceIsPresent_mapsSourceIdNameVersionToNewMeasureUnitIdNameVersionAndReturnIt() {
         final MeasureUnit measureUnit = mapper.mapToEntity(source);
-        final Long sourceId = source.getId();
-        final String sourceName = source.getName();
-        final Long sourceVersion = source.getVersion();
-        final Long measureUnitId = measureUnit.getId();
-        final String measureUnitName = measureUnit.getName();
-        final Long measureUnitVersion = measureUnit.getVersion();
-        assertEquals(sourceId, measureUnitId);
-        assertEquals(sourceName, measureUnitName);
-        assertEquals(sourceVersion, measureUnitVersion);
+        final boolean sourceEqualsMeasureUnit = comparator.compare(measureUnit, source);
+        assertTrue(sourceEqualsMeasureUnit);
     }
 
     @Test
