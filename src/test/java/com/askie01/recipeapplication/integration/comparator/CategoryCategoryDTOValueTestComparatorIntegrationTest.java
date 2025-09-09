@@ -5,8 +5,6 @@ import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.CategoryDTO;
 import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
 import com.askie01.recipeapplication.factory.CategoryTestFactory;
-import com.askie01.recipeapplication.factory.RandomCategoryDTOTestFactory;
-import com.askie01.recipeapplication.factory.RandomCategoryTestFactory;
 import com.askie01.recipeapplication.model.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
         StringNameValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,
         FakerTestConfiguration.class,
-        RandomCategoryDTOTestFactory.class,
-        RandomCategoryTestFactory.class
+        RandomCategoryDTOTestFactoryTestConfiguration.class,
+        RandomCategoryTestFactoryTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
