@@ -1,12 +1,12 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.comparator.CategoryCategoryDTOTestComparator;
+import com.askie01.recipeapplication.comparator.MeasureUnitMeasureUnitDTOTestComparator;
 import com.askie01.recipeapplication.configuration.*;
-import com.askie01.recipeapplication.dto.CategoryDTO;
-import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
-import com.askie01.recipeapplication.factory.CategoryTestFactory;
-import com.askie01.recipeapplication.mapper.CategoryDTOToCategoryMapper;
-import com.askie01.recipeapplication.model.entity.Category;
+import com.askie01.recipeapplication.dto.MeasureUnitDTO;
+import com.askie01.recipeapplication.factory.MeasureUnitDTOTestFactory;
+import com.askie01.recipeapplication.factory.MeasureUnitTestFactory;
+import com.askie01.recipeapplication.mapper.MeasureUnitDTOToMeasureUnitMapper;
+import com.askie01.recipeapplication.model.entity.MeasureUnit;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,24 +22,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        SimpleCategoryDTOToCategoryMapperConfiguration.class,
+        SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
         ValidatedLongIdMapperConfiguration.class,
         PositiveLongIdValidatorConfiguration.class,
         ValidatedStringNameMapperConfiguration.class,
         NonBlankStringNameValidatorConfiguration.class,
         ValidatedLongVersionMapperConfiguration.class,
         PositiveLongVersionValidatorConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
+        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
-        CategoryCategoryDTOValueTestComparatorTestConfiguration.class,
+        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
-        "component.mapper.categoryDTO-to-category-type=simple",
+        "component.mapper.measureUnitDTO-to-measureUnit-type=simple",
         "component.mapper.id-type=validated-long-id",
         "component.validator.id-type=positive-long-id",
         "component.mapper.name-type=validated-string-name",
@@ -48,20 +48,20 @@ import static org.junit.jupiter.api.Assertions.*;
         "component.validator.version-type=positive-long-version"
 })
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
-@DisplayName("SimpleCategoryDTOToCategoryMapper integration tests")
-class SimpleCategoryDTOToCategoryMapperIntegrationTest {
+@DisplayName("SimpleMeasureUnitDTOToMeasureUnitMapper integration tests")
+class SimpleMeasureUnitDTOToMeasureUnitMapperIntegrationTest {
 
-    private final CategoryDTOToCategoryMapper mapper;
-    private final CategoryCategoryDTOTestComparator comparator;
-    private final CategoryDTOTestFactory categoryDTOFactory;
-    private final CategoryTestFactory categoryFactory;
-    private CategoryDTO source;
-    private Category target;
+    private final MeasureUnitDTOToMeasureUnitMapper mapper;
+    private final MeasureUnitMeasureUnitDTOTestComparator comparator;
+    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
+    private final MeasureUnitTestFactory measureUnitFactory;
+    private MeasureUnitDTO source;
+    private MeasureUnit target;
 
     @BeforeEach
     void setUp() {
-        this.source = categoryDTOFactory.createCategoryDTO();
-        this.target = categoryFactory.createCategory();
+        this.source = measureUnitDTOFactory.createMeasureUnitDTO();
+        this.target = measureUnitFactory.createMeasureUnit();
     }
 
     @Test
@@ -72,7 +72,6 @@ class SimpleCategoryDTOToCategoryMapperIntegrationTest {
         final Long targetId = target.getId();
         assertEquals(sourceId, targetId);
     }
-
 
     @Test
     @DisplayName("map method should map source name to target name when source is present")
@@ -113,38 +112,38 @@ class SimpleCategoryDTOToCategoryMapperIntegrationTest {
     }
 
     @Test
-    @DisplayName("mapToEntity method should map source id to new Category id and return it")
-    void mapToEntity_whenSourceIsPresent_mapsSourceIdToNewCategoryIdAndReturnIt() {
-        final Category category = mapper.mapToEntity(source);
+    @DisplayName("mapToEntity method should map source id to new MeasureUnit id and return it")
+    void mapToEntity_whenSourceIsPresent_mapsSourceIdToNewMeasureUnitIdAndReturnIt() {
+        final MeasureUnit measureUnit = mapper.mapToEntity(source);
         final Long sourceId = source.getId();
-        final Long categoryId = category.getId();
-        assertEquals(sourceId, categoryId);
+        final Long measureUnitId = measureUnit.getId();
+        assertEquals(sourceId, measureUnitId);
     }
 
     @Test
-    @DisplayName("mapToEntity method should map source name to new Category name and return it")
-    void mapToEntity_whenSourceIsPresent_mapsSourceNameToNewCategoryNameAndReturnIt() {
-        final Category category = mapper.mapToEntity(source);
+    @DisplayName("mapToEntity method should map source name to new MeasureUnit name and return it")
+    void mapToEntity_whenSourceIsPresent_mapsSourceNameToNewMeasureUnitNameAndReturnIt() {
+        final MeasureUnit measureUnit = mapper.mapToEntity(source);
         final String sourceName = source.getName();
-        final String categoryName = category.getName();
-        assertEquals(sourceName, categoryName);
+        final String measureUnitName = measureUnit.getName();
+        assertEquals(sourceName, measureUnitName);
     }
 
     @Test
-    @DisplayName("mapToEntity method should map source version to new Category version and return it")
-    void mapToEntity_whenSourceIsPresent_mapsSourceVersionToNewCategoryVersionAndReturnIt() {
-        final Category category = mapper.mapToEntity(source);
+    @DisplayName("mapToEntity method should map source version to new MeasureUnit version and return it")
+    void mapToEntity_whenSourceIsPresent_mapsSourceVersionToNewMeasureUnitVersionAndReturnIt() {
+        final MeasureUnit measureUnit = mapper.mapToEntity(source);
         final Long sourceVersion = source.getVersion();
-        final Long categoryVersion = category.getVersion();
-        assertEquals(sourceVersion, categoryVersion);
+        final Long measureUnitVersion = measureUnit.getVersion();
+        assertEquals(sourceVersion, measureUnitVersion);
     }
 
     @Test
-    @DisplayName("mapToEntity method should map source id, name and version to new Category id, name and version object and return it")
-    void mapToEntity_whenSourceIsPresent_mapsSourceIdNameVersionToCategoryIdNameVersionAndReturnIt() {
-        final Category category = mapper.mapToEntity(source);
-        final boolean sourceEqualsCategory = comparator.compare(category, source);
-        assertTrue(sourceEqualsCategory);
+    @DisplayName("mapToEntity method should map source id, name and version to new MeasureUnit id, name and version and return it")
+    void mapToEntity_whenSourceIsPresent_mapsSourceIdNameVersionToNewMeasureUnitIdNameVersionAndReturnIt() {
+        final MeasureUnit measureUnit = mapper.mapToEntity(source);
+        final boolean sourceEqualsMeasureUnit = comparator.compare(measureUnit, source);
+        assertTrue(sourceEqualsMeasureUnit);
     }
 
     @Test

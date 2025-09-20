@@ -58,6 +58,12 @@
       "defaultValue": "positive-long-version"
     },
     {
+      "name": "component.validator.amount-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'amount' validator type.",
+      "defaultValue": "positive-amount"
+    },
+    {
       "name": "component.mapper",
       "type": "java.lang.String",
       "description": "Property used to wire a correct mapper (Mapper implementations)."
@@ -105,6 +111,12 @@
       "defaultValue": "validated-long-version"
     },
     {
+      "name": "component.mapper.amount-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `amount` mapper type.",
+      "defaultValue": "validated-amount"
+    },
+    {
       "name": "component.mapper.difficultyDTO-to-difficulty-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'DifficultyDTOToDifficulty' mapper type.",
@@ -114,6 +126,18 @@
       "name": "component.mapper.categoryDTO-to-category-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'CategoryDTOToCategory' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.measureUnitDTO-to-measureUnit-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'MeasureUnitDTOToMeasureUnit' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.ingredientDTO-to-ingredient-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'IngredientDTOToIngredient' mapper type.",
       "defaultValue": "simple"
     }
   ]
