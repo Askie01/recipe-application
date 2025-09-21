@@ -44,6 +44,7 @@ component:
     instructions-type: validated-instructions
     version-type: validated-long-version
     amount-type: validated-amount
+    description-type: validated-description
     difficultyDTO-to-difficulty-type: simple
     categoryDTO-to-category-type: simple
     measureUnitDTO-to-measureUnit-type: simple
