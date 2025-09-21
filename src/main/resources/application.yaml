@@ -14,10 +14,6 @@ spring:
     hibernate:
       ddl-auto: none
 
-  docker:
-    compose:
-      enabled: true
-
   data:
     jdbc:
       dialect: mysql
