@@ -12,8 +12,8 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("FiveMegaBytesImageValidator unit tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
+@DisplayName("FiveMegaBytesImageValidator unit tests")
 class FiveMegaBytesImageValidatorUnitTest {
 
     private ImageValidator validator;
