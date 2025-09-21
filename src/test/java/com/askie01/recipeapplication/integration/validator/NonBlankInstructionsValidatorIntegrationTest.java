@@ -19,11 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        NonBlankInstructionsValidatorConfiguration.class
-})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@ContextConfiguration(classes = NonBlankInstructionsValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.instructions-type=non-blank-instructions")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("NonBlankInstructionsValidator integration tests")
 class NonBlankInstructionsValidatorIntegrationTest {
