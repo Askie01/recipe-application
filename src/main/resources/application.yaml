@@ -34,6 +34,7 @@ component:
     instructions-type: non-blank-instructions
     version-type: positive-long-version
     amount-type: positive-amount
+    description-type: non-blank-description
   mapper:
     id-type: validated-long-id
     image-type: validated-image
