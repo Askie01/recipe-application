@@ -25,7 +25,7 @@
       "name": "component.validator.image-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'image' validator type.",
-      "defaultValue": "five-mega-bytes"
+      "defaultValue": "five-mega-bytes-image"
     },
     {
       "name": "component.validator.name-type",
