@@ -18,11 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        FiveMegaBytesImageValidatorConfiguration.class
-})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@ContextConfiguration(classes = FiveMegaBytesImageValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.image-type=five-mega-bytes-image")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("FiveMegaBytesImageValidator integration tests")
 class FiveMegaBytesImageValidatorIntegrationTest {
