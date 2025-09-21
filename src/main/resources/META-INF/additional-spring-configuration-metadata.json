@@ -123,6 +123,12 @@
       "defaultValue": "validated-amount"
     },
     {
+      "name": "component.mapper.description-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `description` mapper type.",
+      "defaultValue": "validated-description"
+    },
+    {
       "name": "component.mapper.difficultyDTO-to-difficulty-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'DifficultyDTOToDifficulty' mapper type.",
