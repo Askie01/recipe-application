@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("NonBlankStringNameValidator unit tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
+@DisplayName("NonBlankStringNameValidator unit tests")
 class NonBlankStringNameValidatorUnitTest {
 
     private StringNameValidator validator;
