@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = PositiveCookingTimeValidatorConfiguration.class)
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = "component.validator.cooking-time-type=positive-cooking-time")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveCookingTimeValidator integration tests")
 class PositiveCookingTimeValidatorIntegrationTest {
