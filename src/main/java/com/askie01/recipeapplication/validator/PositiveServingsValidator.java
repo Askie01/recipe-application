@@ -6,10 +6,11 @@ public class PositiveServingsValidator implements ServingsValidator {
 
     @Override
     public boolean isValid(HasServings hasServings) {
-        return hasPositiveServingsValue(hasServings);
+        return hasPositiveServings(hasServings);
     }
 
-    private boolean hasPositiveServingsValue(HasServings hasServings) {
-        return hasServings.getServings() > 0;
+    private boolean hasPositiveServings(HasServings hasServings) {
+        final Double servings = hasServings.getServings();
+        return servings > 0;
     }
 }
