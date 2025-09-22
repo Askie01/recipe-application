@@ -27,8 +27,8 @@ class PositiveServingsValidatorIntegrationTest {
     private final ServingsValidator validator;
 
     @Test
-    @DisplayName("isValid method should return true when source servings is positive")
-    void isValid_whenSourceServingsIsPositive_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's servings are positive")
+    void isValid_whenArgumentServingsArePositive_returnsTrue() {
         final HasServings argument = HasServingsTestBuilder.builder()
                 .servings(5d)
                 .build();
@@ -37,8 +37,8 @@ class PositiveServingsValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should return false when source servings is negative")
-    void isValid_whenSourceServingsIsNegative_returnsFalse() {
+    @DisplayName("isValid method should return false when argument's servings are negative")
+    void isValid_whenArgumentServingsAreNegative_returnsFalse() {
         final HasServings argument = HasServingsTestBuilder.builder()
                 .servings(-5d)
                 .build();
@@ -47,8 +47,8 @@ class PositiveServingsValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source servings is null")
-    void isValid_whenSourceServingsIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's servings are null")
+    void isValid_whenArgumentServingsAreNull_throwsNullPointerException() {
         final HasServings argument = HasServingsTestBuilder.builder()
                 .servings(null)
                 .build();
@@ -56,8 +56,8 @@ class PositiveServingsValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source is null")
-    void isValid_whenSourceIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
+    void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
 }
