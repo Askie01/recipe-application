@@ -10,6 +10,7 @@ public class PositiveAmountValidator implements AmountValidator {
     }
 
     private boolean hasPositiveAmount(HasAmount hasAmount) {
-        return hasAmount.getAmount() > 0;
+        final Double amount = hasAmount.getAmount();
+        return amount > 0;
     }
 }
