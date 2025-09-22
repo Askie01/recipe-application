@@ -27,8 +27,8 @@ class PositiveCookingTimeValidatorIntegrationTest {
     private final CookingTimeValidator validator;
 
     @Test
-    @DisplayName("isValid method should return true when source cooking time is positive")
-    void isValid_whenSourceCookingTimeIsPositive_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's cooking time is positive")
+    void isValid_whenArgumentCookingTimeIsPositive_returnsTrue() {
         final HasCookingTime argument = HasCookingTimeTestBuilder.builder()
                 .cookingTime(5)
                 .build();
@@ -37,8 +37,8 @@ class PositiveCookingTimeValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should return false when source cooking time is negative")
-    void isValid_whenSourceCookingTimeIsNegative_returnsFalse() {
+    @DisplayName("isValid method should return false when argument's cooking time is negative")
+    void isValid_whenArgumentCookingTimeIsNegative_returnsFalse() {
         final HasCookingTime argument = HasCookingTimeTestBuilder.builder()
                 .cookingTime(-5)
                 .build();
@@ -47,8 +47,8 @@ class PositiveCookingTimeValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source cooking time is null")
-    void isValid_whenSourceCookingTimeIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's cooking time is null")
+    void isValid_whenArgumentCookingTimeIsNull_throwsNullPointerException() {
         final HasCookingTime argument = HasCookingTimeTestBuilder.builder()
                 .cookingTime(null)
                 .build();
@@ -56,8 +56,8 @@ class PositiveCookingTimeValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source is null")
-    void isValid_whenSourceIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
+    void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
 }
