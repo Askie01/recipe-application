@@ -17,9 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        PositiveCookingTimeValidatorConfiguration.class
-})
+@ContextConfiguration(classes = PositiveCookingTimeValidatorConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = "component.validator.cooking-time-type=positive-cooking-time")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
