@@ -23,8 +23,8 @@ class PositiveAmountValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should return true when source amount is positive")
-    void isValid_whenSourceAmountIsPositive_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's amount is positive")
+    void isValid_whenArgumentAmountIsPositive_returnsTrue() {
         final HasAmount argument = HasAmountTestBuilder.builder()
                 .amount(5d)
                 .build();
@@ -33,8 +33,8 @@ class PositiveAmountValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should return false when source amount is negative")
-    void isValid_whenSourceAmountIsNegative_returnsFalse() {
+    @DisplayName("isValid method should return false when argument's amount is negative")
+    void isValid_whenArgumentAmountIsNegative_returnsFalse() {
         final HasAmount argument = HasAmountTestBuilder.builder()
                 .amount(-5d)
                 .build();
@@ -43,8 +43,8 @@ class PositiveAmountValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source amount is null")
-    void isValid_whenSourceAmountIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's amount is null")
+    void isValid_whenArgumentAmountIsNull_throwsNullPointerException() {
         final HasAmount argument = HasAmountTestBuilder.builder()
                 .amount(null)
                 .build();
@@ -52,8 +52,8 @@ class PositiveAmountValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source is null")
-    void isValid_whenSourceIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
+    void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
 }
