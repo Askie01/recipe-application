@@ -29,8 +29,8 @@ class NonBlankDescriptionValidatorIntegrationTest {
     private final DescriptionValidator validator;
 
     @Test
-    @DisplayName("isValid method should return true when description is non-blank")
-    void isValid_whenDescriptionIsNonBlank_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's description is non-blank")
+    void isValid_whenArgumentDescriptionIsNonBlank_returnsTrue() {
         final HasDescription argument = HasDescriptionTestBuilder.builder()
                 .description("description")
                 .build();
@@ -38,9 +38,9 @@ class NonBlankDescriptionValidatorIntegrationTest {
         assertTrue(result);
     }
 
-    @ParameterizedTest(name = "isValid method should return false when description is blank")
+    @ParameterizedTest(name = "isValid method should return false when argument's description is blank")
     @ValueSource(strings = {"", "   "})
-    void isValid_whenDescriptionIsBlank_returnsFalse(String description) {
+    void isValid_whenArgumentDescriptionIsBlank_returnsFalse(String description) {
         final HasDescription argument = HasDescriptionTestBuilder.builder()
                 .description(description)
                 .build();
@@ -49,8 +49,8 @@ class NonBlankDescriptionValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if description in HasDescription is null")
-    void isValid_whenDescriptionIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's description is null")
+    void isValid_whenArgumentDescriptionIsNull_throwsNullPointerException() {
         final HasDescription argument = HasDescriptionTestBuilder.builder()
                 .description(null)
                 .build();
@@ -58,7 +58,7 @@ class NonBlankDescriptionValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if HasDescription is null")
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
     void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
