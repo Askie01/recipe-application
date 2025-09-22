@@ -27,8 +27,8 @@ class PositiveLongVersionValidatorIntegrationTest {
     private final LongVersionValidator validator;
 
     @Test
-    @DisplayName("isValid method should return true when source version is positive")
-    void isValid_whenSourceVersionIsPositive_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's version is positive")
+    void isValid_whenArgumentVersionIsPositive_returnsTrue() {
         final HasLongVersion argument = HasLongVersionTestBuilder.builder()
                 .version(5L)
                 .build();
@@ -37,8 +37,8 @@ class PositiveLongVersionValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should return false when source version is negative")
-    void isValid_whenSourceVersionIsNegative_returnsFalse() {
+    @DisplayName("isValid method should return false when argument's version is negative")
+    void isValid_whenArgumentVersionIsNegative_returnsFalse() {
         final HasLongVersion argument = HasLongVersionTestBuilder.builder()
                 .version(-5L)
                 .build();
@@ -47,8 +47,8 @@ class PositiveLongVersionValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source version is null")
-    void isValid_whenSourceVersionIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's version is null")
+    void isValid_whenArgumentVersionIsNull_throwsNullPointerException() {
         final HasLongVersion argument = HasLongVersionTestBuilder.builder()
                 .version(null)
                 .build();
@@ -56,8 +56,8 @@ class PositiveLongVersionValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source is null")
-    void isValid_whenSourceIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
+    void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
 }
