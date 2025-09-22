@@ -17,13 +17,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        PositiveAmountValidatorConfiguration.class
-})
+@ContextConfiguration(classes = PositiveAmountValidatorConfiguration.class)
+@TestPropertySource(properties = "component.validator.amount-type=positive-amount")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@TestPropertySource(properties = {
-        "component.validator.amount-type=positive-amount"
-})
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveAmountValidator integration tests")
 class PositiveAmountValidatorIntegrationTest {
