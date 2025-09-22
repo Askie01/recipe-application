@@ -24,8 +24,8 @@ class FiveMegaBytesImageValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should return true when image size is above 0 MBs")
-    void isValid_whenImageSizeIsAboveZeroMegaBytes_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's image size is above 0 MBs")
+    void isValid_whenArgumentImageSizeIsAboveZeroMegaBytes_returnsTrue() {
         final HasImage argument = HasImageTestBuilder.builder()
                 .image(new byte[2 * 1024 * 1024])
                 .build();
@@ -34,8 +34,8 @@ class FiveMegaBytesImageValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should return true when image size is exactly 5 MBs")
-    void isValid_whenImageSizeIsExactlyFiveMegaBytes_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's image size is exactly 5 MBs")
+    void isValid_whenArgumentImageSizeIsExactlyFiveMegaBytes_returnsTrue() {
         final HasImage argument = HasImageTestBuilder.builder()
                 .image(new byte[5 * 1024 * 1024])
                 .build();
@@ -44,8 +44,8 @@ class FiveMegaBytesImageValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should return true when image size is 0 Bytes")
-    void isValid_whenImageSizeIsZeroBytes_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's image size is 0 Bytes")
+    void isValid_whenArgumentImageSizeIsZeroBytes_returnsTrue() {
         final HasImage argument = HasImageTestBuilder.builder()
                 .image(new byte[0])
                 .build();
@@ -54,8 +54,8 @@ class FiveMegaBytesImageValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if image in HasImage is null")
-    void isValid_whenImageIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's image is null")
+    void isValid_whenArgumentImageIsNull_throwsNullPointerException() {
         final HasImage argument = HasImageTestBuilder.builder()
                 .image(null)
                 .build();
@@ -63,8 +63,8 @@ class FiveMegaBytesImageValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if HasImage is null")
-    void isValid_whenHasImageIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
+    void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
 }
