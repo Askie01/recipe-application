@@ -29,8 +29,8 @@ class NonBlankStringNameValidatorIntegrationTest {
     private final StringNameValidator validator;
 
     @Test
-    @DisplayName("isValid method should return true when name is non-blank")
-    void isValid_whenNameIsNonBlank_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's name is non-blank")
+    void isValid_whenArgumentNameIsNonBlank_returnsTrue() {
         final HasStringName argument = HasStringNameTestBuilder.builder()
                 .name("name")
                 .build();
@@ -38,9 +38,9 @@ class NonBlankStringNameValidatorIntegrationTest {
         assertTrue(result);
     }
 
-    @ParameterizedTest(name = "isValid method should return false when name is blank")
+    @ParameterizedTest(name = "isValid method should return false when argument's name is blank")
     @ValueSource(strings = {"", "   "})
-    void isValid_whenNameIsBlank_returnsFalse(String name) {
+    void isValid_whenArgumentNameIsBlank_returnsFalse(String name) {
         final HasStringName argument = HasStringNameTestBuilder.builder()
                 .name(name)
                 .build();
@@ -49,8 +49,8 @@ class NonBlankStringNameValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if name in HasStringName is null")
-    void isValid_whenNameIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's name is null")
+    void isValid_whenArgumentNameIsNull_throwsNullPointerException() {
         final HasStringName argument = HasStringNameTestBuilder.builder()
                 .name(null)
                 .build();
@@ -58,7 +58,7 @@ class NonBlankStringNameValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if HasStringName is null")
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
     void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
