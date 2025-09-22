@@ -11,8 +11,8 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("PositiveServingsValidator unit tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
+@DisplayName("PositiveServingsValidator unit tests")
 class PositiveServingsValidatorUnitTest {
 
     private ServingsValidator validator;
