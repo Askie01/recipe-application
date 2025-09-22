@@ -17,11 +17,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        PositiveServingsValidatorConfiguration.class
-})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@ContextConfiguration(classes = PositiveServingsValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.servings-type=positive-servings")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveServingsValidator integration tests")
 class PositiveServingsValidatorIntegrationTest {
