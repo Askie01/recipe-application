@@ -19,8 +19,7 @@ spring:
       dialect: mysql
 
 component:
-  auditor:
-    type: service
+  auditor-type: recipe-service-string-auditor
   validator:
     id-type: positive-long-id
     image-type: five-mega-bytes-image
