@@ -13,12 +13,16 @@ public class ValidatedLongVersionMapper implements LongVersionMapper {
     public void map(HasLongVersion source, HasLongVersion target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final Long sourceVersion = source.getVersion();
-            target.setVersion(sourceVersion);
+            mapVersion(source, target);
         }
     }
 
     private boolean isValid(HasLongVersion hasLongVersion) {
         return longVersionValidator.isValid(hasLongVersion);
+    }
+
+    private void mapVersion(HasLongVersion source, HasLongVersion target) {
+        final Long sourceVersion = source.getVersion();
+        target.setVersion(sourceVersion);
     }
 }
