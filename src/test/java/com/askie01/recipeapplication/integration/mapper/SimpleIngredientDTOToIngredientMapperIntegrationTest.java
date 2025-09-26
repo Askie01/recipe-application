@@ -65,11 +65,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SimpleIngredientDTOToIngredientMapperIntegrationTest {
 
     private final IngredientDTOToIngredientMapper mapper;
-    private final IngredientIngredientDTOTestComparator ingredientIngredientDTOComparator;
+    private final IngredientIngredientDTOTestComparator ingredientComparator;
     private final LongIdTestComparator idComparator;
     private final StringNameTestComparator nameComparator;
     private final AmountTestComparator amountComparator;
-    private final MeasureUnitMeasureUnitDTOTestComparator measureUnitMeasureUnitDTOComparator;
+    private final MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
     private final LongVersionTestComparator versionComparator;
     private final IngredientDTOTestFactory ingredientDTOFactory;
     private final IngredientTestFactory ingredientFactory;
@@ -110,10 +110,10 @@ class SimpleIngredientDTOToIngredientMapperIntegrationTest {
     @Test
     @DisplayName("map method should map source measureUnitDTO to target measureUnit when source is present")
     void map_whenSourceIsPresent_mapsSourceMeasureUnitDTOToTargetMeasureUnit() {
+        mapper.map(source, target);
         final MeasureUnitDTO measureUnitDTO = source.getMeasureUnitDTO();
         final MeasureUnit measureUnit = target.getMeasureUnit();
-        mapper.map(source, target);
-        final boolean equalMeasureUnit = measureUnitMeasureUnitDTOComparator.compare(measureUnit, measureUnitDTO);
+        final boolean equalMeasureUnit = measureUnitComparator.compare(measureUnit, measureUnitDTO);
         assertTrue(equalMeasureUnit);
     }
 
@@ -129,7 +129,7 @@ class SimpleIngredientDTOToIngredientMapperIntegrationTest {
     @DisplayName("map method should map all common fields from source to target when source is present")
     void map_whenSourceIsPresent_mapsAllCommonFieldsFromSourceToTarget() {
         mapper.map(source, target);
-        final boolean equalIngredients = ingredientIngredientDTOComparator.compare(target, source);
+        final boolean equalIngredients = ingredientComparator.compare(target, source);
         assertTrue(equalIngredients);
     }
 
@@ -172,10 +172,10 @@ class SimpleIngredientDTOToIngredientMapperIntegrationTest {
     @Test
     @DisplayName("mapToEntity method should map source measureUnitDTO to new ingredientMeasureUnit and return it")
     void mapToEntity_whenSourceIsPresent_mapsSourceMeasureUnitDTOToNewIngredientMeasureUnitAndReturnIt() {
-        final MeasureUnit measureUnit = mapper.mapToEntity(source).getMeasureUnit();
         final MeasureUnitDTO measureUnitDTO = source.getMeasureUnitDTO();
-        final boolean equalMeasureUnit = measureUnitMeasureUnitDTOComparator.compare(measureUnit, measureUnitDTO);
-        assertTrue(equalMeasureUnit);
+        final MeasureUnit measureUnit = mapper.mapToEntity(source).getMeasureUnit();
+        final boolean equalMeasureUnits = measureUnitComparator.compare(measureUnit, measureUnitDTO);
+        assertTrue(equalMeasureUnits);
     }
 
     @Test
@@ -190,7 +190,7 @@ class SimpleIngredientDTOToIngredientMapperIntegrationTest {
     @DisplayName("mapToEntity method should map all common fields from source to new ingredient and return it")
     void mapToEntity_whenSourceIsPresent_mapsAllCommonFieldsFromSourceToNewIngredientAndReturnIt() {
         final Ingredient ingredient = mapper.mapToEntity(source);
-        final boolean equalIngredients = ingredientIngredientDTOComparator.compare(ingredient, source);
+        final boolean equalIngredients = ingredientComparator.compare(ingredient, source);
         assertTrue(equalIngredients);
     }
 
