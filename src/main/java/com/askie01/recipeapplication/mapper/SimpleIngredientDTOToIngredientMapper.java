@@ -17,8 +17,9 @@ public class SimpleIngredientDTOToIngredientMapper implements IngredientDTOToIng
 
     @Override
     public Ingredient mapToEntity(IngredientDTO ingredientDTO) {
+        final MeasureUnit measureUnit = new MeasureUnit();
         final Ingredient ingredient = Ingredient.builder()
-                .measureUnit(new MeasureUnit())
+                .measureUnit(measureUnit)
                 .build();
         map(ingredientDTO, ingredient);
         return ingredient;
