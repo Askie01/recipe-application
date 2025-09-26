@@ -11,14 +11,18 @@ public class ValidatedStringNameMapper implements StringNameMapper {
 
     @Override
     public void map(HasStringName source, HasStringName target) {
-        final boolean isValid = isValid(source);
-        if (isValid) {
-            final String sourceName = source.getName();
-            target.setName(sourceName);
+        final boolean sourceIsValid = isValid(source);
+        if (sourceIsValid) {
+            mapName(source, target);
         }
     }
 
     private boolean isValid(HasStringName hasStringName) {
         return stringNameValidator.isValid(hasStringName);
+    }
+
+    private void mapName(HasStringName source, HasStringName target) {
+        final String sourceName = source.getName();
+        target.setName(sourceName);
     }
 }
