@@ -13,12 +13,16 @@ public class ValidatedLongIdMapper implements LongIdMapper {
     public void map(HasLongId source, HasLongId target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final Long sourceId = source.getId();
-            target.setId(sourceId);
+            mapId(source, target);
         }
     }
 
     private boolean isValid(HasLongId hasLongId) {
         return longIdValidator.isValid(hasLongId);
+    }
+
+    private void mapId(HasLongId source, HasLongId target) {
+        final Long sourceId = source.getId();
+        target.setId(sourceId);
     }
 }
