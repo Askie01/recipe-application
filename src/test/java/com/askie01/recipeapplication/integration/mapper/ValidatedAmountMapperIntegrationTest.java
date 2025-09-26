@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
+import com.askie01.recipeapplication.comparator.AmountTestComparator;
+import com.askie01.recipeapplication.configuration.AmountValueTestComparatorTestConfiguration;
 import com.askie01.recipeapplication.configuration.PositiveAmountValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedAmountMapperConfiguration;
 import com.askie01.recipeapplication.mapper.AmountMapper;
@@ -16,19 +18,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         ValidatedAmountMapperConfiguration.class,
-        PositiveAmountValidatorConfiguration.class
+        PositiveAmountValidatorConfiguration.class,
+        AmountValueTestComparatorTestConfiguration.class
 })
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
         "component.mapper.amount-type=validated-amount",
         "component.validator.amount-type=positive-amount"
 })
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedAmountMapper integration tests")
 class ValidatedAmountMapperIntegrationTest {
@@ -36,6 +38,8 @@ class ValidatedAmountMapperIntegrationTest {
     private final AmountMapper mapper;
     private HasAmount source;
     private HasAmount target;
+
+    private final AmountTestComparator amountComparator;
 
     @BeforeEach
     void setUp() {
@@ -51,19 +55,16 @@ class ValidatedAmountMapperIntegrationTest {
     @DisplayName("map method should map source amount to target amount when source is valid")
     void map_whenSourceAmountIsValid_mapsSourceAmountToTargetAmount() {
         mapper.map(source, target);
-        final Double sourceAmount = source.getAmount();
-        final Double targetAmount = target.getAmount();
-        assertEquals(sourceAmount, targetAmount);
+        final boolean equalAmount = amountComparator.compare(source, target);
+        assertTrue(equalAmount);
     }
 
     @Test
     @DisplayName("map method should not map source amount to target amount when source is invalid")
     void map_whenSourceAmountIsInvalid_doesNotMapSourceAmountToTargetAmount() {
-        source.setAmount(-1.0);
-        final Double targetAmountBeforeMapping = target.getAmount();
         mapper.map(source, target);
-        final Double targetAmountAfterMapping = target.getAmount();
-        assertEquals(targetAmountBeforeMapping, targetAmountAfterMapping);
+        final boolean equalAmount = amountComparator.compare(source, target);
+        assertFalse(equalAmount);
     }
 
     @Test
