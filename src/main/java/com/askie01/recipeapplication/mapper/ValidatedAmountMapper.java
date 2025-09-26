@@ -13,12 +13,16 @@ public class ValidatedAmountMapper implements AmountMapper {
     public void map(HasAmount source, HasAmount target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final Double sourceAmount = source.getAmount();
-            target.setAmount(sourceAmount);
+            mapAmount(source, target);
         }
     }
 
     private boolean isValid(HasAmount hasAmount) {
         return amountValidator.isValid(hasAmount);
+    }
+
+    private void mapAmount(HasAmount source, HasAmount target) {
+        final Double sourceAmount = source.getAmount();
+        target.setAmount(sourceAmount);
     }
 }
