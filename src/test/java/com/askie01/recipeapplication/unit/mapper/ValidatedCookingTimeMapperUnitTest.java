@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
+import com.askie01.recipeapplication.comparator.CookingTimeTestComparator;
+import com.askie01.recipeapplication.comparator.CookingTimeValueTestComparator;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
 import com.askie01.recipeapplication.mapper.ValidatedCookingTimeMapper;
 import com.askie01.recipeapplication.model.value.HasCookingTime;
@@ -13,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +29,8 @@ class ValidatedCookingTimeMapperUnitTest {
     private HasCookingTime source;
     private HasCookingTime target;
 
+    private CookingTimeTestComparator cookingTimeComparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedCookingTimeMapper(validator);
@@ -37,6 +40,7 @@ class ValidatedCookingTimeMapperUnitTest {
         this.target = HasCookingTimeTestBuilder.builder()
                 .cookingTime(20)
                 .build();
+        this.cookingTimeComparator = new CookingTimeValueTestComparator();
     }
 
     @Test
@@ -44,19 +48,17 @@ class ValidatedCookingTimeMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceCookingTimeToTargetCookingTime() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final Integer sourceCookingTime = source.getCookingTime();
-        final Integer targetCookingTime = target.getCookingTime();
-        assertEquals(sourceCookingTime, targetCookingTime);
+        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        assertTrue(equalCookingTime);
     }
 
     @Test
     @DisplayName("map method should not map source cooking time to target cooking time when source is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceCookingTimeToTargetCookingTime() {
         when(validator.isValid(source)).thenReturn(false);
-        final Integer targetCookingTimeBeforeMapping = target.getCookingTime();
         mapper.map(source, target);
-        final Integer targetCookingTimeAfterMapping = target.getCookingTime();
-        assertEquals(targetCookingTimeBeforeMapping, targetCookingTimeAfterMapping);
+        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        assertFalse(equalCookingTime);
     }
 
     @Test
