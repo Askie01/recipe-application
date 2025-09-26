@@ -10,6 +10,7 @@ public class PositiveLongVersionValidator implements LongVersionValidator {
     }
 
     private boolean hasPositiveVersion(HasLongVersion hasLongVersion) {
-        return hasLongVersion.getVersion() > 0;
+        final Long version = hasLongVersion.getVersion();
+        return version > 0;
     }
 }

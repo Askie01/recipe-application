@@ -1,7 +1,9 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasImageTestBuilder;
+import com.askie01.recipeapplication.comparator.ImageTestComparator;
 import com.askie01.recipeapplication.configuration.FiveMegaBytesImageValidatorConfiguration;
+import com.askie01.recipeapplication.configuration.ImageValueTestComparatorTestConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedImageMapperConfiguration;
 import com.askie01.recipeapplication.mapper.ImageMapper;
 import com.askie01.recipeapplication.model.value.HasImage;
@@ -16,19 +18,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         ValidatedImageMapperConfiguration.class,
-        FiveMegaBytesImageValidatorConfiguration.class
+        FiveMegaBytesImageValidatorConfiguration.class,
+        ImageValueTestComparatorTestConfiguration.class
 })
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
         "component.mapper.image-type=validated-image",
-        "component.validator.image-type=five-mega-bytes"
+        "component.validator.image-type=five-mega-bytes-image"
 })
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedImageMapper integration tests")
 class ValidatedImageMapperIntegrationTest {
@@ -36,6 +38,8 @@ class ValidatedImageMapperIntegrationTest {
     private final ImageMapper mapper;
     private HasImage source;
     private HasImage target;
+
+    private final ImageTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -51,19 +55,17 @@ class ValidatedImageMapperIntegrationTest {
     @DisplayName("map method should map source image to target image when source image is valid")
     void map_whenSourceIsValid_mapsSourceImageToTargetImage() {
         mapper.map(source, target);
-        final byte[] sourceImage = source.getImage();
-        final byte[] targetImage = target.getImage();
-        assertArrayEquals(sourceImage, targetImage);
+        final boolean equalImage = comparator.compare(source, target);
+        assertTrue(equalImage);
     }
 
     @Test
     @DisplayName("map method should not map source image to target image when source is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceImageToTargetImage() {
-        final byte[] targetImageBeforeMapping = target.getImage();
         source.setImage(new byte[6 * 1024 * 1024]);
         mapper.map(source, target);
-        final byte[] targetImageAfterMapping = target.getImage();
-        assertArrayEquals(targetImageBeforeMapping, targetImageAfterMapping);
+        final boolean equalImage = comparator.compare(source, target);
+        assertFalse(equalImage);
     }
 
     @Test

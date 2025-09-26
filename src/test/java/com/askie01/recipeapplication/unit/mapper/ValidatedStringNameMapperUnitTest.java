@@ -1,11 +1,12 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasStringNameTestBuilder;
+import com.askie01.recipeapplication.comparator.StringNameTestComparator;
+import com.askie01.recipeapplication.comparator.StringNameValueTestComparator;
 import com.askie01.recipeapplication.mapper.StringNameMapper;
 import com.askie01.recipeapplication.mapper.ValidatedStringNameMapper;
 import com.askie01.recipeapplication.model.value.HasStringName;
 import com.askie01.recipeapplication.validator.StringNameValidator;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,17 +29,18 @@ class ValidatedStringNameMapperUnitTest {
     private HasStringName source;
     private HasStringName target;
 
+    private StringNameTestComparator comparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedStringNameMapper(validator);
-
-        final Faker faker = new Faker();
         this.source = HasStringNameTestBuilder.builder()
-                .name(faker.funnyName().name())
+                .name("Source name")
                 .build();
         this.target = HasStringNameTestBuilder.builder()
-                .name(faker.funnyName().name())
+                .name("Target name")
                 .build();
+        this.comparator = new StringNameValueTestComparator();
     }
 
     @Test
@@ -47,19 +48,17 @@ class ValidatedStringNameMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceNameToTargetName() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final String sourceName = source.getName();
-        final String targetName = target.getName();
-        assertEquals(sourceName, targetName);
+        final boolean equalNames = comparator.compare(source, target);
+        assertTrue(equalNames);
     }
 
     @Test
     @DisplayName("map method should not map source name to target name when source name is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceNameToTargetName() {
         when(validator.isValid(source)).thenReturn(false);
-        final String targetNameBeforeMapping = target.getName();
         mapper.map(source, target);
-        final String targetNameAfterMapping = target.getName();
-        assertEquals(targetNameBeforeMapping, targetNameAfterMapping);
+        final boolean equalNames = comparator.compare(source, target);
+        assertFalse(equalNames);
     }
 
     @Test

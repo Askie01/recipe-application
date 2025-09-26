@@ -19,11 +19,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        NonBlankInstructionsValidatorConfiguration.class
-})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@ContextConfiguration(classes = NonBlankInstructionsValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.instructions-type=non-blank-instructions")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("NonBlankInstructionsValidator integration tests")
 class NonBlankInstructionsValidatorIntegrationTest {
@@ -31,8 +29,8 @@ class NonBlankInstructionsValidatorIntegrationTest {
     private final InstructionsValidator validator;
 
     @Test
-    @DisplayName("isValid method should return true when source instructions is non-blank")
-    void isValid_whenSourceInstructionsIsNonBlank_returnsTrue() {
+    @DisplayName("isValid method should return true when argument's instructions are non-blank")
+    void isValid_whenArgumentInstructionsAreNonBlank_returnsTrue() {
         final HasInstructions argument = HasInstructionsTestBuilder.builder()
                 .instructions("instructions")
                 .build();
@@ -40,9 +38,9 @@ class NonBlankInstructionsValidatorIntegrationTest {
         assertTrue(result);
     }
 
-    @ParameterizedTest(name = "isValid method should return false when source instructions is blank")
+    @ParameterizedTest(name = "isValid method should return false when argument's instructions are blank")
     @ValueSource(strings = {"", "   "})
-    void isValid_whenSourceInstructionsIsBlank_returnsFalse(String instructions) {
+    void isValid_whenArgumentInstructionsAreBlank_returnsFalse(String instructions) {
         final HasInstructions argument = HasInstructionsTestBuilder.builder()
                 .instructions(instructions)
                 .build();
@@ -51,8 +49,8 @@ class NonBlankInstructionsValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source instructions is null")
-    void isValid_whenSourceHasNullInstructions_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument's instructions are null")
+    void isValid_whenArgumentInstructionsAreNull_throwsNullPointerException() {
         final HasInstructions argument = HasInstructionsTestBuilder.builder()
                 .instructions(null)
                 .build();
@@ -60,8 +58,8 @@ class NonBlankInstructionsValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if source is null")
-    void isValid_whenSourceIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should throw NullPointerException if argument is null")
+    void isValid_whenArgumentIsNull_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> validator.isValid(null));
     }
 }

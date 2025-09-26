@@ -14,6 +14,7 @@ public class NonBlankStringNameValidator implements StringNameValidator {
     }
 
     private boolean hasBlankName(HasStringName hasStringName) {
-        return hasStringName.getName().isBlank();
+        final String name = hasStringName.getName();
+        return name.isBlank();
     }
 }

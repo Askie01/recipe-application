@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasInstructionsTestBuilder;
+import com.askie01.recipeapplication.comparator.InstructionsTestComparator;
+import com.askie01.recipeapplication.configuration.InstructionsValueTestComparatorTestConfiguration;
 import com.askie01.recipeapplication.configuration.NonBlankInstructionsValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedInstructionsMapperConfiguration;
 import com.askie01.recipeapplication.mapper.InstructionsMapper;
@@ -17,19 +19,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         ValidatedInstructionsMapperConfiguration.class,
-        NonBlankInstructionsValidatorConfiguration.class
+        NonBlankInstructionsValidatorConfiguration.class,
+        InstructionsValueTestComparatorTestConfiguration.class
 })
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
         "component.mapper.instructions-type=validated-instructions",
         "component.validator.instructions-type=non-blank-instructions"
 })
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedInstructionsMapper integration tests")
 class ValidatedInstructionsMapperIntegrationTest {
@@ -37,6 +39,8 @@ class ValidatedInstructionsMapperIntegrationTest {
     private final InstructionsMapper mapper;
     private HasInstructions source;
     private HasInstructions target;
+
+    private final InstructionsTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -55,19 +59,17 @@ class ValidatedInstructionsMapperIntegrationTest {
     @DisplayName("map method should map source instructions to target instructions when source is valid")
     void map_whenSourceInstructionsIsValid_mapsSourceInstructionsToTargetInstructions() {
         mapper.map(source, target);
-        final String sourceInstructions = source.getInstructions();
-        final String targetInstructions = target.getInstructions();
-        assertEquals(sourceInstructions, targetInstructions);
+        final boolean equalInstructions = comparator.compare(source, target);
+        assertTrue(equalInstructions);
     }
 
     @Test
     @DisplayName("map method should not map source instructions to target instructions when source is invalid")
     void map_whenSourceInstructionsIsInvalid_doesNotMapSourceInstructionsToTargetInstructions() {
         source.setInstructions("");
-        final String targetInstructionsBeforeMapping = target.getInstructions();
         mapper.map(source, target);
-        final String targetInstructionsAfterMapping = target.getInstructions();
-        assertEquals(targetInstructionsBeforeMapping, targetInstructionsAfterMapping);
+        final boolean equalInstructions = comparator.compare(source, target);
+        assertFalse(equalInstructions);
     }
 
     @Test

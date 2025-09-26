@@ -10,6 +10,7 @@ public class PositiveCookingTimeValidator implements CookingTimeValidator {
     }
 
     private boolean hasPositiveCookingTime(HasCookingTime hasCookingTime) {
-        return hasCookingTime.getCookingTime() > 0;
+        final Integer cookingTime = hasCookingTime.getCookingTime();
+        return cookingTime > 0;
     }
 }

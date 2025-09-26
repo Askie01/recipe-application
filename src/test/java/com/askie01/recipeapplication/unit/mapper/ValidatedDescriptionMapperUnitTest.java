@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasDescriptionTestBuilder;
+import com.askie01.recipeapplication.comparator.DescriptionTestComparator;
+import com.askie01.recipeapplication.comparator.DescriptionValueTestComparator;
 import com.askie01.recipeapplication.mapper.DescriptionMapper;
 import com.askie01.recipeapplication.mapper.ValidatedDescriptionMapper;
 import com.askie01.recipeapplication.model.value.HasDescription;
@@ -13,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +29,8 @@ class ValidatedDescriptionMapperUnitTest {
     private HasDescription source;
     private HasDescription target;
 
+    private DescriptionTestComparator descriptionComparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedDescriptionMapper(validator);
@@ -37,6 +40,7 @@ class ValidatedDescriptionMapperUnitTest {
         this.target = HasDescriptionTestBuilder.builder()
                 .description("target description")
                 .build();
+        this.descriptionComparator = new DescriptionValueTestComparator();
     }
 
     @Test
@@ -44,19 +48,17 @@ class ValidatedDescriptionMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceDescriptionToTargetDescription() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final String sourceDescription = source.getDescription();
-        final String targetDescription = target.getDescription();
-        assertEquals(sourceDescription, targetDescription);
+        final boolean equalDescription = descriptionComparator.compare(source, target);
+        assertTrue(equalDescription);
     }
 
     @Test
     @DisplayName("map method should not map source description to target description when source is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceDescriptionToTargetDescription() {
         when(validator.isValid(source)).thenReturn(false);
-        final String targetDescriptionBeforeMapping = target.getDescription();
         mapper.map(source, target);
-        final String targetDescriptionAfterMapping = target.getDescription();
-        assertEquals(targetDescriptionBeforeMapping, targetDescriptionAfterMapping);
+        final boolean equalDescription = descriptionComparator.compare(source, target);
+        assertFalse(equalDescription);
     }
 
     @Test

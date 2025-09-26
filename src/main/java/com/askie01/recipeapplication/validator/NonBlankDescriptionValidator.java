@@ -15,6 +15,7 @@ public class NonBlankDescriptionValidator implements DescriptionValidator {
 
 
     private boolean hasBlankDescription(HasDescription hasDescription) {
-        return hasDescription.getDescription().isBlank();
+        final String description = hasDescription.getDescription();
+        return description.isBlank();
     }
 }

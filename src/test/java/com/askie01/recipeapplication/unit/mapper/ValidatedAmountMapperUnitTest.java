@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
+import com.askie01.recipeapplication.comparator.AmountTestComparator;
+import com.askie01.recipeapplication.comparator.AmountValueTestComparator;
 import com.askie01.recipeapplication.mapper.AmountMapper;
 import com.askie01.recipeapplication.mapper.ValidatedAmountMapper;
 import com.askie01.recipeapplication.model.value.HasAmount;
@@ -13,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +29,8 @@ class ValidatedAmountMapperUnitTest {
     private HasAmount source;
     private HasAmount target;
 
+    private AmountTestComparator amountComparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedAmountMapper(validator);
@@ -37,6 +40,7 @@ class ValidatedAmountMapperUnitTest {
         this.target = HasAmountTestBuilder.builder()
                 .amount(2.0)
                 .build();
+        this.amountComparator = new AmountValueTestComparator();
     }
 
     @Test
@@ -44,19 +48,17 @@ class ValidatedAmountMapperUnitTest {
     void map_whenSourceAmountIsValid_mapsSourceAmountToTargetAmount() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final Double sourceAmount = source.getAmount();
-        final Double targetAmount = target.getAmount();
-        assertEquals(sourceAmount, targetAmount);
+        final boolean equalAmount = amountComparator.compare(source, target);
+        assertTrue(equalAmount);
     }
 
     @Test
     @DisplayName("map method should not map source amount to target amount when source is invalid")
     void map_whenSourceAmountIsInvalid_doesNotMapSourceAmountToTargetAmount() {
         when(validator.isValid(source)).thenReturn(false);
-        final Double targetAmountBeforeMapping = target.getAmount();
         mapper.map(source, target);
-        final Double targetAmountAfterMapping = target.getAmount();
-        assertEquals(targetAmountBeforeMapping, targetAmountAfterMapping);
+        final boolean equalAmount = amountComparator.compare(source, target);
+        assertFalse(equalAmount);
     }
 
     @Test

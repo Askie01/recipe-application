@@ -14,6 +14,7 @@ public class NonBlankInstructionsValidator implements InstructionsValidator {
     }
 
     private boolean hasBlankInstructions(HasInstructions hasInstructions) {
-        return hasInstructions.getInstructions().isBlank();
+        final String instructions = hasInstructions.getInstructions();
+        return instructions.isBlank();
     }
 }

@@ -10,6 +10,7 @@ public class PositiveLongIdValidator implements LongIdValidator {
     }
 
     private boolean hasPositiveId(HasLongId hasLongId) {
-        return hasLongId.getId() > 0;
+        final Long id = hasLongId.getId();
+        return id > 0;
     }
 }

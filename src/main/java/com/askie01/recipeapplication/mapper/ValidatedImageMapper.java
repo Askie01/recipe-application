@@ -13,12 +13,16 @@ public class ValidatedImageMapper implements ImageMapper {
     public void map(HasImage source, HasImage target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final byte[] sourceImage = source.getImage();
-            target.setImage(sourceImage);
+            mapImage(source, target);
         }
     }
 
     private boolean isValid(HasImage hasImage) {
         return imageValidator.isValid(hasImage);
+    }
+
+    private void mapImage(HasImage source, HasImage target) {
+        final byte[] sourceImage = source.getImage();
+        target.setImage(sourceImage);
     }
 }

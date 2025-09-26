@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
+import com.askie01.recipeapplication.comparator.ServingsTestComparator;
+import com.askie01.recipeapplication.comparator.ServingsValueTestComparator;
 import com.askie01.recipeapplication.mapper.ServingsMapper;
 import com.askie01.recipeapplication.mapper.ValidatedServingsMapper;
 import com.askie01.recipeapplication.model.value.HasServings;
@@ -13,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +29,8 @@ class ValidatedServingsMapperUnitTest {
     private HasServings source;
     private HasServings target;
 
+    private ServingsTestComparator comparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedServingsMapper(validator);
@@ -37,6 +40,7 @@ class ValidatedServingsMapperUnitTest {
         this.target = HasServingsTestBuilder.builder()
                 .servings(5.0)
                 .build();
+        this.comparator = new ServingsValueTestComparator();
     }
 
     @Test
@@ -44,19 +48,17 @@ class ValidatedServingsMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceServingsToTargetServings() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final Double sourceServings = source.getServings();
-        final Double targetServings = target.getServings();
-        assertEquals(sourceServings, targetServings);
+        final boolean equalServings = comparator.compare(source, target);
+        assertTrue(equalServings);
     }
 
     @Test
     @DisplayName("map method should not map source servings to target servings when source is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceServingsToTargetServings() {
         when(validator.isValid(source)).thenReturn(false);
-        final Double targetServingsBeforeMapping = target.getServings();
         mapper.map(source, target);
-        final Double targetServingsAfterMapping = target.getServings();
-        assertEquals(targetServingsBeforeMapping, targetServingsAfterMapping);
+        final boolean equalServings = comparator.compare(source, target);
+        assertFalse(equalServings);
     }
 
     @Test

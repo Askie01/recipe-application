@@ -18,11 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        SimpleDifficultyDTOToDifficultyMapperConfiguration.class
-})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@ContextConfiguration(classes = SimpleDifficultyDTOToDifficultyMapperConfiguration.class)
 @TestPropertySource(properties = "component.mapper.difficultyDTO-to-difficulty-type=simple")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleDifficultyDTOToDifficultyMapper integration tests")
 class SimpleDifficultyDTOToDifficultyMapperIntegrationTest {

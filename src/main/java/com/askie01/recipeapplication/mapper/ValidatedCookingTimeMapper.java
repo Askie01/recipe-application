@@ -13,12 +13,16 @@ public class ValidatedCookingTimeMapper implements CookingTimeMapper {
     public void map(HasCookingTime source, HasCookingTime target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final Integer sourceCookingTime = source.getCookingTime();
-            target.setCookingTime(sourceCookingTime);
+            mapCookingTime(source, target);
         }
     }
 
     private boolean isValid(HasCookingTime hasCookingTime) {
         return cookingTimeValidator.isValid(hasCookingTime);
+    }
+
+    private void mapCookingTime(HasCookingTime source, HasCookingTime target) {
+        final Integer sourceCookingTime = source.getCookingTime();
+        target.setCookingTime(sourceCookingTime);
     }
 }

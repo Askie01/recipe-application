@@ -1,6 +1,9 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.comparator.CategoryCategoryDTOTestComparator;
+import com.askie01.recipeapplication.comparator.LongIdTestComparator;
+import com.askie01.recipeapplication.comparator.LongVersionTestComparator;
+import com.askie01.recipeapplication.comparator.StringNameTestComparator;
 import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.CategoryDTO;
 import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
@@ -18,7 +21,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
@@ -37,7 +41,6 @@ import static org.junit.jupiter.api.Assertions.*;
         StringNameValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class
 })
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
         "component.mapper.categoryDTO-to-category-type=simple",
         "component.mapper.id-type=validated-long-id",
@@ -47,12 +50,16 @@ import static org.junit.jupiter.api.Assertions.*;
         "component.mapper.version-type=validated-long-version",
         "component.validator.version-type=positive-long-version"
 })
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleCategoryDTOToCategoryMapper integration tests")
 class SimpleCategoryDTOToCategoryMapperIntegrationTest {
 
     private final CategoryDTOToCategoryMapper mapper;
-    private final CategoryCategoryDTOTestComparator comparator;
+    private final LongIdTestComparator idComparator;
+    private final StringNameTestComparator nameComparator;
+    private final LongVersionTestComparator versionComparator;
+    private final CategoryCategoryDTOTestComparator categoryComparator;
     private final CategoryDTOTestFactory categoryDTOFactory;
     private final CategoryTestFactory categoryFactory;
     private CategoryDTO source;
@@ -68,9 +75,8 @@ class SimpleCategoryDTOToCategoryMapperIntegrationTest {
     @DisplayName("map method should map source id to target id when source is present")
     void map_whenSourceIsPresent_mapsSourceIdToTargetId() {
         mapper.map(source, target);
-        final Long sourceId = source.getId();
-        final Long targetId = target.getId();
-        assertEquals(sourceId, targetId);
+        final boolean equalId = idComparator.compare(source, target);
+        assertTrue(equalId);
     }
 
 
@@ -78,26 +84,24 @@ class SimpleCategoryDTOToCategoryMapperIntegrationTest {
     @DisplayName("map method should map source name to target name when source is present")
     void map_whenSourceIsPresent_mapsSourceNameToTargetName() {
         mapper.map(source, target);
-        final String sourceName = source.getName();
-        final String targetName = target.getName();
-        assertEquals(sourceName, targetName);
+        final boolean equalName = nameComparator.compare(source, target);
+        assertTrue(equalName);
     }
 
     @Test
     @DisplayName("map method should map source version to target version when source is present")
     void map_whenSourceIsPresent_mapsSourceVersionToTargetVersion() {
         mapper.map(source, target);
-        final Long sourceVersion = source.getVersion();
-        final Long targetVersion = target.getVersion();
-        assertEquals(sourceVersion, targetVersion);
+        final boolean equalVersion = versionComparator.compare(source, target);
+        assertTrue(equalVersion);
     }
 
     @Test
-    @DisplayName("map method should map source id, name and version to target id, name and version when source is present")
-    void map_whenSourceIsPresent_mapsSourceIdNameVersionToTargetIdNameVersion() {
+    @DisplayName("map method should map all common field values from source to target if source is present")
+    void map_whenSourceIsPresent_mapsAllCommonFieldValuesFromSourceToTarget() {
         mapper.map(source, target);
-        final boolean sourceEqualsTarget = comparator.compare(target, source);
-        assertTrue(sourceEqualsTarget);
+        final boolean equalCategories = categoryComparator.compare(target, source);
+        assertTrue(equalCategories);
     }
 
     @Test
@@ -116,35 +120,33 @@ class SimpleCategoryDTOToCategoryMapperIntegrationTest {
     @DisplayName("mapToEntity method should map source id to new Category id and return it")
     void mapToEntity_whenSourceIsPresent_mapsSourceIdToNewCategoryIdAndReturnIt() {
         final Category category = mapper.mapToEntity(source);
-        final Long sourceId = source.getId();
-        final Long categoryId = category.getId();
-        assertEquals(sourceId, categoryId);
+        final boolean equalId = idComparator.compare(source, category);
+        assertTrue(equalId);
     }
 
     @Test
     @DisplayName("mapToEntity method should map source name to new Category name and return it")
     void mapToEntity_whenSourceIsPresent_mapsSourceNameToNewCategoryNameAndReturnIt() {
         final Category category = mapper.mapToEntity(source);
-        final String sourceName = source.getName();
-        final String categoryName = category.getName();
-        assertEquals(sourceName, categoryName);
+        final boolean equalName = nameComparator.compare(source, category);
+        assertTrue(equalName);
     }
 
     @Test
     @DisplayName("mapToEntity method should map source version to new Category version and return it")
     void mapToEntity_whenSourceIsPresent_mapsSourceVersionToNewCategoryVersionAndReturnIt() {
         final Category category = mapper.mapToEntity(source);
-        final Long sourceVersion = source.getVersion();
-        final Long categoryVersion = category.getVersion();
-        assertEquals(sourceVersion, categoryVersion);
+        final boolean equalVersion = versionComparator.compare(source, category);
+        assertTrue(equalVersion);
     }
 
+
     @Test
-    @DisplayName("mapToEntity method should map source id, name and version to new Category id, name and version object and return it")
-    void mapToEntity_whenSourceIsPresent_mapsSourceIdNameVersionToCategoryIdNameVersionAndReturnIt() {
+    @DisplayName("mapToEntity method should map all common field values from source to new Category object and return it if source is present")
+    void mapToEntity_whenSourceIsPresent_mapsAllCommonFieldValuesFromSourceToNewCategoryAndReturnIt() {
         final Category category = mapper.mapToEntity(source);
-        final boolean sourceEqualsCategory = comparator.compare(category, source);
-        assertTrue(sourceEqualsCategory);
+        final boolean equalCategories = categoryComparator.compare(category, source);
+        assertTrue(equalCategories);
     }
 
     @Test

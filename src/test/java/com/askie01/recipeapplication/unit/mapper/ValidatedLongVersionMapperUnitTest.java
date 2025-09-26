@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
+import com.askie01.recipeapplication.comparator.LongVersionTestComparator;
+import com.askie01.recipeapplication.comparator.LongVersionValueTestComparator;
 import com.askie01.recipeapplication.mapper.LongVersionMapper;
 import com.askie01.recipeapplication.mapper.ValidatedLongVersionMapper;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
@@ -13,8 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +29,8 @@ class ValidatedLongVersionMapperUnitTest {
     private HasLongVersion source;
     private HasLongVersion target;
 
+    private LongVersionTestComparator comparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedLongVersionMapper(validator);
@@ -37,6 +40,7 @@ class ValidatedLongVersionMapperUnitTest {
         this.target = HasLongVersionTestBuilder.builder()
                 .version(5L)
                 .build();
+        this.comparator = new LongVersionValueTestComparator();
     }
 
     @Test
@@ -44,19 +48,17 @@ class ValidatedLongVersionMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceVersionToTargetVersion() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final Long sourceVersion = source.getVersion();
-        final Long targetVersion = target.getVersion();
-        assertEquals(sourceVersion, targetVersion);
+        final boolean equalVersion = comparator.compare(source, target);
+        assertTrue(equalVersion);
     }
 
     @Test
     @DisplayName("map method should not map source version to target version when source is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceVersionToTargetVersion() {
         when(validator.isValid(source)).thenReturn(false);
-        final Long targetVersionBeforeMapping = target.getVersion();
         mapper.map(source, target);
-        final Long targetVersionAfterMapping = target.getVersion();
-        assertEquals(targetVersionBeforeMapping, targetVersionAfterMapping);
+        final boolean equalVersion = comparator.compare(source, target);
+        assertFalse(equalVersion);
     }
 
     @Test

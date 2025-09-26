@@ -14,20 +14,15 @@ spring:
     hibernate:
       ddl-auto: none
 
-  docker:
-    compose:
-      enabled: true
-
   data:
     jdbc:
       dialect: mysql
 
 component:
-  auditor:
-    type: service
+  auditor-type: recipe-service-string-auditor
   validator:
     id-type: positive-long-id
-    image-type: five-mega-bytes
+    image-type: five-mega-bytes-image
     name-type: non-blank-string
     servings-type: positive-servings
     cooking-time-type: positive-cooking-time

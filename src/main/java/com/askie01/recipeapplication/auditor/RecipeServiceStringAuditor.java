@@ -1,10 +1,8 @@
 package com.askie01.recipeapplication.auditor;
 
-import org.springframework.data.domain.AuditorAware;
-
 import java.util.Optional;
 
-public class ServiceAuditor implements AuditorAware<String> {
+public class RecipeServiceStringAuditor implements StringAuditor {
 
     @Override
     public Optional<String> getCurrentAuditor() {

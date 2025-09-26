@@ -1,5 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
+import com.askie01.recipeapplication.comparator.*;
 import com.askie01.recipeapplication.dto.CategoryDTO;
 import com.askie01.recipeapplication.factory.RandomCategoryDTOTestFactory;
 import com.askie01.recipeapplication.factory.RandomCategoryTestFactory;
@@ -14,8 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -25,23 +26,36 @@ import static org.mockito.Mockito.*;
 class SimpleCategoryDTOToCategoryMapperUnitTest {
 
     @Mock
-    private LongIdMapper longIdMapper;
+    private LongIdMapper idMapper;
 
     @Mock
-    private StringNameMapper stringNameMapper;
+    private StringNameMapper nameMapper;
 
     @Mock
-    private LongVersionMapper longVersionMapper;
+    private LongVersionMapper versionMapper;
     private CategoryDTOToCategoryMapper mapper;
     private CategoryDTO source;
     private Category target;
 
+    private CategoryCategoryDTOTestComparator categoryComparator;
+    private LongIdTestComparator idComparator;
+    private StringNameTestComparator nameComparator;
+    private LongVersionTestComparator versionComparator;
+
     @BeforeEach
     void setUp() {
-        this.mapper = new SimpleCategoryDTOToCategoryMapper(longIdMapper, stringNameMapper, longVersionMapper);
+        this.mapper = new SimpleCategoryDTOToCategoryMapper(idMapper, nameMapper, versionMapper);
         final Faker faker = new Faker();
         this.source = new RandomCategoryDTOTestFactory(faker).createCategoryDTO();
         this.target = new RandomCategoryTestFactory(faker).createCategory();
+
+        this.idComparator = new LongIdValueTestComparator();
+        this.nameComparator = new StringNameValueTestComparator();
+        this.versionComparator = new LongVersionValueTestComparator();
+        this.categoryComparator = new CategoryCategoryDTOValueTestComparator(
+                idComparator,
+                nameComparator,
+                versionComparator);
     }
 
     @Test
@@ -51,11 +65,10 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
             final Long sourceId = source.getId();
             target.setId(sourceId);
             return null;
-        }).when(longIdMapper).map(source, target);
+        }).when(idMapper).map(source, target);
         mapper.map(source, target);
-        final Long sourceId = source.getId();
-        final Long targetId = target.getId();
-        assertEquals(sourceId, targetId);
+        final boolean equalId = idComparator.compare(source, target);
+        assertTrue(equalId);
     }
 
 
@@ -66,11 +79,10 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
             final String sourceName = source.getName();
             target.setName(sourceName);
             return null;
-        }).when(stringNameMapper).map(source, target);
+        }).when(nameMapper).map(source, target);
         mapper.map(source, target);
-        final String sourceName = source.getName();
-        final String targetName = target.getName();
-        assertEquals(sourceName, targetName);
+        final boolean equalName = nameComparator.compare(source, target);
+        assertTrue(equalName);
     }
 
     @Test
@@ -80,49 +92,41 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
             final Long sourceVersion = source.getVersion();
             target.setVersion(sourceVersion);
             return null;
-        }).when(longVersionMapper).map(source, target);
+        }).when(versionMapper).map(source, target);
         mapper.map(source, target);
-        final Long sourceVersion = source.getVersion();
-        final Long targetVersion = target.getVersion();
-        assertEquals(sourceVersion, targetVersion);
+        final boolean equalVersion = versionComparator.compare(source, target);
+        assertTrue(equalVersion);
     }
 
     @Test
-    @DisplayName("map method should map source id, name and version to target id, name and version when source is present")
-    void map_whenSourceIsPresent_mapsSourceIdNameVersionToTargetIdNameVersion() {
+    @DisplayName("map method should map all common field values from source to target if source is present")
+    void map_whenSourceIsPresent_mapsAllCommonFieldValuesFromSourceToTarget() {
         doAnswer(invocation -> {
             final Long sourceId = source.getId();
             target.setId(sourceId);
             return null;
-        }).when(longIdMapper).map(source, target);
+        }).when(idMapper).map(source, target);
         doAnswer(invocation -> {
             final String sourceName = source.getName();
             target.setName(sourceName);
             return null;
-        }).when(stringNameMapper).map(source, target);
+        }).when(nameMapper).map(source, target);
         doAnswer(invocation -> {
             final Long sourceVersion = source.getVersion();
             target.setVersion(sourceVersion);
             return null;
-        }).when(longVersionMapper).map(source, target);
+        }).when(versionMapper).map(source, target);
 
         mapper.map(source, target);
-        final Long sourceId = source.getId();
-        final String sourceName = source.getName();
-        final Long sourceVersion = source.getVersion();
-        final Long targetId = target.getId();
-        final String targetName = target.getName();
-        final Long targetVersion = target.getVersion();
-        assertEquals(sourceId, targetId);
-        assertEquals(sourceName, targetName);
-        assertEquals(sourceVersion, targetVersion);
+        final boolean equalCategories = categoryComparator.compare(target, source);
+        assertTrue(equalCategories);
     }
 
     @Test
     @DisplayName("map method should throw NullPointerException when source is null")
     void map_whenSourceIsNull_throwsNullPointerException() {
         doThrow(NullPointerException.class)
-                .when(longIdMapper)
+                .when(idMapper)
                 .map(isNull(), any(Category.class));
         assertThrows(NullPointerException.class, () -> mapper.map(null, target));
     }
@@ -131,7 +135,7 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
     @DisplayName("map method should throw NullPointerException when target is null")
     void map_whenTargetIsNull_throwsNullPointerException() {
         doThrow(NullPointerException.class)
-                .when(longIdMapper)
+                .when(idMapper)
                 .map(any(CategoryDTO.class), isNull());
         assertThrows(NullPointerException.class, () -> mapper.map(source, null));
     }
@@ -145,11 +149,10 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
             final Long categoryDTOId = categoryDTO.getId();
             category.setId(categoryDTOId);
             return null;
-        }).when(longIdMapper).map(any(CategoryDTO.class), any(Category.class));
+        }).when(idMapper).map(any(CategoryDTO.class), any(Category.class));
         final Category category = mapper.mapToEntity(source);
-        final Long sourceId = source.getId();
-        final Long categoryId = category.getId();
-        assertEquals(sourceId, categoryId);
+        final boolean equalId = idComparator.compare(source, category);
+        assertTrue(equalId);
     }
 
     @Test
@@ -161,11 +164,10 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
             final String categoryDTOName = categoryDTO.getName();
             category.setName(categoryDTOName);
             return null;
-        }).when(stringNameMapper).map(any(CategoryDTO.class), any(Category.class));
+        }).when(nameMapper).map(any(CategoryDTO.class), any(Category.class));
         final Category category = mapper.mapToEntity(source);
-        final String sourceName = source.getName();
-        final String categoryName = category.getName();
-        assertEquals(sourceName, categoryName);
+        final boolean equalName = nameComparator.compare(source, category);
+        assertTrue(equalName);
     }
 
     @Test
@@ -177,55 +179,48 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
             final Long categoryDTOVersion = categoryDTO.getVersion();
             category.setVersion(categoryDTOVersion);
             return null;
-        }).when(longVersionMapper).map(any(CategoryDTO.class), any(Category.class));
+        }).when(versionMapper).map(any(CategoryDTO.class), any(Category.class));
         final Category category = mapper.mapToEntity(source);
-        final Long sourceVersion = source.getVersion();
-        final Long categoryVersion = category.getVersion();
-        assertEquals(sourceVersion, categoryVersion);
+        final boolean equalVersion = versionComparator.compare(source, category);
+        assertTrue(equalVersion);
     }
 
+
     @Test
-    @DisplayName("mapToEntity method should map source id, name and version to new Category id, name and version object and return it")
-    void mapToEntity_whenSourceIsPresent_mapsSourceIdNameVersionToCategoryIdNameVersionAndReturnIt() {
+    @DisplayName("mapToEntity method should map all common field values from source to new Category object and return it if source is present")
+    void mapToEntity_whenSourceIsPresent_mapsAllCommonFieldValuesFromSourceToNewCategoryAndReturnIt() {
         doAnswer(invocation -> {
             final CategoryDTO categoryDTO = invocation.getArgument(0);
             final Category category = invocation.getArgument(1);
             final Long categoryDTOId = categoryDTO.getId();
             category.setId(categoryDTOId);
             return null;
-        }).when(longIdMapper).map(any(CategoryDTO.class), any(Category.class));
+        }).when(idMapper).map(any(CategoryDTO.class), any(Category.class));
         doAnswer(invocation -> {
             final CategoryDTO categoryDTO = invocation.getArgument(0);
             final Category category = invocation.getArgument(1);
             final String categoryDTOName = categoryDTO.getName();
             category.setName(categoryDTOName);
             return null;
-        }).when(stringNameMapper).map(any(CategoryDTO.class), any(Category.class));
+        }).when(nameMapper).map(any(CategoryDTO.class), any(Category.class));
         doAnswer(invocation -> {
             final CategoryDTO categoryDTO = invocation.getArgument(0);
             final Category category = invocation.getArgument(1);
             final Long categoryDTOVersion = categoryDTO.getVersion();
             category.setVersion(categoryDTOVersion);
             return null;
-        }).when(longVersionMapper).map(any(CategoryDTO.class), any(Category.class));
+        }).when(versionMapper).map(any(CategoryDTO.class), any(Category.class));
 
         final Category category = mapper.mapToEntity(source);
-        final Long sourceId = source.getId();
-        final String sourceName = source.getName();
-        final Long sourceVersion = source.getVersion();
-        final Long categoryId = category.getId();
-        final String categoryName = category.getName();
-        final Long categoryVersion = category.getVersion();
-        assertEquals(sourceId, categoryId);
-        assertEquals(sourceName, categoryName);
-        assertEquals(sourceVersion, categoryVersion);
+        final boolean equalCategories = categoryComparator.compare(category, source);
+        assertTrue(equalCategories);
     }
 
     @Test
     @DisplayName("mapToEntity method should throw NullPointerException when source is null")
     void mapToEntity_whenSourceIsNull_throwsNullPointerException() {
         doThrow(NullPointerException.class)
-                .when(longIdMapper)
+                .when(idMapper)
                 .map(isNull(), any(Category.class));
         assertThrows(NullPointerException.class, () -> mapper.mapToEntity(null));
     }

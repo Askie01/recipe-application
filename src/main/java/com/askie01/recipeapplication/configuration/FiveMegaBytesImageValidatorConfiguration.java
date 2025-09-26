@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.image-type", havingValue = "five-mega-bytes")
+@ConditionalOnProperty(name = "component.validator.image-type", havingValue = "five-mega-bytes-image")
 public class FiveMegaBytesImageValidatorConfiguration {
 
     @Bean
