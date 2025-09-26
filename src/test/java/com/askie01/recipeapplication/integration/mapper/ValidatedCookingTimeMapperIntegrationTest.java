@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
+import com.askie01.recipeapplication.comparator.CookingTimeTestComparator;
+import com.askie01.recipeapplication.configuration.CookingTimeValueTestComparatorTestConfiguration;
 import com.askie01.recipeapplication.configuration.PositiveCookingTimeValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedCookingTimeMapperConfiguration;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
@@ -16,13 +18,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         ValidatedCookingTimeMapperConfiguration.class,
-        PositiveCookingTimeValidatorConfiguration.class
+        PositiveCookingTimeValidatorConfiguration.class,
+        CookingTimeValueTestComparatorTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
@@ -37,6 +39,7 @@ class ValidatedCookingTimeMapperIntegrationTest {
     private HasCookingTime source;
     private HasCookingTime target;
 
+    private final CookingTimeTestComparator cookingTimeComparator;
 
     @BeforeEach
     void setUp() {
@@ -52,19 +55,17 @@ class ValidatedCookingTimeMapperIntegrationTest {
     @DisplayName("map method should map source cooking time to target cooking time when source is valid")
     void map_whenSourceIsValid_mapsSourceCookingTimeToTargetCookingTime() {
         mapper.map(source, target);
-        final Integer sourceCookingTime = source.getCookingTime();
-        final Integer targetCookingTime = target.getCookingTime();
-        assertEquals(sourceCookingTime, targetCookingTime);
+        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        assertTrue(equalCookingTime);
     }
 
     @Test
     @DisplayName("map method should not map source cooking time to target cooking time when source is invalid")
     void map_whenSourceIsInvalid_doesNotMapSourceCookingTimeToTargetCookingTime() {
-        source.setCookingTime(-5);
-        final Integer targetCookingTimeBeforeMapping = target.getCookingTime();
+        source.setCookingTime(0);
         mapper.map(source, target);
-        final Integer targetCookingTimeAfterMapping = target.getCookingTime();
-        assertEquals(targetCookingTimeBeforeMapping, targetCookingTimeAfterMapping);
+        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        assertFalse(equalCookingTime);
     }
 
     @Test
