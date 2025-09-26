@@ -13,12 +13,16 @@ public class ValidatedServingsMapper implements ServingsMapper {
     public void map(HasServings source, HasServings target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final Double sourceServings = source.getServings();
-            target.setServings(sourceServings);
+            mapServings(source, target);
         }
     }
 
     private boolean isValid(HasServings hasServings) {
         return servingsValidator.isValid(hasServings);
+    }
+
+    private void mapServings(HasServings source, HasServings target) {
+        final Double sourceServings = source.getServings();
+        target.setServings(sourceServings);
     }
 }
