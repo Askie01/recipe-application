@@ -13,12 +13,16 @@ public class ValidatedInstructionsMapper implements InstructionsMapper {
     public void map(HasInstructions source, HasInstructions target) {
         final boolean sourceIsValid = isValid(source);
         if (sourceIsValid) {
-            final String sourceInstructions = source.getInstructions();
-            target.setInstructions(sourceInstructions);
+            mapInstructions(source, target);
         }
     }
 
     private boolean isValid(HasInstructions hasInstructions) {
         return instructionsValidator.isValid(hasInstructions);
+    }
+
+    private void mapInstructions(HasInstructions source, HasInstructions target) {
+        final String sourceInstructions = source.getInstructions();
+        target.setInstructions(sourceInstructions);
     }
 }
