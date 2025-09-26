@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasInstructionsTestBuilder;
+import com.askie01.recipeapplication.comparator.InstructionsTestComparator;
+import com.askie01.recipeapplication.comparator.InstructionsValueTestComparator;
 import com.askie01.recipeapplication.mapper.InstructionsMapper;
 import com.askie01.recipeapplication.mapper.ValidatedInstructionsMapper;
 import com.askie01.recipeapplication.model.value.HasInstructions;
@@ -14,8 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,6 +30,8 @@ class ValidatedInstructionsMapperUnitTest {
     private HasInstructions source;
     private HasInstructions target;
 
+    private InstructionsTestComparator comparator;
+
     @BeforeEach
     void setUp() {
         this.mapper = new ValidatedInstructionsMapper(validator);
@@ -41,6 +44,7 @@ class ValidatedInstructionsMapperUnitTest {
         this.target = HasInstructionsTestBuilder.builder()
                 .instructions(targetInstructions)
                 .build();
+        this.comparator = new InstructionsValueTestComparator();
     }
 
     @Test
@@ -48,19 +52,17 @@ class ValidatedInstructionsMapperUnitTest {
     void map_whenSourceInstructionsIsValid_mapsSourceInstructionsToTargetInstructions() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final String sourceInstructions = source.getInstructions();
-        final String targetInstructions = target.getInstructions();
-        assertEquals(sourceInstructions, targetInstructions);
+        final boolean equalInstructions = comparator.compare(source, target);
+        assertTrue(equalInstructions);
     }
 
     @Test
     @DisplayName("map method should not map source instructions to target instructions when source is invalid")
     void map_whenSourceInstructionsIsInvalid_doesNotMapSourceInstructionsToTargetInstructions() {
         when(validator.isValid(source)).thenReturn(false);
-        final String targetInstructionsBeforeMapping = target.getInstructions();
         mapper.map(source, target);
-        final String targetInstructionsAfterMapping = target.getInstructions();
-        assertEquals(targetInstructionsBeforeMapping, targetInstructionsAfterMapping);
+        final boolean equalInstructions = comparator.compare(source, target);
+        assertFalse(equalInstructions);
     }
 
     @Test
