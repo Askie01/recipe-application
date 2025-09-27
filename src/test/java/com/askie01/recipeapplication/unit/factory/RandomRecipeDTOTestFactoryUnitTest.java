@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
-@DisplayName("RandomRecipeDTOTestFactory unit tests")
+@DisplayName("RandomRecipeDTOTestFactory unit test")
 class RandomRecipeDTOTestFactoryUnitTest {
 
     @Mock
@@ -49,8 +49,6 @@ class RandomRecipeDTOTestFactoryUnitTest {
 
     @Mock
     private IngredientDTOTestFactory ingredientDTOTestFactory;
-
-    @Mock
     private RecipeDTOTestFactory recipeDTOTestFactory;
 
     @BeforeEach
