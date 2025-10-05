@@ -1,6 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.builder.TestHasLongIdBuilder;
+import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
+import com.askie01.recipeapplication.comparator.LongIdTestComparator;
+import com.askie01.recipeapplication.configuration.LongIdValueTestComparatorTestConfiguration;
 import com.askie01.recipeapplication.configuration.PositiveLongIdValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ValidatedLongIdMapperConfiguration;
 import com.askie01.recipeapplication.mapper.LongIdMapper;
@@ -16,19 +18,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class
+        PositiveLongIdValidatorConfiguration.class,
+        LongIdValueTestComparatorTestConfiguration.class
 })
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @TestPropertySource(properties = {
         "component.mapper.id-type=validated-long-id",
         "component.validator.id-type=positive-long-id"
 })
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedLongIdMapper integration tests")
 class ValidatedLongIdMapperIntegrationTest {
@@ -37,12 +39,14 @@ class ValidatedLongIdMapperIntegrationTest {
     private HasLongId source;
     private HasLongId target;
 
+    private final LongIdTestComparator comparator;
+
     @BeforeEach
     void setUp() {
-        this.source = TestHasLongIdBuilder.builder()
+        this.source = HasLongIdTestBuilder.builder()
                 .id(1L)
                 .build();
-        this.target = TestHasLongIdBuilder.builder()
+        this.target = HasLongIdTestBuilder.builder()
                 .id(2L)
                 .build();
     }
@@ -51,19 +55,17 @@ class ValidatedLongIdMapperIntegrationTest {
     @DisplayName("map method should map source id to target id when source id is valid")
     void map_whenSourceIdIsValid_mapsSourceIdToTargetId() {
         mapper.map(source, target);
-        final Long sourceId = source.getId();
-        final Long targetId = target.getId();
-        assertEquals(sourceId, targetId);
+        final boolean equalId = comparator.compare(source, target);
+        assertTrue(equalId);
     }
 
     @Test
     @DisplayName("map method should not map source id to target id when source id is invalid")
     void map_whenSourceIdIsInvalid_doesNotMapSourceIdToTargetId() {
-        final Long targetIdBeforeMapping = target.getId();
         source.setId(-1L);
         mapper.map(source, target);
-        final Long targetIdAfterMapping = target.getId();
-        assertEquals(targetIdBeforeMapping, targetIdAfterMapping);
+        final boolean equalId = comparator.compare(source, target);
+        assertFalse(equalId);
     }
 
     @Test
