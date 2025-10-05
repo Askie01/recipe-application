@@ -44,3 +44,4 @@ component:
     categoryDTO-to-category-type: simple
     measureUnitDTO-to-measureUnit-type: simple
     ingredientDTO-to-ingredient-type: simple
+    recipeDTO-to-recipe-type: simple
