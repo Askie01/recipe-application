@@ -39,7 +39,7 @@ component:
     servings-type: validated-servings
     cooking-time-type: validated-cooking-time
     instructions-type: validated-instructions
-    version-type: validated-long-version
+    version-type: simple-long-version
     amount-type: validated-amount
     description-type: validated-description
     difficultyDTO-to-difficulty-type: simple
