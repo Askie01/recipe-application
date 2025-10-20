@@ -78,7 +78,7 @@
       "name": "component.mapper.id-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'id' mapper type.",
-      "defaultValue": "validated-long-id"
+      "defaultValue": "simple-long-id"
     },
     {
       "name": "component.mapper.image-type",
