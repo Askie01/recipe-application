@@ -20,6 +20,7 @@ spring:
 
 component:
   auditor-type: recipe-service-string-auditor
+
   validator:
     id-type: positive-long-id
     image-type: five-mega-bytes-image
@@ -30,8 +31,9 @@ component:
     version-type: positive-long-version
     amount-type: positive-amount
     description-type: non-blank-description
+
   mapper:
-    id-type: validated-long-id
+    id-type: simple-long-id
     image-type: validated-image
     name-type: validated-string-name
     servings-type: validated-servings
