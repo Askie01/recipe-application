@@ -114,7 +114,7 @@
       "name": "component.mapper.version-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'version' mapper type.",
-      "defaultValue": "validated-long-version"
+      "defaultValue": "simple-long-version"
     },
     {
       "name": "component.mapper.amount-type",
