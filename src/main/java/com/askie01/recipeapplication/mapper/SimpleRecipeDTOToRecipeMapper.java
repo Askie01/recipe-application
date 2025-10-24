@@ -8,7 +8,9 @@ import com.askie01.recipeapplication.model.entity.Recipe;
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class SimpleRecipeDTOToRecipeMapper implements RecipeDTOToRecipeMapper {
@@ -72,14 +74,14 @@ public class SimpleRecipeDTOToRecipeMapper implements RecipeDTOToRecipeMapper {
     private void mapCategoryDTOsToCategories(RecipeDTO recipeDTO, Recipe recipe) {
         final List<Category> categories = recipeDTO.getCategoryDTOs().stream()
                 .map(categoryDTOToCategoryMapper::mapToEntity)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
         recipe.setCategories(categories);
     }
 
     private void mapIngredientDTOsToIngredients(RecipeDTO recipeDTO, Recipe recipe) {
         final List<Ingredient> ingredients = recipeDTO.getIngredientDTOs().stream()
                 .map(ingredientDTOToIngredientMapper::mapToEntity)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
         recipe.setIngredients(ingredients);
     }
 
