@@ -16,7 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -45,8 +45,8 @@ class RandomRecipeTestFactoryIntegrationTest {
         final String name = recipe.getName();
         final String description = recipe.getDescription();
         final Difficulty difficulty = recipe.getDifficulty();
-        final List<Category> categories = recipe.getCategories();
-        final List<Ingredient> ingredients = recipe.getIngredients();
+        final Set<Category> categories = recipe.getCategories();
+        final Set<Ingredient> ingredients = recipe.getIngredients();
         final Double servings = recipe.getServings();
         final Integer cookingTime = recipe.getCookingTime();
         final String instructions = recipe.getInstructions();

@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,16 +85,16 @@ class RecipeRecipeDTOValueTestComparatorIntegrationTest {
         final String recipeName = recipe.getName();
         final String recipeDescription = recipe.getDescription();
         final Difficulty difficulty = recipe.getDifficulty();
-        final List<Category> categories = recipe.getCategories();
-        final List<Ingredient> ingredients = recipe.getIngredients();
+        final Set<Category> categories = recipe.getCategories();
+        final Set<Ingredient> ingredients = recipe.getIngredients();
         final Double recipeServings = recipe.getServings();
         final Integer recipeCookingTime = recipe.getCookingTime();
         final String recipeInstructions = recipe.getInstructions();
         final Long recipeVersion = recipe.getVersion();
 
         final DifficultyDTO difficultyDTO = mapToDifficultyDTO(difficulty);
-        final List<CategoryDTO> categoryDTOs = mapToCategoryDTOs(categories);
-        final List<IngredientDTO> ingredientDTOs = mapToIngredientDTOs(ingredients);
+        final Set<CategoryDTO> categoryDTOs = mapToCategoryDTOs(categories);
+        final Set<IngredientDTO> ingredientDTOs = mapToIngredientDTOs(ingredients);
 
         recipeDTO.setId(recipeId);
         recipeDTO.setImage(recipeImage);
@@ -112,7 +114,7 @@ class RecipeRecipeDTOValueTestComparatorIntegrationTest {
         return DifficultyDTO.valueOf(difficultyName);
     }
 
-    private List<CategoryDTO> mapToCategoryDTOs(List<Category> categories) {
+    private Set<CategoryDTO> mapToCategoryDTOs(Set<Category> categories) {
         return categories.stream()
                 .map(category -> {
                     final Long categoryId = category.getId();
@@ -124,10 +126,11 @@ class RecipeRecipeDTOValueTestComparatorIntegrationTest {
                     categoryDTO.setName(categoryName);
                     categoryDTO.setVersion(categoryVersion);
                     return categoryDTO;
-                }).toList();
+                })
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
-    private List<IngredientDTO> mapToIngredientDTOs(List<Ingredient> ingredients) {
+    private Set<IngredientDTO> mapToIngredientDTOs(Set<Ingredient> ingredients) {
         return ingredients.stream()
                 .map(ingredient -> {
                     final Long ingredientId = ingredient.getId();
@@ -145,7 +148,7 @@ class RecipeRecipeDTOValueTestComparatorIntegrationTest {
                     ingredientDTO.setMeasureUnitDTO(measureUnitDTO);
                     return ingredientDTO;
                 })
-                .toList();
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
     private MeasureUnitDTO mapToMeasureUnitDTO(MeasureUnit measureUnit) {

@@ -264,16 +264,34 @@ class SimpleRecipeDTOToRecipeMapperUnitTest {
                 });
         recipeMapper.map(source, target);
         assertIterableEquals(
-                source.getCategoryDTOs().stream().map(CategoryDTO::getId).toList(),
-                target.getCategories().stream().map(Category::getId).toList()
+                source.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getId)
+                        .sorted()
+                        .toList(),
+                target.getCategories().stream()
+                        .map(Category::getId)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getCategoryDTOs().stream().map(CategoryDTO::getName).toList(),
-                target.getCategories().stream().map(Category::getName).toList()
+                source.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getName)
+                        .sorted()
+                        .toList(),
+                target.getCategories().stream()
+                        .map(Category::getName)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getCategoryDTOs().stream().map(CategoryDTO::getVersion).toList(),
-                target.getCategories().stream().map(Category::getVersion).toList()
+                source.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getVersion)
+                        .sorted()
+                        .toList(),
+                target.getCategories().stream()
+                        .map(Category::getVersion)
+                        .sorted()
+                        .toList()
         );
     }
 
@@ -308,32 +326,80 @@ class SimpleRecipeDTOToRecipeMapperUnitTest {
                 });
         recipeMapper.map(source, target);
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getId).toList(),
-                target.getIngredients().stream().map(Ingredient::getId).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getId)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getId)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getName).toList(),
-                target.getIngredients().stream().map(Ingredient::getName).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getName)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getName)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getAmount).toList(),
-                target.getIngredients().stream().map(Ingredient::getAmount).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getAmount)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getAmount)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getVersion).toList(),
-                target.getIngredients().stream().map(Ingredient::getVersion).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getVersion)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getVersion)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getMeasureUnitDTO).map(MeasureUnitDTO::getId).toList(),
-                target.getIngredients().stream().map(Ingredient::getMeasureUnit).map(MeasureUnit::getId).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getId)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getId)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getMeasureUnitDTO).map(MeasureUnitDTO::getName).toList(),
-                target.getIngredients().stream().map(Ingredient::getMeasureUnit).map(MeasureUnit::getName).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getName)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getName)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getMeasureUnitDTO).map(MeasureUnitDTO::getVersion).toList(),
-                target.getIngredients().stream().map(Ingredient::getMeasureUnit).map(MeasureUnit::getVersion).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getVersion)
+                        .sorted()
+                        .toList(),
+                target.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getVersion)
+                        .sorted()
+                        .toList()
         );
     }
 
@@ -658,16 +724,34 @@ class SimpleRecipeDTOToRecipeMapperUnitTest {
                 });
         final Recipe recipe = recipeMapper.mapToEntity(source);
         assertIterableEquals(
-                source.getCategoryDTOs().stream().map(CategoryDTO::getId).toList(),
-                recipe.getCategories().stream().map(Category::getId).toList()
+                source.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getId)
+                        .sorted()
+                        .toList(),
+                recipe.getCategories().stream()
+                        .map(Category::getId)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getCategoryDTOs().stream().map(CategoryDTO::getName).toList(),
-                recipe.getCategories().stream().map(Category::getName).toList()
+                source.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getName)
+                        .sorted()
+                        .toList(),
+                recipe.getCategories().stream()
+                        .map(Category::getName)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getCategoryDTOs().stream().map(CategoryDTO::getVersion).toList(),
-                recipe.getCategories().stream().map(Category::getVersion).toList()
+                source.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getVersion)
+                        .sorted()
+                        .toList(),
+                recipe.getCategories().stream()
+                        .map(Category::getVersion)
+                        .sorted()
+                        .toList()
         );
     }
 
@@ -702,32 +786,80 @@ class SimpleRecipeDTOToRecipeMapperUnitTest {
                 });
         final Recipe recipe = recipeMapper.mapToEntity(source);
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getId).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getId).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getId)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getId)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getName).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getName).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getName)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getName)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getAmount).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getAmount).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getAmount)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getAmount)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getMeasureUnitDTO).map(MeasureUnitDTO::getId).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getMeasureUnit).map(MeasureUnit::getId).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getId)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getId)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getMeasureUnitDTO).map(MeasureUnitDTO::getName).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getMeasureUnit).map(MeasureUnit::getName).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getName)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getName)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getMeasureUnitDTO).map(MeasureUnitDTO::getVersion).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getMeasureUnit).map(MeasureUnit::getVersion).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getVersion)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getVersion)
+                        .sorted()
+                        .toList()
         );
         assertIterableEquals(
-                source.getIngredientDTOs().stream().map(IngredientDTO::getVersion).toList(),
-                recipe.getIngredients().stream().map(Ingredient::getVersion).toList()
+                source.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getVersion)
+                        .sorted()
+                        .toList(),
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getVersion)
+                        .sorted()
+                        .toList()
         );
     }
 

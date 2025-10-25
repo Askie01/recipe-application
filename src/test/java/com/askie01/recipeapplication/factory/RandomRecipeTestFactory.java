@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class RandomRecipeTestFactory implements RecipeTestFactory {
@@ -27,8 +30,8 @@ public class RandomRecipeTestFactory implements RecipeTestFactory {
         final String randomName = getRandomString();
         final String randomDescription = getRandomString();
         final Difficulty randomDifficulty = getRandomDifficulty();
-        final List<Category> randomCategories = getRandomCategories();
-        final List<Ingredient> randomIngredients = getRandomIngredients();
+        final Set<Category> randomCategories = getRandomCategories();
+        final Set<Ingredient> randomIngredients = getRandomIngredients();
         final Double randomServings = getRandomDouble();
         final Integer randomCookingTime = getRandomInteger();
         final String randomInstructions = getRandomString();
@@ -72,24 +75,26 @@ public class RandomRecipeTestFactory implements RecipeTestFactory {
         return difficultyTestFactory.createDifficulty();
     }
 
-    private List<Category> getRandomCategories() {
-        return List.of(
-                categoryTestFactory.createCategory(),
-                categoryTestFactory.createCategory(),
-                categoryTestFactory.createCategory(),
-                categoryTestFactory.createCategory(),
-                categoryTestFactory.createCategory()
-        );
+    private Set<Category> getRandomCategories() {
+        return Stream.of(
+                        categoryTestFactory.createCategory(),
+                        categoryTestFactory.createCategory(),
+                        categoryTestFactory.createCategory(),
+                        categoryTestFactory.createCategory(),
+                        categoryTestFactory.createCategory()
+                )
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
-    private List<Ingredient> getRandomIngredients() {
-        return List.of(
-                ingredientTestFactory.createIngredient(),
-                ingredientTestFactory.createIngredient(),
-                ingredientTestFactory.createIngredient(),
-                ingredientTestFactory.createIngredient(),
-                ingredientTestFactory.createIngredient()
-        );
+    private Set<Ingredient> getRandomIngredients() {
+        return Stream.of(
+                        ingredientTestFactory.createIngredient(),
+                        ingredientTestFactory.createIngredient(),
+                        ingredientTestFactory.createIngredient(),
+                        ingredientTestFactory.createIngredient(),
+                        ingredientTestFactory.createIngredient()
+                )
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
     private Double getRandomDouble() {

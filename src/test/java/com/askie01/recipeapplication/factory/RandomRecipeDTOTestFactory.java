@@ -7,7 +7,10 @@ import com.askie01.recipeapplication.dto.RecipeDTO;
 import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class RandomRecipeDTOTestFactory implements RecipeDTOTestFactory {
@@ -24,8 +27,8 @@ public class RandomRecipeDTOTestFactory implements RecipeDTOTestFactory {
         final String randomName = getRandomString();
         final String randomDescription = getRandomString();
         final DifficultyDTO randomDifficultyDTO = getRandomDifficultyDTO();
-        final List<CategoryDTO> randomCategoryDTOs = getRandomCategoryDTOs();
-        final List<IngredientDTO> randomIngredientDTOs = getRandomIngredientDTOs();
+        final Set<CategoryDTO> randomCategoryDTOs = getRandomCategoryDTOs();
+        final Set<IngredientDTO> randomIngredientDTOs = getRandomIngredientDTOs();
         final Double randomServings = getRandomDouble();
         final Integer randomCookingTime = getRandomInteger();
         final String randomInstructions = getRandomString();
@@ -61,24 +64,26 @@ public class RandomRecipeDTOTestFactory implements RecipeDTOTestFactory {
         return difficultyDTOTestFactory.createDifficultyDTO();
     }
 
-    private List<CategoryDTO> getRandomCategoryDTOs() {
-        return List.of(
-                categoryDTOTestFactory.createCategoryDTO(),
-                categoryDTOTestFactory.createCategoryDTO(),
-                categoryDTOTestFactory.createCategoryDTO(),
-                categoryDTOTestFactory.createCategoryDTO(),
-                categoryDTOTestFactory.createCategoryDTO()
-        );
+    private Set<CategoryDTO> getRandomCategoryDTOs() {
+        return Stream.of(
+                        categoryDTOTestFactory.createCategoryDTO(),
+                        categoryDTOTestFactory.createCategoryDTO(),
+                        categoryDTOTestFactory.createCategoryDTO(),
+                        categoryDTOTestFactory.createCategoryDTO(),
+                        categoryDTOTestFactory.createCategoryDTO()
+                )
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
-    private List<IngredientDTO> getRandomIngredientDTOs() {
-        return List.of(
-                ingredientDTOTestFactory.createIngredientDTO(),
-                ingredientDTOTestFactory.createIngredientDTO(),
-                ingredientDTOTestFactory.createIngredientDTO(),
-                ingredientDTOTestFactory.createIngredientDTO(),
-                ingredientDTOTestFactory.createIngredientDTO()
-        );
+    private Set<IngredientDTO> getRandomIngredientDTOs() {
+        return Stream.of(
+                        ingredientDTOTestFactory.createIngredientDTO(),
+                        ingredientDTOTestFactory.createIngredientDTO(),
+                        ingredientDTOTestFactory.createIngredientDTO(),
+                        ingredientDTOTestFactory.createIngredientDTO(),
+                        ingredientDTOTestFactory.createIngredientDTO()
+                )
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
     private Double getRandomDouble() {

@@ -10,8 +10,11 @@ import com.askie01.recipeapplication.model.entity.Recipe;
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class RecipeRecipeDTOValueTestComparator implements RecipeRecipeDTOTestComparator {
@@ -77,8 +80,8 @@ public class RecipeRecipeDTOValueTestComparator implements RecipeRecipeDTOTestCo
     }
 
     private boolean haveEqualCategories(Recipe recipe, RecipeDTO recipeDTO) {
-        final List<Category> categories = recipe.getCategories();
-        final List<CategoryDTO> categoryDTOs = recipeDTO.getCategoryDTOs();
+        final Set<Category> categories = recipe.getCategories();
+        final Set<CategoryDTO> categoryDTOs = recipeDTO.getCategoryDTOs();
         final boolean haveEqualSize = categories.size() == categoryDTOs.size();
 
         if (haveEqualSize) {
@@ -89,16 +92,16 @@ public class RecipeRecipeDTOValueTestComparator implements RecipeRecipeDTOTestCo
         return false;
     }
 
-    private List<Category> sortCategoriesByName(List<Category> categories) {
+    private List<Category> sortCategoriesByName(Set<Category> categories) {
         return categories.stream()
                 .sorted(Comparator.comparing(Category::getName))
-                .collect(java.util.stream.Collectors.toList());
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private List<CategoryDTO> sortCategoryDTOsByName(List<CategoryDTO> categoryDTOs) {
+    private List<CategoryDTO> sortCategoryDTOsByName(Set<CategoryDTO> categoryDTOs) {
         return categoryDTOs.stream()
                 .sorted(Comparator.comparing(CategoryDTO::getName))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private boolean areEqualCategories(List<Category> categories, List<CategoryDTO> categoryDTOs) {
@@ -114,8 +117,8 @@ public class RecipeRecipeDTOValueTestComparator implements RecipeRecipeDTOTestCo
     }
 
     private boolean haveEqualIngredients(Recipe recipe, RecipeDTO recipeDTO) {
-        final List<Ingredient> ingredients = recipe.getIngredients();
-        final List<IngredientDTO> ingredientDTOs = recipeDTO.getIngredientDTOs();
+        final Set<Ingredient> ingredients = recipe.getIngredients();
+        final Set<IngredientDTO> ingredientDTOs = recipeDTO.getIngredientDTOs();
         final boolean haveEqualSize = ingredients.size() == ingredientDTOs.size();
 
         if (haveEqualSize) {
@@ -126,16 +129,16 @@ public class RecipeRecipeDTOValueTestComparator implements RecipeRecipeDTOTestCo
         return false;
     }
 
-    private List<Ingredient> sortIngredientsByName(List<Ingredient> ingredients) {
+    private List<Ingredient> sortIngredientsByName(Set<Ingredient> ingredients) {
         return ingredients.stream()
                 .sorted(Comparator.comparing(Ingredient::getName))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private List<IngredientDTO> sortIngredientDTOsByName(List<IngredientDTO> ingredientDTOs) {
+    private List<IngredientDTO> sortIngredientDTOsByName(Set<IngredientDTO> ingredientDTOs) {
         return ingredientDTOs.stream()
                 .sorted(Comparator.comparing(IngredientDTO::getName))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private boolean areEqualIngredients(List<Ingredient> ingredients, List<IngredientDTO> ingredientDTOs) {

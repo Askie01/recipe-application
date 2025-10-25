@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -112,8 +112,8 @@ class RandomRecipeTestFactoryUnitTest {
         final String name = recipe.getName();
         final String description = recipe.getDescription();
         final Difficulty difficulty = recipe.getDifficulty();
-        final List<Category> categories = recipe.getCategories();
-        final List<Ingredient> ingredients = recipe.getIngredients();
+        final Set<Category> categories = recipe.getCategories();
+        final Set<Ingredient> ingredients = recipe.getIngredients();
         final Double servings = recipe.getServings();
         final Integer cookingTime = recipe.getCookingTime();
         final String instructions = recipe.getInstructions();

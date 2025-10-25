@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -44,8 +44,8 @@ class RandomRecipeDTOTestFactoryIntegrationTest {
         final String name = recipeDTO.getName();
         final String description = recipeDTO.getDescription();
         final DifficultyDTO difficultyDTO = recipeDTO.getDifficultyDTO();
-        final List<CategoryDTO> categoryDTOs = recipeDTO.getCategoryDTOs();
-        final List<IngredientDTO> ingredientDTOs = recipeDTO.getIngredientDTOs();
+        final Set<CategoryDTO> categoryDTOs = recipeDTO.getCategoryDTOs();
+        final Set<IngredientDTO> ingredientDTOs = recipeDTO.getIngredientDTOs();
         final Double servings = recipeDTO.getServings();
         final Integer cookingTime = recipeDTO.getCookingTime();
         final String instructions = recipeDTO.getInstructions();

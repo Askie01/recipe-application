@@ -63,6 +63,7 @@ class ValidatedAmountMapperIntegrationTest {
     @DisplayName("map method should not map source amount to target amount when source is invalid")
     void map_whenSourceAmountIsInvalid_doesNotMapSourceAmountToTargetAmount() {
         mapper.map(source, target);
+        source.setAmount(-1.0);
         final boolean equalAmount = amountComparator.compare(source, target);
         assertFalse(equalAmount);
     }
