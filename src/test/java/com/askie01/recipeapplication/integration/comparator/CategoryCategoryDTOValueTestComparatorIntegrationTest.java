@@ -4,7 +4,7 @@ import com.askie01.recipeapplication.comparator.CategoryCategoryDTOTestComparato
 import com.askie01.recipeapplication.configuration.CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration;
 import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
 import com.askie01.recipeapplication.configuration.RandomCategoryDTOTestFactoryDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomCategoryTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomCategoryTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.dto.CategoryDTO;
 import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
 import com.askie01.recipeapplication.factory.CategoryTestFactory;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {
         FakerTestConfiguration.class,
         RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
         CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)

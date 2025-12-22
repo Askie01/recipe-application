@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         RandomRecipeTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
         RandomDifficultyTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
         RandomMeasureUnitTestFactoryTestConfiguration.class,
 })

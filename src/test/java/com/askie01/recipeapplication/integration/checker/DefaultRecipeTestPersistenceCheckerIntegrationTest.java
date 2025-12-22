@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {
         FakerTestConfiguration.class,
         RandomDifficultyTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
         RandomMeasureUnitTestFactoryTestConfiguration.class,
         RandomRecipeTestFactoryTestConfiguration.class,
