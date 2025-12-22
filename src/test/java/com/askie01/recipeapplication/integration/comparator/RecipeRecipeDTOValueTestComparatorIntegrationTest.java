@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
         StringNameValueTestComparatorTestConfiguration.class,
         DescriptionValueTestComparatorTestConfiguration.class,
         DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class,
-        CategoryCategoryDTOValueTestComparatorTestConfiguration.class,
+        CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class,
         IngredientIngredientDTOValueTestComparatorTestConfiguration.class,
         AmountValueTestComparatorTestConfiguration.class,
         MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,

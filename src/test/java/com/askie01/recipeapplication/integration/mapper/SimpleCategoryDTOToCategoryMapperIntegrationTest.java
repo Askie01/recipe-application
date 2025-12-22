@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         RandomCategoryDTOTestFactoryTestConfiguration.class,
         RandomCategoryTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
-        CategoryCategoryDTOValueTestComparatorTestConfiguration.class,
+        CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class
