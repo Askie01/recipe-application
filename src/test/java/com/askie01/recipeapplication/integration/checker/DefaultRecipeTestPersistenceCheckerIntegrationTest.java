@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         FakerTestConfiguration.class,
-        RandomDifficultyTestFactoryTestConfiguration.class,
+        RandomDifficultyTestFactoryDefaultTestConfiguration.class,
         RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
         RandomMeasureUnitTestFactoryTestConfiguration.class,

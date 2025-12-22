@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration(classes = {
         RandomRecipeTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
-        RandomDifficultyTestFactoryTestConfiguration.class,
+        RandomDifficultyTestFactoryDefaultTestConfiguration.class,
         RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
         RandomMeasureUnitTestFactoryTestConfiguration.class,
