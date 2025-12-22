@@ -70,9 +70,9 @@ import static org.junit.jupiter.api.Assertions.*;
         DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class,
         CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,
-        IngredientIngredientDTOValueTestComparatorTestConfiguration.class,
+        IngredientIngredientDTOValueTestComparatorDefaultTestConfiguration.class,
         AmountValueTestComparatorTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
+        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
         ServingsValueTestComparatorTestConfiguration.class,
         CookingTimeValueTestComparatorTestConfiguration.class,
         InstructionsValueTestComparatorTestConfiguration.class

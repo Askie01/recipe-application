@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
+        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,

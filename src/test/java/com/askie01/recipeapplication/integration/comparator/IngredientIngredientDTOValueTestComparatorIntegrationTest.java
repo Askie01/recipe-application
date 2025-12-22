@@ -24,11 +24,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        IngredientIngredientDTOValueTestComparatorTestConfiguration.class,
+        IngredientIngredientDTOValueTestComparatorDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
         AmountValueTestComparatorTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
+        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,
         FakerTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
