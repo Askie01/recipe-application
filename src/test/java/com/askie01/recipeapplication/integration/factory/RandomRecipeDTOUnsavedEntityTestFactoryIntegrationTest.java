@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
         FakerTestConfiguration.class,
         RandomRecipeDTOUnsavedEntityTestFactoryTestConfiguration.class,
         RandomDifficultyDTOTestFactoryTestConfiguration.class,
-        RandomCategoryDTOUnsavedEntityTestFactoryTestConfiguration.class,
+        RandomCategoryDTOUnsavedEntityTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOUnsavedEntityTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOUnsavedEntityTestFactoryTestConfiguration.class
 })
