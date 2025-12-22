@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RandomMeasureUnitTestFactoryTestConfiguration.class,
         RandomRecipeDTOTestFactoryTestConfiguration.class,
         RandomDifficultyDTOTestFactoryTestConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
+        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryTestConfiguration.class
 })

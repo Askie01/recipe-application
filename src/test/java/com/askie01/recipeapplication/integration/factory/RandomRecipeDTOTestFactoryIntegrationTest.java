@@ -24,13 +24,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         RandomRecipeDTOTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
         RandomDifficultyDTOTestFactoryTestConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
+        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("RandomRecipeDTOTestFactory integration test")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class RandomRecipeDTOTestFactoryIntegrationTest {
 
     private final RecipeDTOTestFactory factory;

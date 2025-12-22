@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RandomRecipeDTOTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
         RandomDifficultyDTOTestFactoryTestConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
+        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
         RandomRecipeTestFactoryTestConfiguration.class,
@@ -103,8 +103,8 @@ import static org.junit.jupiter.api.Assertions.*;
         "component.validator.instructions-type=non-blank-instructions",
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleRecipeDTOToRecipeMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleRecipeDTOToRecipeMapperIntegrationTest {
 
     private final RecipeDTOToRecipeMapper mapper;

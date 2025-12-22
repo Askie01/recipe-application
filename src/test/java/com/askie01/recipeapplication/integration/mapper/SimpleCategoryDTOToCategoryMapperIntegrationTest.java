@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         NonBlankStringNameValidatorConfiguration.class,
         ValidatedLongVersionMapperConfiguration.class,
         PositiveLongVersionValidatorConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
+        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         RandomCategoryTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
         CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class,
@@ -51,8 +51,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         "component.validator.version-type=positive-long-version"
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleCategoryDTOToCategoryMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleCategoryDTOToCategoryMapperIntegrationTest {
 
     private final CategoryDTOToCategoryMapper mapper;
