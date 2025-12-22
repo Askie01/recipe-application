@@ -18,12 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        FakerTestConfiguration.class,
         RandomDifficultyTestFactoryDefaultTestConfiguration.class,
         RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
-        RandomRecipeTestFactoryTestConfiguration.class,
+        RandomRecipeTestFactoryDefaultTestConfiguration.class,
         DefaultRecipeTestPersistenceCheckerDefaultTestConfiguration.class,
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
