@@ -2,8 +2,7 @@ package com.askie01.recipeapplication.integration.checker;
 
 import com.askie01.recipeapplication.checker.IngredientTestPersistenceChecker;
 import com.askie01.recipeapplication.configuration.DefaultIngredientTestPersistenceCheckerDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomIngredientTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomIngredientTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.configuration.RandomMeasureUnitTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.factory.IngredientTestFactory;
 import com.askie01.recipeapplication.model.entity.Ingredient;
@@ -21,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        FakerTestConfiguration.class,
-        RandomIngredientTestFactoryTestConfiguration.class,
+        RandomIngredientTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         DefaultIngredientTestPersistenceCheckerDefaultTestConfiguration.class
 })

@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         LongVersionValueTestComparatorTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
-        RandomIngredientTestFactoryTestConfiguration.class,
+        RandomIngredientTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitTestFactoryDefaultTestConfiguration.class
 })
 @TestPropertySource(properties = {
