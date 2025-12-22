@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         FakerTestConfiguration.class,
         RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class,
         RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
-        RandomIngredientDTOTestFactoryTestConfiguration.class,
+        RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)

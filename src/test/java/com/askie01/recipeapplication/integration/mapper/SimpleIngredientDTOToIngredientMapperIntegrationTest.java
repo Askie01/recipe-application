@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         AmountValueTestComparatorTestConfiguration.class,
         MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,
-        RandomIngredientDTOTestFactoryTestConfiguration.class,
+        RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitTestFactoryDefaultTestConfiguration.class

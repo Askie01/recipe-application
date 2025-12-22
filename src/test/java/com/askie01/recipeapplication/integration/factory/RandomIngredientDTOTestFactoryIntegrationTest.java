@@ -1,7 +1,6 @@
 package com.askie01.recipeapplication.integration.factory;
 
-import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomIngredientDTOTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomIngredientDTOTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.configuration.RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.dto.IngredientDTO;
 import com.askie01.recipeapplication.dto.MeasureUnitDTO;
@@ -19,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        FakerTestConfiguration.class,
-        RandomIngredientDTOTestFactoryTestConfiguration.class,
+        RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
