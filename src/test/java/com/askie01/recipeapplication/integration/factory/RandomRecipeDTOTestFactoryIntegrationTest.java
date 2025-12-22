@@ -21,8 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        RandomRecipeDTOTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class,
+        RandomRecipeDTOTestFactoryDefaultTestConfiguration.class,
         RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class,
         RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,

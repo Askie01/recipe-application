@@ -50,7 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
         ValidatedInstructionsMapperConfiguration.class,
         NonBlankInstructionsValidatorConfiguration.class,
 
-        RandomRecipeDTOTestFactoryTestConfiguration.class,
+        RandomRecipeDTOTestFactoryDefaultTestConfiguration.class,
         FakerTestConfiguration.class,
         RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class,
         RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
