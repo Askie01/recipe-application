@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
         RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class,
         RandomCategoryDTOUnsavedEntityTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOUnsavedEntityTestFactoryTestConfiguration.class,
-        RandomMeasureUnitDTOUnsavedEntityTestFactoryTestConfiguration.class
+        RandomMeasureUnitDTOUnsavedEntityTestFactoryDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("RandomRecipeDTOUnsavedEntityTestFactory integration tests")
