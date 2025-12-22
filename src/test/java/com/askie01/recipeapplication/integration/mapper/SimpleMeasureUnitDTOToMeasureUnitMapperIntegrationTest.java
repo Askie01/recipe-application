@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         NonBlankStringNameValidatorConfiguration.class,
         ValidatedLongVersionMapperConfiguration.class,
         PositiveLongVersionValidatorConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
+        RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitTestFactoryTestConfiguration.class,
         FakerTestConfiguration.class,
         MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,

@@ -52,7 +52,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class,
         RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryTestConfiguration.class
+        RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")

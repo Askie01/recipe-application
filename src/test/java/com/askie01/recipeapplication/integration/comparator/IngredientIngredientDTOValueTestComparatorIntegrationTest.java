@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RandomIngredientTestFactoryTestConfiguration.class,
         RandomMeasureUnitTestFactoryTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
+        RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
         SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
         ValidatedLongIdMapperConfiguration.class,
         PositiveLongIdValidatorConfiguration.class,
