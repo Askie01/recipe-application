@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
         StringNameValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,
         FakerTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)

@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         RandomDifficultyTestFactoryDefaultTestConfiguration.class,
         RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")

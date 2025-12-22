@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         ValidatedLongVersionMapperConfiguration.class,
         PositiveLongVersionValidatorConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         FakerTestConfiguration.class,
         MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,

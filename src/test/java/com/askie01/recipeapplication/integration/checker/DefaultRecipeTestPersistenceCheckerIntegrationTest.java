@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RandomDifficultyTestFactoryDefaultTestConfiguration.class,
         RandomCategoryTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         RandomRecipeTestFactoryTestConfiguration.class,
         DefaultRecipeTestPersistenceCheckerDefaultTestConfiguration.class,
 })

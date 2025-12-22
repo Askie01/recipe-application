@@ -2,8 +2,7 @@ package com.askie01.recipeapplication.integration.checker;
 
 import com.askie01.recipeapplication.checker.MeasureUnitTestPersistenceChecker;
 import com.askie01.recipeapplication.configuration.DefaultMeasureUnitTestPersistenceCheckerDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomMeasureUnitTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomMeasureUnitTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.factory.MeasureUnitTestFactory;
 import com.askie01.recipeapplication.model.entity.MeasureUnit;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        DefaultMeasureUnitTestPersistenceCheckerDefaultTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
+        DefaultMeasureUnitTestPersistenceCheckerDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("DefaultMeasureUnitTestPersistenceChecker integration tests")

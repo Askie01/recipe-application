@@ -45,7 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         RandomIngredientDTOTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class
 })
 @TestPropertySource(properties = {
         "component.mapper.ingredientDTO-to-ingredient-type=simple",

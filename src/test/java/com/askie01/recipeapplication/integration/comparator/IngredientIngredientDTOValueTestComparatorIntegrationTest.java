@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
         LongVersionValueTestComparatorTestConfiguration.class,
         FakerTestConfiguration.class,
         RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryTestConfiguration.class,
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
         SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
