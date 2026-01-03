@@ -1,7 +1,9 @@
 package com.askie01.recipeapplication.integration.comparator;
 
 import com.askie01.recipeapplication.comparator.RecipeRecipeDTOTestComparator;
-import com.askie01.recipeapplication.configuration.*;
+import com.askie01.recipeapplication.configuration.RandomRecipeDTOTestFactoryDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomRecipeTestFactoryDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.RecipeRecipeDTOValueTestComparatorDefaultTestConfiguration;
 import com.askie01.recipeapplication.dto.*;
 import com.askie01.recipeapplication.factory.RecipeDTOTestFactory;
 import com.askie01.recipeapplication.factory.RecipeTestFactory;
@@ -28,42 +30,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        RecipeRecipeDTOValueTestComparatorTestConfiguration.class,
-        LongIdValueTestComparatorTestConfiguration.class,
-        ImageValueTestComparatorTestConfiguration.class,
-        StringNameValueTestComparatorTestConfiguration.class,
-        DescriptionValueTestComparatorTestConfiguration.class,
-        DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class,
-        CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class,
-        IngredientIngredientDTOValueTestComparatorDefaultTestConfiguration.class,
-        AmountValueTestComparatorTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
-        ServingsValueTestComparatorTestConfiguration.class,
-        CookingTimeValueTestComparatorTestConfiguration.class,
-        InstructionsValueTestComparatorTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class,
-        FakerTestConfiguration.class,
         RandomRecipeTestFactoryDefaultTestConfiguration.class,
-        RandomDifficultyTestFactoryDefaultTestConfiguration.class,
-        RandomCategoryTestFactoryDefaultTestConfiguration.class,
-        RandomIngredientTestFactoryDefaultTestConfiguration.class,
-        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         RandomRecipeDTOTestFactoryDefaultTestConfiguration.class,
-        RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class,
-        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
-        RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class
+        RecipeRecipeDTOValueTestComparatorDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("RecipeRecipeDTOValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class RecipeRecipeDTOValueTestComparatorIntegrationTest {
 
-    private final RecipeRecipeDTOTestComparator comparator;
-    private final RecipeTestFactory recipeFactory;
-    private final RecipeDTOTestFactory recipeDTOFactory;
     private Recipe recipe;
     private RecipeDTO recipeDTO;
+    private final RecipeTestFactory recipeFactory;
+    private final RecipeDTOTestFactory recipeDTOFactory;
+    private final RecipeRecipeDTOTestComparator comparator;
 
     @BeforeEach
     void setUp() {
