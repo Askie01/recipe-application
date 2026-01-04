@@ -3,8 +3,7 @@ package com.askie01.recipeapplication.integration.mapper;
 import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
 import com.askie01.recipeapplication.comparator.CookingTimeTestComparator;
 import com.askie01.recipeapplication.configuration.CookingTimeValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.PositiveCookingTimeValidatorConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedCookingTimeMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedCookingTimeMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
 import com.askie01.recipeapplication.model.value.HasCookingTime;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedCookingTimeMapperConfiguration.class,
-        PositiveCookingTimeValidatorConfiguration.class,
+        ValidatedCookingTimeMapperDefaultTestConfiguration.class,
         CookingTimeValueTestComparatorTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@TestPropertySource(properties = {
-        "component.mapper.cooking-time-type=validated-cooking-time",
-        "component.validator.cooking-time-type=positive-cooking-time"
-})
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
+@TestPropertySource(locations = "classpath:validated-cooking-time-mapper-default-test-configuration.properties")
 @DisplayName("ValidatedCookingTimeMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedCookingTimeMapperIntegrationTest {
 
-    private final CookingTimeMapper mapper;
     private HasCookingTime source;
     private HasCookingTime target;
-
+    private final CookingTimeMapper mapper;
     private final CookingTimeTestComparator cookingTimeComparator;
 
     @BeforeEach
