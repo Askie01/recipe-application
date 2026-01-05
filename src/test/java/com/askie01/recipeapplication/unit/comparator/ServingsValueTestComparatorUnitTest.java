@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ServingsValueTestComparatorUnitTest {
 
-    private ServingsTestComparator comparator;
     private HasServings source;
     private HasServings target;
+    private ServingsTestComparator comparator;
 
     @BeforeEach
     void setUp() {

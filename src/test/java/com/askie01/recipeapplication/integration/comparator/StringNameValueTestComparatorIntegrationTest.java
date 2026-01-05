@@ -17,17 +17,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        StringNameValueTestComparatorTestConfiguration.class
-})
+@ContextConfiguration(classes = StringNameValueTestComparatorTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("StringNameValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class StringNameValueTestComparatorIntegrationTest {
 
-    private final StringNameTestComparator comparator;
     private HasStringName source;
     private HasStringName target;
+    private final StringNameTestComparator comparator;
 
     @BeforeEach
     void setUp() {

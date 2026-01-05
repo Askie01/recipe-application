@@ -19,17 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedDescriptionMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedDescriptionMapperUnitTest {
+
+    private HasDescription source;
+    private HasDescription target;
+    private DescriptionMapper mapper;
 
     @Mock
     private DescriptionValidator validator;
-    private DescriptionMapper mapper;
-    private HasDescription source;
-    private HasDescription target;
-
-    private DescriptionTestComparator descriptionComparator;
+    private DescriptionTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +40,7 @@ class ValidatedDescriptionMapperUnitTest {
         this.target = HasDescriptionTestBuilder.builder()
                 .description("target description")
                 .build();
-        this.descriptionComparator = new DescriptionValueTestComparator();
+        this.comparator = new DescriptionValueTestComparator();
     }
 
     @Test
@@ -48,7 +48,7 @@ class ValidatedDescriptionMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceDescriptionToTargetDescription() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalDescription = descriptionComparator.compare(source, target);
+        final boolean equalDescription = comparator.compare(source, target);
         assertTrue(equalDescription);
     }
 
@@ -57,7 +57,7 @@ class ValidatedDescriptionMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceDescriptionToTargetDescription() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalDescription = descriptionComparator.compare(source, target);
+        final boolean equalDescription = comparator.compare(source, target);
         assertFalse(equalDescription);
     }
 

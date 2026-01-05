@@ -2,9 +2,8 @@ package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasImageTestBuilder;
 import com.askie01.recipeapplication.comparator.ImageTestComparator;
-import com.askie01.recipeapplication.configuration.FiveMegaBytesImageValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ImageValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedImageMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedImageMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.ImageMapper;
 import com.askie01.recipeapplication.model.value.HasImage;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedImageMapperConfiguration.class,
-        FiveMegaBytesImageValidatorConfiguration.class,
+        ValidatedImageMapperDefaultTestConfiguration.class,
         ImageValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.image-type=validated-image",
-        "component.validator.image-type=five-mega-bytes-image"
-})
+@TestPropertySource(locations = "classpath:validated-image-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedImageMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedImageMapperIntegrationTest {
 
-    private final ImageMapper mapper;
     private HasImage source;
     private HasImage target;
-
+    private final ImageMapper mapper;
     private final ImageTestComparator comparator;
 
     @BeforeEach

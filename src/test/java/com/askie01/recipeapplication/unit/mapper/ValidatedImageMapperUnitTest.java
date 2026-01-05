@@ -19,16 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedImageMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedImageMapperUnitTest {
+
+    private HasImage source;
+    private HasImage target;
+    private ImageMapper mapper;
 
     @Mock
     private ImageValidator validator;
-    private ImageMapper mapper;
-    private HasImage source;
-    private HasImage target;
-
     private ImageTestComparator comparator;
 
     @BeforeEach

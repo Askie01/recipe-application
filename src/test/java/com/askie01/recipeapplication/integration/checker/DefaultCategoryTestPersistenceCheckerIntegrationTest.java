@@ -2,8 +2,7 @@ package com.askie01.recipeapplication.integration.checker;
 
 import com.askie01.recipeapplication.checker.CategoryTestPersistenceChecker;
 import com.askie01.recipeapplication.configuration.DefaultCategoryTestPersistenceCheckerDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomCategoryTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomCategoryTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.factory.CategoryTestFactory;
 import com.askie01.recipeapplication.model.entity.Category;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        DefaultCategoryTestPersistenceCheckerDefaultTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
+        DefaultCategoryTestPersistenceCheckerDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("DefaultCategoryTestPersistenceChecker integration tests")

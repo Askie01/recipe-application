@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = PositiveServingsValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.servings-type=positive-servings")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveServingsValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class PositiveServingsValidatorIntegrationTest {
 
     private final ServingsValidator validator;

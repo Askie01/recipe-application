@@ -26,44 +26,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        SimpleCategoryDTOToCategoryMapperConfiguration.class,
-        ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class,
-        ValidatedStringNameMapperConfiguration.class,
-        NonBlankStringNameValidatorConfiguration.class,
-        ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class,
-        CategoryCategoryDTOValueTestComparatorTestConfiguration.class,
+        SimpleCategoryDTOToCategoryMapperDefaultTestConfiguration.class,
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
+        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class
+        LongVersionValueTestComparatorTestConfiguration.class,
+        CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.categoryDTO-to-category-type=simple",
-        "component.mapper.id-type=validated-long-id",
-        "component.validator.id-type=positive-long-id",
-        "component.mapper.name-type=validated-string-name",
-        "component.validator.name-type=non-blank-string",
-        "component.mapper.version-type=validated-long-version",
-        "component.validator.version-type=positive-long-version"
-})
+@TestPropertySource(locations = "classpath:simple-categoryDTO-to-category-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleCategoryDTOToCategoryMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleCategoryDTOToCategoryMapperIntegrationTest {
 
+    private CategoryDTO source;
+    private Category target;
+    private final CategoryTestFactory categoryFactory;
+    private final CategoryDTOTestFactory categoryDTOFactory;
     private final CategoryDTOToCategoryMapper mapper;
     private final LongIdTestComparator idComparator;
     private final StringNameTestComparator nameComparator;
     private final LongVersionTestComparator versionComparator;
     private final CategoryCategoryDTOTestComparator categoryComparator;
-    private final CategoryDTOTestFactory categoryDTOFactory;
-    private final CategoryTestFactory categoryFactory;
-    private CategoryDTO source;
-    private Category target;
 
     @BeforeEach
     void setUp() {

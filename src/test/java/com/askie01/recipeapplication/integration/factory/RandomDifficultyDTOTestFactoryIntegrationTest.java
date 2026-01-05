@@ -1,7 +1,6 @@
 package com.askie01.recipeapplication.integration.factory;
 
-import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomDifficultyDTOTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomDifficultyDTOTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.dto.DifficultyDTO;
 import com.askie01.recipeapplication.factory.DifficultyDTOTestFactory;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +15,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        RandomDifficultyDTOTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class
-})
+@ContextConfiguration(classes = RandomDifficultyDTOTestFactoryDefaultTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("RandomDifficultyDTOTestFactory integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class RandomDifficultyDTOTestFactoryIntegrationTest {
 
     private final DifficultyDTOTestFactory factory;

@@ -26,44 +26,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
-        ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class,
-        ValidatedStringNameMapperConfiguration.class,
-        NonBlankStringNameValidatorConfiguration.class,
-        ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
+        SimpleMeasureUnitDTOToMeasureUnitMapperDefaultTestConfiguration.class,
+        RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class
+        LongVersionValueTestComparatorTestConfiguration.class,
+        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.measureUnitDTO-to-measureUnit-type=simple",
-        "component.mapper.id-type=validated-long-id",
-        "component.validator.id-type=positive-long-id",
-        "component.mapper.name-type=validated-string-name",
-        "component.validator.name-type=non-blank-string",
-        "component.mapper.version-type=validated-long-version",
-        "component.validator.version-type=positive-long-version"
-})
+@TestPropertySource(locations = "classpath:simple-measureUnitDTO-to-measureUnit-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleMeasureUnitDTOToMeasureUnitMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleMeasureUnitDTOToMeasureUnitMapperIntegrationTest {
 
+    private MeasureUnitDTO source;
+    private MeasureUnit target;
+    private final MeasureUnitTestFactory measureUnitFactory;
+    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
     private final MeasureUnitDTOToMeasureUnitMapper mapper;
     private final LongIdTestComparator idComparator;
     private final StringNameTestComparator nameComparator;
     private final LongVersionTestComparator versionComparator;
     private final MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
-    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
-    private final MeasureUnitTestFactory measureUnitFactory;
-    private MeasureUnitDTO source;
-    private MeasureUnit target;
 
     @BeforeEach
     void setUp() {

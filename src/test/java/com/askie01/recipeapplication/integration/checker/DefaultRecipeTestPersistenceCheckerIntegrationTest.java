@@ -18,12 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        FakerTestConfiguration.class,
-        RandomDifficultyTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
-        RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
-        RandomRecipeTestFactoryTestConfiguration.class,
+        RandomDifficultyTestFactoryDefaultTestConfiguration.class,
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
+        RandomIngredientTestFactoryDefaultTestConfiguration.class,
+        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
+        RandomRecipeTestFactoryDefaultTestConfiguration.class,
         DefaultRecipeTestPersistenceCheckerDefaultTestConfiguration.class,
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -32,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultRecipeTestPersistenceCheckerIntegrationTest {
 
     private Recipe source;
-    private final RecipeTestPersistenceChecker checker;
     private final RecipeTestFactory factory;
+    private final RecipeTestPersistenceChecker checker;
 
     @BeforeEach
     void setUp() {

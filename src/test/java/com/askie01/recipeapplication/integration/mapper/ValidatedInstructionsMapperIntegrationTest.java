@@ -3,8 +3,7 @@ package com.askie01.recipeapplication.integration.mapper;
 import com.askie01.recipeapplication.builder.HasInstructionsTestBuilder;
 import com.askie01.recipeapplication.comparator.InstructionsTestComparator;
 import com.askie01.recipeapplication.configuration.InstructionsValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.NonBlankInstructionsValidatorConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedInstructionsMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedInstructionsMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.InstructionsMapper;
 import com.askie01.recipeapplication.model.value.HasInstructions;
 import com.github.javafaker.Faker;
@@ -23,23 +22,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedInstructionsMapperConfiguration.class,
-        NonBlankInstructionsValidatorConfiguration.class,
+        ValidatedInstructionsMapperDefaultTestConfiguration.class,
         InstructionsValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.instructions-type=validated-instructions",
-        "component.validator.instructions-type=non-blank-instructions"
-})
+@TestPropertySource(locations = "classpath:validated-instructions-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedInstructionsMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedInstructionsMapperIntegrationTest {
 
-    private final InstructionsMapper mapper;
     private HasInstructions source;
     private HasInstructions target;
-
+    private final InstructionsMapper mapper;
     private final InstructionsTestComparator comparator;
 
     @BeforeEach

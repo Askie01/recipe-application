@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = NonBlankInstructionsValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.instructions-type=non-blank-instructions")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("NonBlankInstructionsValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class NonBlankInstructionsValidatorIntegrationTest {
 
     private final InstructionsValidator validator;

@@ -19,16 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedLongVersionMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedLongVersionMapperUnitTest {
+
+    private HasLongVersion source;
+    private HasLongVersion target;
+    private LongVersionMapper mapper;
 
     @Mock
     private LongVersionValidator validator;
-    private LongVersionMapper mapper;
-    private HasLongVersion source;
-    private HasLongVersion target;
-
     private LongVersionTestComparator comparator;
 
     @BeforeEach

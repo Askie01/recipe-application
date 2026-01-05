@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {DefaultSimpleAuditTestPresenceCheckerTestConfiguration.class})
+@ContextConfiguration(classes = DefaultSimpleAuditTestPresenceCheckerTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("DefaultSimpleAuditTestPresenceChecker integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")

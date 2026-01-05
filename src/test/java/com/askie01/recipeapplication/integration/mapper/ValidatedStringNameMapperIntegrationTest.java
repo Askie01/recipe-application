@@ -2,9 +2,8 @@ package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasStringNameTestBuilder;
 import com.askie01.recipeapplication.comparator.StringNameTestComparator;
-import com.askie01.recipeapplication.configuration.NonBlankStringNameValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.StringNameValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedStringNameMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedStringNameMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.StringNameMapper;
 import com.askie01.recipeapplication.model.value.HasStringName;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedStringNameMapperConfiguration.class,
-        NonBlankStringNameValidatorConfiguration.class,
-        StringNameValueTestComparatorTestConfiguration.class
+        StringNameValueTestComparatorTestConfiguration.class,
+        ValidatedStringNameMapperDefaultTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.name-type=validated-string-name",
-        "component.validator.name-type=non-blank-string"
-})
+@TestPropertySource(locations = "classpath:validated-string-name-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedStringNameMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedStringNameMapperIntegrationTest {
 
-    private final StringNameMapper mapper;
     private HasStringName source;
     private HasStringName target;
-
+    private final StringNameMapper mapper;
     private final StringNameTestComparator comparator;
 
     @BeforeEach

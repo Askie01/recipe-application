@@ -14,15 +14,14 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("SimpleLongIdMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class SimpleLongIdMapperUnitTest {
 
     private HasLongId source;
     private HasLongId target;
     private LongIdMapper mapper;
-
-    private LongIdTestComparator idComparator;
+    private LongIdTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -33,14 +32,14 @@ class SimpleLongIdMapperUnitTest {
         this.target = HasLongIdTestBuilder.builder()
                 .id(2L)
                 .build();
-        this.idComparator = new LongIdValueTestComparator();
+        this.comparator = new LongIdValueTestComparator();
     }
 
     @Test
     @DisplayName("map method should map source id to target id when source and target are present")
     void map_shouldMapSourceIdToTargetId_whenSourceAndTargetArePresent() {
         mapper.map(source, target);
-        final boolean equalId = idComparator.compare(source, target);
+        final boolean equalId = comparator.compare(source, target);
         assertTrue(equalId);
     }
 

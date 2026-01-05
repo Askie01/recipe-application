@@ -25,17 +25,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         SimpleLongVersionMapperConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.version-type=simple-long-version"
-})
+@TestPropertySource(properties = "component.mapper.version-type=simple-long-version")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleLongVersionMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleLongVersionMapperIntegrationTest {
 
     private HasLongVersion source;
     private HasLongVersion target;
-
     private final LongVersionMapper mapper;
     private final LongVersionTestComparator comparator;
 

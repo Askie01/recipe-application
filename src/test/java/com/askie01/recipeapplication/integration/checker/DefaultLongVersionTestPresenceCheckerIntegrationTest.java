@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {DefaultLongVersionTestPresenceCheckerTestConfiguration.class})
+@ContextConfiguration(classes = DefaultLongVersionTestPresenceCheckerTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("DefaultLongVersionTestPresenceChecker integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")

@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class LongIdValueTestComparatorUnitTest {
 
-    private LongIdTestComparator comparator;
     private HasLongId source;
     private HasLongId target;
+    private LongIdTestComparator comparator;
 
     @BeforeEach
     void setUp() {

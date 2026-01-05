@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ImageValueTestComparatorUnitTest {
 
-    private ImageTestComparator comparator;
     private HasImage source;
     private HasImage target;
+    private ImageTestComparator comparator;
 
     @BeforeEach
     void setUp() {

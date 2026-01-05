@@ -19,17 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedAmountMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedAmountMapperUnitTest {
+
+    private HasAmount source;
+    private HasAmount target;
+    private AmountMapper mapper;
 
     @Mock
     private AmountValidator validator;
-    private AmountMapper mapper;
-    private HasAmount source;
-    private HasAmount target;
-
-    private AmountTestComparator amountComparator;
+    private AmountTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +40,7 @@ class ValidatedAmountMapperUnitTest {
         this.target = HasAmountTestBuilder.builder()
                 .amount(2.0)
                 .build();
-        this.amountComparator = new AmountValueTestComparator();
+        this.comparator = new AmountValueTestComparator();
     }
 
     @Test
@@ -48,7 +48,7 @@ class ValidatedAmountMapperUnitTest {
     void map_whenSourceAmountIsValid_mapsSourceAmountToTargetAmount() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalAmount = amountComparator.compare(source, target);
+        final boolean equalAmount = comparator.compare(source, target);
         assertTrue(equalAmount);
     }
 
@@ -57,7 +57,7 @@ class ValidatedAmountMapperUnitTest {
     void map_whenSourceAmountIsInvalid_doesNotMapSourceAmountToTargetAmount() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalAmount = amountComparator.compare(source, target);
+        final boolean equalAmount = comparator.compare(source, target);
         assertFalse(equalAmount);
     }
 
