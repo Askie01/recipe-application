@@ -1,7 +1,10 @@
 package com.askie01.recipeapplication.integration.comparator;
 
 import com.askie01.recipeapplication.comparator.IngredientIngredientDTOTestComparator;
-import com.askie01.recipeapplication.configuration.*;
+import com.askie01.recipeapplication.configuration.IngredientIngredientDTOValueTestComparatorDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomIngredientDTOTestFactoryDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomIngredientTestFactoryDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.SimpleMeasureUnitDTOToMeasureUnitMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.dto.IngredientDTO;
 import com.askie01.recipeapplication.dto.MeasureUnitDTO;
 import com.askie01.recipeapplication.factory.IngredientDTOTestFactory;
@@ -25,44 +28,22 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         IngredientIngredientDTOValueTestComparatorDefaultTestConfiguration.class,
-        LongIdValueTestComparatorTestConfiguration.class,
-        StringNameValueTestComparatorTestConfiguration.class,
-        AmountValueTestComparatorTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class,
-        FakerTestConfiguration.class,
         RandomIngredientTestFactoryDefaultTestConfiguration.class,
-        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class,
         RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class,
-        SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
-        ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class,
-        ValidatedStringNameMapperConfiguration.class,
-        NonBlankStringNameValidatorConfiguration.class,
-        ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class
+        SimpleMeasureUnitDTOToMeasureUnitMapperDefaultTestConfiguration.class,
 })
+@TestPropertySource(locations = "classpath:ingredient-ingredientDTO-value-test-comparator-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@TestPropertySource(properties = {
-        "component.mapper.measureUnitDTO-to-measureUnit-type=simple",
-        "component.mapper.id-type=validated-long-id",
-        "component.validator.id-type=positive-long-id",
-        "component.mapper.name-type=validated-string-name",
-        "component.validator.name-type=non-blank-string",
-        "component.mapper.version-type=validated-long-version",
-        "component.validator.version-type=positive-long-version"
-})
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("IngredientIngredientDTOValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class IngredientIngredientDTOValueTestComparatorIntegrationTest {
 
-    private final IngredientIngredientDTOTestComparator comparator;
+    private Ingredient ingredient;
+    private IngredientDTO ingredientDTO;
     private final IngredientTestFactory ingredientTestFactory;
     private final IngredientDTOTestFactory ingredientDTOTestFactory;
     private final MeasureUnitDTOToMeasureUnitMapper measureUnitDTOToMeasureUnitMapper;
-    private Ingredient ingredient;
-    private IngredientDTO ingredientDTO;
+    private final IngredientIngredientDTOTestComparator ingredientIngredientDTOTestComparator;
 
     @BeforeEach
     void setUp() {
@@ -86,40 +67,40 @@ class IngredientIngredientDTOValueTestComparatorIntegrationTest {
         ingredient.setMeasureUnit(measureUnit);
         ingredient.setVersion(ingredientDTOVersion);
 
-        final boolean result = comparator.compare(ingredient, ingredientDTO);
+        final boolean result = ingredientIngredientDTOTestComparator.compare(ingredient, ingredientDTO);
         assertTrue(result);
     }
 
     @Test
     @DisplayName("compare method should return false when Ingredient and IngredientDTO have different common field values")
     void compare_whenIngredientAndIngredientDTOHaveOneCommonFieldWithDifferentValue_returnsFalse() {
-        final boolean result = comparator.compare(ingredient, ingredientDTO);
+        final boolean result = ingredientIngredientDTOTestComparator.compare(ingredient, ingredientDTO);
         assertFalse(result);
     }
 
     @Test
     @DisplayName("compare method should throw NullPointerException when ingredient is null")
     void compare_whenIngredientIsNull_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> comparator.compare(null, ingredientDTO));
+        assertThrows(NullPointerException.class, () -> ingredientIngredientDTOTestComparator.compare(null, ingredientDTO));
     }
 
     @Test
     @DisplayName("compare method should throw NullPointerException when measureUnit in Ingredient is null")
     void compare_whenMeasureUnitInIngredientIsNull_throwsNullPointerException() {
         ingredient.setMeasureUnit(null);
-        assertThrows(NullPointerException.class, () -> comparator.compare(ingredient, ingredientDTO));
+        assertThrows(NullPointerException.class, () -> ingredientIngredientDTOTestComparator.compare(ingredient, ingredientDTO));
     }
 
     @Test
     @DisplayName("compare method should throw NullPointerException when ingredientDTO is null")
     void compare_whenIngredientDTOIsNull_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> comparator.compare(ingredient, null));
+        assertThrows(NullPointerException.class, () -> ingredientIngredientDTOTestComparator.compare(ingredient, null));
     }
 
     @Test
     @DisplayName("compare method should throw NullPointerException when measureUnitDTO in IngredientDTO is null")
     void compare_whenMeasureUnitDTOInIngredientDTOIsNull_throwsNullPointerException() {
         ingredientDTO.setMeasureUnitDTO(null);
-        assertThrows(NullPointerException.class, () -> comparator.compare(ingredient, ingredientDTO));
+        assertThrows(NullPointerException.class, () -> ingredientIngredientDTOTestComparator.compare(ingredient, ingredientDTO));
     }
 }
