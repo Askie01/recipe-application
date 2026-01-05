@@ -5,7 +5,7 @@ import com.askie01.recipeapplication.model.entity.Recipe;
 
 import java.util.List;
 
-public interface RecipeService {
+public interface RecipeServiceV1 {
     Recipe createRecipe(RecipeDTO recipeDTO);
 
     Recipe getRecipe(Long id);
