@@ -1,7 +1,6 @@
 package com.askie01.recipeapplication.integration.factory;
 
 import com.askie01.recipeapplication.configuration.RandomIngredientTestFactoryDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomMeasureUnitTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.factory.IngredientTestFactory;
 import com.askie01.recipeapplication.model.entity.Ingredient;
 import com.askie01.recipeapplication.model.entity.MeasureUnit;
@@ -19,13 +18,10 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        RandomIngredientTestFactoryDefaultTestConfiguration.class,
-        RandomMeasureUnitTestFactoryDefaultTestConfiguration.class
-})
+@ContextConfiguration(classes = RandomIngredientTestFactoryDefaultTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("RandomIngredientTestFactory integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class RandomIngredientTestFactoryIntegrationTest {
 
     private final IngredientTestFactory factory;

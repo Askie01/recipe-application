@@ -50,6 +50,7 @@ class SimpleRecipeDTOToRecipeMapperIntegrationTest {
     private Recipe target;
     private final RecipeTestFactory recipeFactory;
     private final RecipeDTOTestFactory recipeDTOFactory;
+    private final RecipeDTOToRecipeMapper mapper;
     private final LongIdTestComparator idComparator;
     private final ImageTestComparator imageComparator;
     private final StringNameTestComparator nameComparator;
@@ -60,7 +61,6 @@ class SimpleRecipeDTOToRecipeMapperIntegrationTest {
     private final InstructionsTestComparator instructionsComparator;
     private final LongVersionTestComparator versionComparator;
     private final RecipeRecipeDTOTestComparator recipeComparator;
-    private final RecipeDTOToRecipeMapper mapper;
 
     @BeforeEach
     void setUp() {

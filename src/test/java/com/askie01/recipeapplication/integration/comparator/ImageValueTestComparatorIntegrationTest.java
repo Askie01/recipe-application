@@ -17,12 +17,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        ImageValueTestComparatorTestConfiguration.class
-})
+@ContextConfiguration(classes = ImageValueTestComparatorTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ImageValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ImageValueTestComparatorIntegrationTest {
 
     private final ImageTestComparator comparator;

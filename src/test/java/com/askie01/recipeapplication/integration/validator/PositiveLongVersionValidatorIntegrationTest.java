@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = PositiveLongVersionValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.version-type=positive-long-version")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveLongVersionValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class PositiveLongVersionValidatorIntegrationTest {
 
     private final LongVersionValidator validator;

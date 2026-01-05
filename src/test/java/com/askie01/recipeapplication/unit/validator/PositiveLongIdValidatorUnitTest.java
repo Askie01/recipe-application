@@ -11,8 +11,8 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("PositiveLongIdValidator unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class PositiveLongIdValidatorUnitTest {
 
     private LongIdValidator validator;

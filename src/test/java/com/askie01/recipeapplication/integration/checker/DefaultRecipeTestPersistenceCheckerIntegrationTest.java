@@ -31,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultRecipeTestPersistenceCheckerIntegrationTest {
 
     private Recipe source;
-    private final RecipeTestPersistenceChecker checker;
     private final RecipeTestFactory factory;
+    private final RecipeTestPersistenceChecker checker;
 
     @BeforeEach
     void setUp() {

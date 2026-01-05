@@ -19,16 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedServingsMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedServingsMapperUnitTest {
+
+    private HasServings source;
+    private HasServings target;
+    private ServingsMapper mapper;
 
     @Mock
     private ServingsValidator validator;
-    private ServingsMapper mapper;
-    private HasServings source;
-    private HasServings target;
-
     private ServingsTestComparator comparator;
 
     @BeforeEach

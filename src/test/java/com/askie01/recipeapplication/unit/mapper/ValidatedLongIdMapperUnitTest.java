@@ -19,16 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedLongIdMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedLongIdMapperUnitTest {
+
+    private HasLongId source;
+    private HasLongId target;
+    private LongIdMapper mapper;
 
     @Mock
     private LongIdValidator validator;
-    private LongIdMapper mapper;
-    private HasLongId source;
-    private HasLongId target;
-
     private LongIdTestComparator comparator;
 
     @BeforeEach

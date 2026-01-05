@@ -33,7 +33,7 @@ class ValidatedDescriptionMapperIntegrationTest {
     private HasDescription source;
     private HasDescription target;
     private final DescriptionMapper mapper;
-    private final DescriptionTestComparator descriptionComparator;
+    private final DescriptionTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +49,7 @@ class ValidatedDescriptionMapperIntegrationTest {
     @DisplayName("map method should map source description to target description when source is valid")
     void map_whenSourceIsValid_mapsSourceDescriptionToTargetDescription() {
         mapper.map(source, target);
-        final boolean equalDescriptions = descriptionComparator.compare(source, target);
+        final boolean equalDescriptions = comparator.compare(source, target);
         assertTrue(equalDescriptions);
     }
 
@@ -58,7 +58,7 @@ class ValidatedDescriptionMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceDescriptionToTargetDescription() {
         source.setDescription("");
         mapper.map(source, target);
-        final boolean equalDescriptions = descriptionComparator.compare(source, target);
+        final boolean equalDescriptions = comparator.compare(source, target);
         assertFalse(equalDescriptions);
     }
 

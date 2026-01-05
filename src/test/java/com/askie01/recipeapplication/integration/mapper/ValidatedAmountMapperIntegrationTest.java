@@ -33,7 +33,7 @@ class ValidatedAmountMapperIntegrationTest {
     private HasAmount source;
     private HasAmount target;
     private final AmountMapper mapper;
-    private final AmountTestComparator amountComparator;
+    private final AmountTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +49,7 @@ class ValidatedAmountMapperIntegrationTest {
     @DisplayName("map method should map source amount to target amount when source is valid")
     void map_whenSourceAmountIsValid_mapsSourceAmountToTargetAmount() {
         mapper.map(source, target);
-        final boolean equalAmount = amountComparator.compare(source, target);
+        final boolean equalAmount = comparator.compare(source, target);
         assertTrue(equalAmount);
     }
 
@@ -58,7 +58,7 @@ class ValidatedAmountMapperIntegrationTest {
     void map_whenSourceAmountIsInvalid_doesNotMapSourceAmountToTargetAmount() {
         mapper.map(source, target);
         source.setAmount(-1.0);
-        final boolean equalAmount = amountComparator.compare(source, target);
+        final boolean equalAmount = comparator.compare(source, target);
         assertFalse(equalAmount);
     }
 

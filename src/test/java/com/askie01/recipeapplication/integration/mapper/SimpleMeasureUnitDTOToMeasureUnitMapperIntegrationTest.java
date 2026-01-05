@@ -42,13 +42,13 @@ class SimpleMeasureUnitDTOToMeasureUnitMapperIntegrationTest {
 
     private MeasureUnitDTO source;
     private MeasureUnit target;
+    private final MeasureUnitTestFactory measureUnitFactory;
+    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
+    private final MeasureUnitDTOToMeasureUnitMapper mapper;
     private final LongIdTestComparator idComparator;
     private final StringNameTestComparator nameComparator;
     private final LongVersionTestComparator versionComparator;
     private final MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
-    private final MeasureUnitTestFactory measureUnitFactory;
-    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
-    private final MeasureUnitDTOToMeasureUnitMapper mapper;
 
     @BeforeEach
     void setUp() {

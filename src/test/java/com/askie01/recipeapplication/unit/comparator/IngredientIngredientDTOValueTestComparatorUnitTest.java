@@ -33,6 +33,9 @@ import static org.mockito.Mockito.when;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class IngredientIngredientDTOValueTestComparatorUnitTest {
 
+    private Ingredient ingredient;
+    private IngredientDTO ingredientDTO;
+
     @Mock
     private LongIdTestComparator longIdTestComparator;
 
@@ -48,8 +51,6 @@ class IngredientIngredientDTOValueTestComparatorUnitTest {
     @Mock
     private LongVersionTestComparator longVersionTestComparator;
     private IngredientIngredientDTOTestComparator ingredientIngredientDTOTestComparator;
-    private Ingredient ingredient;
-    private IngredientDTO ingredientDTO;
 
     @BeforeEach
     void setUp() {

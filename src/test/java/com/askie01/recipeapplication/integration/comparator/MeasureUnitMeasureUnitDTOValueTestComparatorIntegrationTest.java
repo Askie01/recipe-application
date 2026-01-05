@@ -29,15 +29,15 @@ import static org.junit.jupiter.api.Assertions.*;
         RandomMeasureUnitDTOTestFactoryDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("MeasureUnitMeasureUnitDTOValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class MeasureUnitMeasureUnitDTOValueTestComparatorIntegrationTest {
 
-    private final MeasureUnitMeasureUnitDTOTestComparator comparator;
-    private final MeasureUnitTestFactory measureUnitFactory;
-    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
     private MeasureUnit measureUnit;
     private MeasureUnitDTO measureUnitDTO;
+    private final MeasureUnitTestFactory measureUnitFactory;
+    private final MeasureUnitDTOTestFactory measureUnitDTOFactory;
+    private final MeasureUnitMeasureUnitDTOTestComparator comparator;
 
     @BeforeEach
     void setUp() {

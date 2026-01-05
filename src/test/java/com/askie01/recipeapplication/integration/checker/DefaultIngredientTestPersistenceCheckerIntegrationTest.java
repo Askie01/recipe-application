@@ -30,8 +30,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultIngredientTestPersistenceCheckerIntegrationTest {
 
     private Ingredient source;
-    private final IngredientTestPersistenceChecker checker;
     private final IngredientTestFactory factory;
+    private final IngredientTestPersistenceChecker checker;
 
     @BeforeEach
     void setUp() {

@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class LongVersionValueTestComparatorUnitTest {
 
-    private LongVersionTestComparator comparator;
     private HasLongVersion source;
     private HasLongVersion target;
+    private LongVersionTestComparator comparator;
 
     @BeforeEach
     void setUp() {

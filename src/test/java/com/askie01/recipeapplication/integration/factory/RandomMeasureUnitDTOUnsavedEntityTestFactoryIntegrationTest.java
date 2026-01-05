@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = RandomMeasureUnitDTOUnsavedEntityTestFactoryDefaultTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("RandomMeasureUnitDTOEntityTestFactory integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class RandomMeasureUnitDTOUnsavedEntityTestFactoryIntegrationTest {
 
     private final MeasureUnitDTOUnsavedEntityTestFactory factory;

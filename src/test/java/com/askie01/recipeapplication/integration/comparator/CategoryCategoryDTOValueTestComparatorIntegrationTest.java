@@ -33,11 +33,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class CategoryCategoryDTOValueTestComparatorIntegrationTest {
 
-    private final CategoryCategoryDTOTestComparator comparator;
-    private final CategoryTestFactory categoryFactory;
-    private final CategoryDTOTestFactory categoryDTOFactory;
     private Category category;
     private CategoryDTO categoryDTO;
+    private final CategoryTestFactory categoryFactory;
+    private final CategoryDTOTestFactory categoryDTOFactory;
+    private final CategoryCategoryDTOTestComparator comparator;
 
     @BeforeEach
     void setUp() {

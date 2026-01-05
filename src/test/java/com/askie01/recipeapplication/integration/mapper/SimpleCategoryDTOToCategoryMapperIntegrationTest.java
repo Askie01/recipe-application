@@ -42,13 +42,13 @@ class SimpleCategoryDTOToCategoryMapperIntegrationTest {
 
     private CategoryDTO source;
     private Category target;
+    private final CategoryTestFactory categoryFactory;
+    private final CategoryDTOTestFactory categoryDTOFactory;
+    private final CategoryDTOToCategoryMapper mapper;
     private final LongIdTestComparator idComparator;
     private final StringNameTestComparator nameComparator;
     private final LongVersionTestComparator versionComparator;
     private final CategoryCategoryDTOTestComparator categoryComparator;
-    private final CategoryTestFactory categoryFactory;
-    private final CategoryDTOTestFactory categoryDTOFactory;
-    private final CategoryDTOToCategoryMapper mapper;
 
     @BeforeEach
     void setUp() {

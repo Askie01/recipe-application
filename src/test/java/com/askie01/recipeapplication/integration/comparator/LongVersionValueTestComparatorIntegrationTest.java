@@ -17,17 +17,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        LongVersionValueTestComparatorTestConfiguration.class
-})
+@ContextConfiguration(classes = LongVersionValueTestComparatorTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("LongVersionValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class LongVersionValueTestComparatorIntegrationTest {
 
-    private final LongVersionTestComparator comparator;
     private HasLongVersion source;
     private HasLongVersion target;
+    private final LongVersionTestComparator comparator;
 
     @BeforeEach
     void setUp() {

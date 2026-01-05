@@ -19,16 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedStringNameMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedStringNameMapperUnitTest {
+
+    private HasStringName source;
+    private HasStringName target;
+    private StringNameMapper mapper;
 
     @Mock
     private StringNameValidator validator;
-    private StringNameMapper mapper;
-    private HasStringName source;
-    private HasStringName target;
-
     private StringNameTestComparator comparator;
 
     @BeforeEach

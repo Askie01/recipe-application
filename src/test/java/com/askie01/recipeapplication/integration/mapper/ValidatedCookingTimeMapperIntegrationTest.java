@@ -33,7 +33,7 @@ class ValidatedCookingTimeMapperIntegrationTest {
     private HasCookingTime source;
     private HasCookingTime target;
     private final CookingTimeMapper mapper;
-    private final CookingTimeTestComparator cookingTimeComparator;
+    private final CookingTimeTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +49,7 @@ class ValidatedCookingTimeMapperIntegrationTest {
     @DisplayName("map method should map source cooking time to target cooking time when source is valid")
     void map_whenSourceIsValid_mapsSourceCookingTimeToTargetCookingTime() {
         mapper.map(source, target);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        final boolean equalCookingTime = comparator.compare(source, target);
         assertTrue(equalCookingTime);
     }
 
@@ -58,7 +58,7 @@ class ValidatedCookingTimeMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceCookingTimeToTargetCookingTime() {
         source.setCookingTime(0);
         mapper.map(source, target);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        final boolean equalCookingTime = comparator.compare(source, target);
         assertFalse(equalCookingTime);
     }
 

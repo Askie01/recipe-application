@@ -43,15 +43,15 @@ class SimpleIngredientDTOToIngredientMapperIntegrationTest {
 
     private IngredientDTO source;
     private Ingredient target;
+    private final IngredientTestFactory ingredientFactory;
+    private final IngredientDTOTestFactory ingredientDTOFactory;
+    private final IngredientDTOToIngredientMapper mapper;
     private final LongIdTestComparator idComparator;
     private final StringNameTestComparator nameComparator;
     private final AmountTestComparator amountComparator;
     private final LongVersionTestComparator versionComparator;
     private final MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
     private final IngredientIngredientDTOTestComparator ingredientComparator;
-    private final IngredientTestFactory ingredientFactory;
-    private final IngredientDTOTestFactory ingredientDTOFactory;
-    private final IngredientDTOToIngredientMapper mapper;
 
     @BeforeEach
     void setUp() {

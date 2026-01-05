@@ -31,9 +31,12 @@ import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("RecipeRecipeDTOValueTestComparator unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class RecipeRecipeDTOValueTestComparatorUnitTest {
+
+    private Recipe recipe;
+    private RecipeDTO recipeDTO;
 
     @Mock
     private LongIdTestComparator idComparator;
@@ -68,8 +71,6 @@ class RecipeRecipeDTOValueTestComparatorUnitTest {
     @Mock
     private LongVersionTestComparator versionComparator;
     private RecipeRecipeDTOTestComparator recipeComparator;
-    private Recipe recipe;
-    private RecipeDTO recipeDTO;
 
     @BeforeEach
     void setUp() {

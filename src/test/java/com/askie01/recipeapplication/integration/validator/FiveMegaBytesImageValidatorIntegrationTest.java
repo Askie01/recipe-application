@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ContextConfiguration(classes = FiveMegaBytesImageValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.image-type=five-mega-bytes-image")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("FiveMegaBytesImageValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class FiveMegaBytesImageValidatorIntegrationTest {
 
     private final ImageValidator validator;

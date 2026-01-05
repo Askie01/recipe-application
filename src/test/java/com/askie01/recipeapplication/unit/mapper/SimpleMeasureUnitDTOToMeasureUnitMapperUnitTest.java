@@ -23,9 +23,12 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("SimpleMeasureUnitDTOToMeasureUnitMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class SimpleMeasureUnitDTOToMeasureUnitMapperUnitTest {
+
+    private MeasureUnitDTO source;
+    private MeasureUnit target;
 
     @Mock
     private LongIdMapper idMapper;
@@ -36,8 +39,6 @@ class SimpleMeasureUnitDTOToMeasureUnitMapperUnitTest {
     @Mock
     private LongVersionMapper versionMapper;
     private MeasureUnitDTOToMeasureUnitMapper mapper;
-    private MeasureUnitDTO source;
-    private MeasureUnit target;
 
     private LongIdTestComparator idComparator;
     private StringNameTestComparator nameComparator;

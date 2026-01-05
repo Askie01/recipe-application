@@ -25,8 +25,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("RandomRecipeTestFactory unit test")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class RandomRecipeTestFactoryUnitTest {
 
     @Mock
