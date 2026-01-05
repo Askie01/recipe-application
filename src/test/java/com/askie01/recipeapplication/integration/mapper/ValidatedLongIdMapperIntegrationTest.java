@@ -3,8 +3,7 @@ package com.askie01.recipeapplication.integration.mapper;
 import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
 import com.askie01.recipeapplication.comparator.LongIdTestComparator;
 import com.askie01.recipeapplication.configuration.LongIdValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.PositiveLongIdValidatorConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedLongIdMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedLongIdMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.LongIdMapper;
 import com.askie01.recipeapplication.model.value.HasLongId;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class,
+        ValidatedLongIdMapperDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.id-type=validated-long-id",
-        "component.validator.id-type=positive-long-id"
-})
+@TestPropertySource(locations = "classpath:validated-long-id-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedLongIdMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedLongIdMapperIntegrationTest {
 
-    private final LongIdMapper mapper;
     private HasLongId source;
     private HasLongId target;
-
+    private final LongIdMapper mapper;
     private final LongIdTestComparator comparator;
 
     @BeforeEach
