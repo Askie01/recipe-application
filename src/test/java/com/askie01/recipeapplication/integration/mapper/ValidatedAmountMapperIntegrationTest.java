@@ -3,8 +3,7 @@ package com.askie01.recipeapplication.integration.mapper;
 import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
 import com.askie01.recipeapplication.comparator.AmountTestComparator;
 import com.askie01.recipeapplication.configuration.AmountValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.PositiveAmountValidatorConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedAmountMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedAmountMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.AmountMapper;
 import com.askie01.recipeapplication.model.value.HasAmount;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedAmountMapperConfiguration.class,
-        PositiveAmountValidatorConfiguration.class,
+        ValidatedAmountMapperDefaultTestConfiguration.class,
         AmountValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.amount-type=validated-amount",
-        "component.validator.amount-type=positive-amount"
-})
+@TestPropertySource(locations = "classpath:validated-amount-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedAmountMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedAmountMapperIntegrationTest {
 
-    private final AmountMapper mapper;
     private HasAmount source;
     private HasAmount target;
-
+    private final AmountMapper mapper;
     private final AmountTestComparator amountComparator;
 
     @BeforeEach
