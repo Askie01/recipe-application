@@ -25,57 +25,33 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        SimpleIngredientDTOToIngredientMapperConfiguration.class,
-        ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class,
-        ValidatedStringNameMapperConfiguration.class,
-        NonBlankStringNameValidatorConfiguration.class,
-        ValidatedAmountMapperConfiguration.class,
-        PositiveAmountValidatorConfiguration.class,
-        SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
-        ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class,
-        FakerTestConfiguration.class,
-        IngredientIngredientDTOValueTestComparatorTestConfiguration.class,
+        SimpleIngredientDTOToIngredientMapperDefaultTestConfiguration.class,
+        RandomIngredientDTOTestFactoryDefaultTestConfiguration.class,
+        RandomIngredientTestFactoryDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
         AmountValueTestComparatorTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class,
-        RandomIngredientDTOTestFactoryTestConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
-        RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class
+        MeasureUnitMeasureUnitDTOValueTestComparatorDefaultTestConfiguration.class,
+        IngredientIngredientDTOValueTestComparatorDefaultTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.ingredientDTO-to-ingredient-type=simple",
-        "component.mapper.id-type=validated-long-id",
-        "component.validator.id-type=positive-long-id",
-        "component.mapper.name-type=validated-string-name",
-        "component.validator.name-type=non-blank-string",
-        "component.mapper.amount-type=validated-amount",
-        "component.validator.amount-type=positive-amount",
-        "component.mapper.measureUnitDTO-to-measureUnit-type=simple",
-        "component.mapper.version-type=validated-long-version",
-        "component.validator.version-type=positive-long-version"
-})
+@TestPropertySource(locations = "classpath:simple-ingredientDTO-to-ingredient-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleIngredientDTOToIngredientMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleIngredientDTOToIngredientMapperIntegrationTest {
-
-    private final IngredientDTOToIngredientMapper mapper;
-    private final IngredientIngredientDTOTestComparator ingredientComparator;
-    private final LongIdTestComparator idComparator;
-    private final StringNameTestComparator nameComparator;
-    private final AmountTestComparator amountComparator;
-    private final MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
-    private final LongVersionTestComparator versionComparator;
-    private final IngredientDTOTestFactory ingredientDTOFactory;
-    private final IngredientTestFactory ingredientFactory;
 
     private IngredientDTO source;
     private Ingredient target;
+    private final IngredientTestFactory ingredientFactory;
+    private final IngredientDTOTestFactory ingredientDTOFactory;
+    private final IngredientDTOToIngredientMapper mapper;
+    private final LongIdTestComparator idComparator;
+    private final StringNameTestComparator nameComparator;
+    private final AmountTestComparator amountComparator;
+    private final LongVersionTestComparator versionComparator;
+    private final MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
+    private final IngredientIngredientDTOTestComparator ingredientComparator;
 
     @BeforeEach
     void setUp() {

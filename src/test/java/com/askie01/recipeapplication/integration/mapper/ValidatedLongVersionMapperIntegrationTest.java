@@ -3,8 +3,7 @@ package com.askie01.recipeapplication.integration.mapper;
 import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
 import com.askie01.recipeapplication.comparator.LongVersionTestComparator;
 import com.askie01.recipeapplication.configuration.LongVersionValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.PositiveLongVersionValidatorConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedLongVersionMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedLongVersionMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.LongVersionMapper;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class,
+        ValidatedLongVersionMapperDefaultTestConfiguration.class,
         LongVersionValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.version-type=validated-long-version",
-        "component.validator.version-type=positive-long-version"
-})
+@TestPropertySource(locations = "classpath:validated-long-version-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedLongVersionMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedLongVersionMapperIntegrationTest {
 
-    private final LongVersionMapper mapper;
     private HasLongVersion source;
     private HasLongVersion target;
-
+    private final LongVersionMapper mapper;
     private final LongVersionTestComparator comparator;
 
     @BeforeEach

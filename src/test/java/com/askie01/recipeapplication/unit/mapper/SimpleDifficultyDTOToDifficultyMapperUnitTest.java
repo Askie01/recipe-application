@@ -12,8 +12,8 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("SimpleDifficultyDTOToDifficultyMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class SimpleDifficultyDTOToDifficultyMapperUnitTest {
 
     private DifficultyDTOToDifficultyMapper mapper;

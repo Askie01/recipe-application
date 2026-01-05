@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class InstructionsValueTestComparatorUnitTest {
 
-    private InstructionsTestComparator comparator;
     private HasInstructions source;
     private HasInstructions target;
+    private InstructionsTestComparator comparator;
 
     @BeforeEach
     void setUp() {

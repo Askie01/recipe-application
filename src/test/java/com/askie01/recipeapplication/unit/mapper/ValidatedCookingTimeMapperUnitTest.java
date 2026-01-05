@@ -19,17 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("ValidatedCookingTimeMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class ValidatedCookingTimeMapperUnitTest {
+
+    private HasCookingTime source;
+    private HasCookingTime target;
+    private CookingTimeMapper mapper;
 
     @Mock
     private CookingTimeValidator validator;
-    private CookingTimeMapper mapper;
-    private HasCookingTime source;
-    private HasCookingTime target;
-
-    private CookingTimeTestComparator cookingTimeComparator;
+    private CookingTimeTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +40,7 @@ class ValidatedCookingTimeMapperUnitTest {
         this.target = HasCookingTimeTestBuilder.builder()
                 .cookingTime(20)
                 .build();
-        this.cookingTimeComparator = new CookingTimeValueTestComparator();
+        this.comparator = new CookingTimeValueTestComparator();
     }
 
     @Test
@@ -48,7 +48,7 @@ class ValidatedCookingTimeMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceCookingTimeToTargetCookingTime() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        final boolean equalCookingTime = comparator.compare(source, target);
         assertTrue(equalCookingTime);
     }
 
@@ -57,7 +57,7 @@ class ValidatedCookingTimeMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceCookingTimeToTargetCookingTime() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
+        final boolean equalCookingTime = comparator.compare(source, target);
         assertFalse(equalCookingTime);
     }
 

@@ -1,7 +1,6 @@
 package com.askie01.recipeapplication.integration.factory;
 
-import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomMeasureUnitTestFactoryTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomMeasureUnitTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.factory.MeasureUnitTestFactory;
 import com.askie01.recipeapplication.model.entity.MeasureUnit;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +17,10 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class
-})
+@ContextConfiguration(classes = RandomMeasureUnitTestFactoryDefaultTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("RandomMeasureUnitTestFactory integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class RandomMeasureUnitTestFactoryIntegrationTest {
 
     private final MeasureUnitTestFactory factory;

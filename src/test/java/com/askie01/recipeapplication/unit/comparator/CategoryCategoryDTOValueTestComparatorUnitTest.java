@@ -29,6 +29,9 @@ import static org.mockito.Mockito.when;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class CategoryCategoryDTOValueTestComparatorUnitTest {
 
+    private Category category;
+    private CategoryDTO categoryDTO;
+
     @Mock
     private LongIdTestComparator longIdTestComparator;
 
@@ -38,8 +41,6 @@ class CategoryCategoryDTOValueTestComparatorUnitTest {
     @Mock
     private LongVersionTestComparator longVersionTestComparator;
     private CategoryCategoryDTOTestComparator categoryCategoryDTOTestComparator;
-    private Category category;
-    private CategoryDTO categoryDTO;
 
     @BeforeEach
     void setUp() {

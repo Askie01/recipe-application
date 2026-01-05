@@ -25,19 +25,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         SimpleLongIdMapperConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.id-type=simple-long-id"
-})
+@TestPropertySource(properties = "component.mapper.id-type=simple-long-id")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleLongIdMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleLongIdMapperIntegrationTest {
 
     private HasLongId source;
     private HasLongId target;
-
     private final LongIdMapper mapper;
-    private final LongIdTestComparator idComparator;
+    private final LongIdTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -53,7 +50,7 @@ class SimpleLongIdMapperIntegrationTest {
     @DisplayName("map method should map source id to target id when source and target are present")
     void map_shouldMapSourceIdToTargetId_whenSourceAndTargetArePresent() {
         mapper.map(source, target);
-        final boolean equalId = idComparator.compare(source, target);
+        final boolean equalId = comparator.compare(source, target);
         assertTrue(equalId);
     }
 

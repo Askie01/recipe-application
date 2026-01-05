@@ -16,12 +16,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class
-})
+@ContextConfiguration(classes = DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("DifficultyDifficultyDTOValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class DifficultyDifficultyDTOValueTestComparatorIntegrationTest {
 
     private final DifficultyDifficultyDTOTestComparator comparator;

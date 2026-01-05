@@ -21,9 +21,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("SimpleCategoryDTOToCategoryMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class SimpleCategoryDTOToCategoryMapperUnitTest {
+
+    private CategoryDTO source;
+    private Category target;
 
     @Mock
     private LongIdMapper idMapper;
@@ -34,8 +37,6 @@ class SimpleCategoryDTOToCategoryMapperUnitTest {
     @Mock
     private LongVersionMapper versionMapper;
     private CategoryDTOToCategoryMapper mapper;
-    private CategoryDTO source;
-    private Category target;
 
     private CategoryCategoryDTOTestComparator categoryComparator;
     private LongIdTestComparator idComparator;

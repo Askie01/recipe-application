@@ -3,8 +3,7 @@ package com.askie01.recipeapplication.integration.mapper;
 import com.askie01.recipeapplication.builder.HasDescriptionTestBuilder;
 import com.askie01.recipeapplication.comparator.DescriptionTestComparator;
 import com.askie01.recipeapplication.configuration.DescriptionValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.NonBlankDescriptionValidatorConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedDescriptionMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedDescriptionMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.DescriptionMapper;
 import com.askie01.recipeapplication.model.value.HasDescription;
 import lombok.RequiredArgsConstructor;
@@ -22,24 +21,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedDescriptionMapperConfiguration.class,
-        NonBlankDescriptionValidatorConfiguration.class,
+        ValidatedDescriptionMapperDefaultTestConfiguration.class,
         DescriptionValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.description-type=validated-description",
-        "component.validator.description-type=non-blank-description"
-})
+@TestPropertySource(locations = "classpath:validated-description-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedDescriptionMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedDescriptionMapperIntegrationTest {
 
-    private final DescriptionMapper mapper;
     private HasDescription source;
     private HasDescription target;
-
-    private final DescriptionTestComparator descriptionComparator;
+    private final DescriptionMapper mapper;
+    private final DescriptionTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -55,7 +49,7 @@ class ValidatedDescriptionMapperIntegrationTest {
     @DisplayName("map method should map source description to target description when source is valid")
     void map_whenSourceIsValid_mapsSourceDescriptionToTargetDescription() {
         mapper.map(source, target);
-        final boolean equalDescriptions = descriptionComparator.compare(source, target);
+        final boolean equalDescriptions = comparator.compare(source, target);
         assertTrue(equalDescriptions);
     }
 
@@ -64,7 +58,7 @@ class ValidatedDescriptionMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceDescriptionToTargetDescription() {
         source.setDescription("");
         mapper.map(source, target);
-        final boolean equalDescriptions = descriptionComparator.compare(source, target);
+        final boolean equalDescriptions = comparator.compare(source, target);
         assertFalse(equalDescriptions);
     }
 

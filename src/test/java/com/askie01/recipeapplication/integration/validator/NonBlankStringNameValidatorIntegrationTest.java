@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = NonBlankStringNameValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.name-type=non-blank-string")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("NonBlankStringNameValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class NonBlankStringNameValidatorIntegrationTest {
 
     private final StringNameValidator validator;

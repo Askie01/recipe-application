@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = NonBlankDescriptionValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.description-type=non-blank-description")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("NonBlankDescriptionValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class NonBlankDescriptionValidatorIntegrationTest {
 
     private final DescriptionValidator validator;

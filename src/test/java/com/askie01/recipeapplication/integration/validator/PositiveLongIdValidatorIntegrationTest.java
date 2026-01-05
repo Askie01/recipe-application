@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = PositiveLongIdValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.id-type=positive-long-id")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveLongIdValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class PositiveLongIdValidatorIntegrationTest {
 
     private final LongIdValidator validator;

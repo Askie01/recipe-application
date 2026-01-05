@@ -1,7 +1,10 @@
 package com.askie01.recipeapplication.integration.comparator;
 
 import com.askie01.recipeapplication.comparator.CategoryCategoryDTOTestComparator;
-import com.askie01.recipeapplication.configuration.*;
+import com.askie01.recipeapplication.configuration.CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.FakerTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomCategoryDTOTestFactoryDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.RandomCategoryTestFactoryDefaultTestConfiguration;
 import com.askie01.recipeapplication.dto.CategoryDTO;
 import com.askie01.recipeapplication.factory.CategoryDTOTestFactory;
 import com.askie01.recipeapplication.factory.CategoryTestFactory;
@@ -20,24 +23,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        CategoryCategoryDTOValueTestComparatorTestConfiguration.class,
-        LongIdValueTestComparatorTestConfiguration.class,
-        StringNameValueTestComparatorTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class,
         FakerTestConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class
+        RandomCategoryDTOTestFactoryDefaultTestConfiguration.class,
+        RandomCategoryTestFactoryDefaultTestConfiguration.class,
+        CategoryCategoryDTOValueTestComparatorDefaultTestConfiguration.class
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("CategoryCategoryDTOValueTestComparator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class CategoryCategoryDTOValueTestComparatorIntegrationTest {
 
-    private final CategoryCategoryDTOTestComparator comparator;
-    private final CategoryTestFactory categoryFactory;
-    private final CategoryDTOTestFactory categoryDTOFactory;
     private Category category;
     private CategoryDTO categoryDTO;
+    private final CategoryTestFactory categoryFactory;
+    private final CategoryDTOTestFactory categoryDTOFactory;
+    private final CategoryCategoryDTOTestComparator comparator;
 
     @BeforeEach
     void setUp() {

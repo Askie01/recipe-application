@@ -14,13 +14,12 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 @DisplayName("SimpleLongVersionMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class SimpleLongVersionMapperUnitTest {
 
     private HasLongVersion source;
     private HasLongVersion target;
-
     private LongVersionMapper mapper;
     private LongVersionTestComparator comparator;
 

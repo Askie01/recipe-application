@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class CookingTimeValueTestComparatorUnitTest {
 
-    private CookingTimeTestComparator comparator;
     private HasCookingTime source;
     private HasCookingTime target;
+    private CookingTimeTestComparator comparator;
 
     @BeforeEach
     void setUp() {

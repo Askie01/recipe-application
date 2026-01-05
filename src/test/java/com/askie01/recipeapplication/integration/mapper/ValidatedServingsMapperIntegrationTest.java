@@ -2,9 +2,8 @@ package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
 import com.askie01.recipeapplication.comparator.ServingsTestComparator;
-import com.askie01.recipeapplication.configuration.PositiveServingsValidatorConfiguration;
 import com.askie01.recipeapplication.configuration.ServingsValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedServingsMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ValidatedServingsMapperDefaultTestConfiguration;
 import com.askie01.recipeapplication.mapper.ServingsMapper;
 import com.askie01.recipeapplication.model.value.HasServings;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        ValidatedServingsMapperConfiguration.class,
-        PositiveServingsValidatorConfiguration.class,
+        ValidatedServingsMapperDefaultTestConfiguration.class,
         ServingsValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.servings-type=validated-servings",
-        "component.validator.servings-type=positive-servings"
-})
+@TestPropertySource(locations = "classpath:validated-servings-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("ValidatedServingsMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedServingsMapperIntegrationTest {
 
-    private final ServingsMapper mapper;
     private HasServings source;
     private HasServings target;
-
+    private final ServingsMapper mapper;
     private final ServingsTestComparator comparator;
 
     @BeforeEach

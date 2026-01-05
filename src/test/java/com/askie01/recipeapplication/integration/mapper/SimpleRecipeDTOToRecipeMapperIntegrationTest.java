@@ -26,90 +26,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-        SimpleRecipeDTOToRecipeMapperConfiguration.class,
-        ValidatedLongIdMapperConfiguration.class,
-        PositiveLongIdValidatorConfiguration.class,
-        ValidatedImageMapperConfiguration.class,
-        FiveMegaBytesImageValidatorConfiguration.class,
-        ValidatedStringNameMapperConfiguration.class,
-        NonBlankStringNameValidatorConfiguration.class,
-        ValidatedDescriptionMapperConfiguration.class,
-        NonBlankDescriptionValidatorConfiguration.class,
-        SimpleDifficultyDTOToDifficultyMapperConfiguration.class,
-        SimpleCategoryDTOToCategoryMapperConfiguration.class,
-        ValidatedLongVersionMapperConfiguration.class,
-        PositiveLongVersionValidatorConfiguration.class,
-        SimpleIngredientDTOToIngredientMapperConfiguration.class,
-        ValidatedAmountMapperConfiguration.class,
-        PositiveAmountValidatorConfiguration.class,
-        SimpleMeasureUnitDTOToMeasureUnitMapperConfiguration.class,
-        ValidatedServingsMapperConfiguration.class,
-        PositiveServingsValidatorConfiguration.class,
-        ValidatedCookingTimeMapperConfiguration.class,
-        PositiveCookingTimeValidatorConfiguration.class,
-        ValidatedInstructionsMapperConfiguration.class,
-        NonBlankInstructionsValidatorConfiguration.class,
-
-        RandomRecipeDTOTestFactoryTestConfiguration.class,
-        FakerTestConfiguration.class,
-        RandomDifficultyDTOTestFactoryTestConfiguration.class,
-        RandomCategoryDTOTestFactoryTestConfiguration.class,
-        RandomIngredientDTOTestFactoryTestConfiguration.class,
-        RandomMeasureUnitDTOTestFactoryTestConfiguration.class,
-        RandomRecipeTestFactoryTestConfiguration.class,
-        RandomDifficultyTestFactoryTestConfiguration.class,
-        RandomCategoryTestFactoryTestConfiguration.class,
-        RandomIngredientTestFactoryTestConfiguration.class,
-        RandomMeasureUnitTestFactoryTestConfiguration.class,
-
-        RecipeRecipeDTOValueTestComparatorTestConfiguration.class,
+        SimpleRecipeDTOToRecipeMapperDefaultTestConfiguration.class,
+        RandomRecipeDTOTestFactoryDefaultTestConfiguration.class,
+        RandomRecipeTestFactoryDefaultTestConfiguration.class,
+        RecipeRecipeDTOValueTestComparatorDefaultTestConfiguration.class,
         LongIdValueTestComparatorTestConfiguration.class,
         ImageValueTestComparatorTestConfiguration.class,
         StringNameValueTestComparatorTestConfiguration.class,
         DescriptionValueTestComparatorTestConfiguration.class,
         DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class,
-        CategoryCategoryDTOValueTestComparatorTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class,
-        IngredientIngredientDTOValueTestComparatorTestConfiguration.class,
-        AmountValueTestComparatorTestConfiguration.class,
-        MeasureUnitMeasureUnitDTOValueTestComparatorTestConfiguration.class,
         ServingsValueTestComparatorTestConfiguration.class,
         CookingTimeValueTestComparatorTestConfiguration.class,
-        InstructionsValueTestComparatorTestConfiguration.class
+        InstructionsValueTestComparatorTestConfiguration.class,
+        LongVersionValueTestComparatorTestConfiguration.class
 })
-@TestPropertySource(properties = {
-        "component.mapper.recipeDTO-to-recipe-type=simple",
-        "component.mapper.id-type=validated-long-id",
-        "component.validator.id-type=positive-long-id",
-        "component.mapper.image-type=validated-image",
-        "component.validator.image-type=five-mega-bytes-image",
-        "component.mapper.name-type=validated-string-name",
-        "component.validator.name-type=non-blank-string",
-        "component.mapper.description-type=validated-description",
-        "component.validator.description-type=non-blank-description",
-        "component.mapper.difficultyDTO-to-difficulty-type=simple",
-        "component.mapper.categoryDTO-to-category-type=simple",
-        "component.mapper.version-type=validated-long-version",
-        "component.validator.version-type=positive-long-version",
-        "component.mapper.ingredientDTO-to-ingredient-type=simple",
-        "component.mapper.amount-type=validated-amount",
-        "component.validator.amount-type=positive-amount",
-        "component.mapper.measureUnitDTO-to-measureUnit-type=simple",
-        "component.mapper.servings-type=validated-servings",
-        "component.validator.servings-type=positive-servings",
-        "component.mapper.cooking-time-type=validated-cooking-time",
-        "component.validator.cooking-time-type=positive-cooking-time",
-        "component.mapper.instructions-type=validated-instructions",
-        "component.validator.instructions-type=non-blank-instructions",
-})
+@TestPropertySource(locations = "classpath:simple-recipeDTO-to-recipe-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("SimpleRecipeDTOToRecipeMapper integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class SimpleRecipeDTOToRecipeMapperIntegrationTest {
 
+    private RecipeDTO source;
+    private Recipe target;
+    private final RecipeTestFactory recipeFactory;
+    private final RecipeDTOTestFactory recipeDTOFactory;
     private final RecipeDTOToRecipeMapper mapper;
-
-    private final RecipeRecipeDTOTestComparator recipeComparator;
     private final LongIdTestComparator idComparator;
     private final ImageTestComparator imageComparator;
     private final StringNameTestComparator nameComparator;
@@ -119,12 +60,7 @@ class SimpleRecipeDTOToRecipeMapperIntegrationTest {
     private final CookingTimeTestComparator cookingTimeComparator;
     private final InstructionsTestComparator instructionsComparator;
     private final LongVersionTestComparator versionComparator;
-
-    private final RecipeDTOTestFactory recipeDTOFactory;
-    private final RecipeTestFactory recipeFactory;
-
-    private RecipeDTO source;
-    private Recipe target;
+    private final RecipeRecipeDTOTestComparator recipeComparator;
 
     @BeforeEach
     void setUp() {

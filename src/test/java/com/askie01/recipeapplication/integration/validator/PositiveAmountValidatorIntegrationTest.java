@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = PositiveAmountValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.amount-type=positive-amount")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 @DisplayName("PositiveAmountValidator integration tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class PositiveAmountValidatorIntegrationTest {
 
     private final AmountValidator validator;
