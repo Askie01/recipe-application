@@ -13,4 +13,4 @@ CREATE TABLE recipe
     updated_at   TIMESTAMP    DEFAULT NULL,
     updated_by   VARCHAR(255) DEFAULT NULL,
     version      BIGINT                          NOT NULL
-)
+);
