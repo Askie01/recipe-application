@@ -14,10 +14,6 @@ spring:
     hibernate:
       ddl-auto: none
 
-  data:
-    jdbc:
-      dialect: mysql
-
 component:
   auditor-type: recipe-service-string-auditor
 
