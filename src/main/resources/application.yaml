@@ -6,7 +6,7 @@ spring:
     name: recipe-application
 
   datasource:
-    url: jdbc:mysql://localhost:3306/recipe_database
+    url: jdbc:mysql://localhost:3306/recipes
     username: root
     password: root
 
@@ -45,3 +45,6 @@ component:
     measureUnitDTO-to-measureUnit-type: simple
     ingredientDTO-to-ingredient-type: simple
     recipeDTO-to-recipe-type: simple
+
+  service:
+    recipe: v1
