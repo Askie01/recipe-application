@@ -157,6 +157,12 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeDTOToRecipe' mapper type.",
       "defaultValue": "simple"
+    },
+    {
+      "name": "component.service.recipe",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeService' implementation.",
+      "defaultValue": "v1"
     }
   ]
 }
