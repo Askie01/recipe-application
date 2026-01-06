@@ -11,7 +11,6 @@ import com.askie01.recipeapplication.model.entity.Ingredient;
 import com.askie01.recipeapplication.model.entity.Recipe;
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
 import com.github.javafaker.Faker;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -94,7 +93,7 @@ class RecipeRecipeDTOValueTestComparatorUnitTest {
         this.recipeDTO = recipeDTOFactory.createRecipeDTO();
     }
 
-    private static @NotNull RecipeDTOTestFactory getRecipeDTOTestFactory(Faker faker) {
+    private static RecipeDTOTestFactory getRecipeDTOTestFactory(Faker faker) {
         final DifficultyDTOTestFactory difficultyDTOFactory = new RandomDifficultyDTOTestFactory(faker);
         final CategoryDTOTestFactory categoryDTOFactory = new RandomCategoryDTOTestFactory(faker);
         final MeasureUnitDTOTestFactory measureUnitDTOFactory = new RandomMeasureUnitDTOTestFactory(faker);
@@ -107,7 +106,7 @@ class RecipeRecipeDTOValueTestComparatorUnitTest {
         );
     }
 
-    private static @NotNull RecipeTestFactory getRecipeTestFactory(Faker faker) {
+    private static RecipeTestFactory getRecipeTestFactory(Faker faker) {
         final DifficultyTestFactory difficultyFactory = new RandomDifficultyTestFactory(faker);
         final CategoryTestFactory categoryFactory = new RandomCategoryTestFactory(faker);
         final MeasureUnitTestFactory measureUnitFactory = new RandomMeasureUnitTestFactory(faker);
