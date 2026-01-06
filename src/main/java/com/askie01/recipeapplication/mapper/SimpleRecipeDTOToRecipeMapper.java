@@ -75,14 +75,24 @@ public class SimpleRecipeDTOToRecipeMapper implements RecipeDTOToRecipeMapper {
         final Set<Category> categories = recipeDTO.getCategoryDTOs().stream()
                 .map(categoryDTOToCategoryMapper::mapToEntity)
                 .collect(Collectors.toCollection(HashSet::new));
-        recipe.setCategories(categories);
+        if (recipe.getCategories() == null) {
+            recipe.setCategories(categories);
+        } else {
+            recipe.getCategories().clear();
+            recipe.getCategories().addAll(categories);
+        }
     }
 
     private void mapIngredientDTOsToIngredients(RecipeDTO recipeDTO, Recipe recipe) {
         final Set<Ingredient> ingredients = recipeDTO.getIngredientDTOs().stream()
                 .map(ingredientDTOToIngredientMapper::mapToEntity)
                 .collect(Collectors.toCollection(HashSet::new));
-        recipe.setIngredients(ingredients);
+        if (recipe.getIngredients() == null) {
+            recipe.setIngredients(ingredients);
+        } else {
+            recipe.getIngredients().clear();
+            recipe.getIngredients().addAll(ingredients);
+        }
     }
 
     private void mapServings(RecipeDTO recipeDTO, Recipe recipe) {
