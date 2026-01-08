@@ -39,6 +39,7 @@ component:
     difficultyDTO-to-difficulty-type: simple
     difficulty-to-difficultyDTO-type: simple
     categoryDTO-to-category-type: simple
+    category-to-categoryDTO-type: simple
     measureUnitDTO-to-measureUnit-type: simple
     ingredientDTO-to-ingredient-type: simple
     recipeDTO-to-recipe-type: simple
