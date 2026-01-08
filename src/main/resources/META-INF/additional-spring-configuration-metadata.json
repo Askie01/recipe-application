@@ -171,6 +171,12 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.ingredient-to-ingredientDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'IngredientToIngredientDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
       "name": "component.mapper.recipeDTO-to-recipe-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeDTOToRecipe' mapper type.",
