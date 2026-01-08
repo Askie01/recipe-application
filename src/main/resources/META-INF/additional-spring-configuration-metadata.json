@@ -147,6 +147,12 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.category-to-categoryDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CategoryToCategoryDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
       "name": "component.mapper.measureUnitDTO-to-measureUnit-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'MeasureUnitDTOToMeasureUnit' mapper type.",
