@@ -45,6 +45,7 @@ component:
     ingredientDTO-to-ingredient-type: simple
     ingredient-to-ingredientDTO-type: simple
     recipeDTO-to-recipe-type: simple
+    recipe-to-recipeDTO-type: simple
 
   service:
     recipe: v1
