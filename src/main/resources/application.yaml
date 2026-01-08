@@ -37,6 +37,7 @@ component:
     amount-type: validated-amount
     description-type: validated-description
     difficultyDTO-to-difficulty-type: simple
+    difficulty-to-difficultyDTO-type: simple
     categoryDTO-to-category-type: simple
     measureUnitDTO-to-measureUnit-type: simple
     ingredientDTO-to-ingredient-type: simple
