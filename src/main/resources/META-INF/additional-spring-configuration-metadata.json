@@ -135,9 +135,21 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.difficulty-to-difficultyDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'DifficultyToDifficultyDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
       "name": "component.mapper.categoryDTO-to-category-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'CategoryDTOToCategory' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.category-to-categoryDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CategoryToCategoryDTO' mapper type.",
       "defaultValue": "simple"
     },
     {
@@ -147,15 +159,33 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.measureUnit-to-measureUnitDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'MeasureUnitToMeasureUnitDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
       "name": "component.mapper.ingredientDTO-to-ingredient-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'IngredientDTOToIngredient' mapper type.",
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.ingredient-to-ingredientDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'IngredientToIngredientDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
       "name": "component.mapper.recipeDTO-to-recipe-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeDTOToRecipe' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.recipe-to-recipeDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeToRecipeDTO' mapper type.",
       "defaultValue": "simple"
     },
     {
