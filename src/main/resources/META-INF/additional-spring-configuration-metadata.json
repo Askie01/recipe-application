@@ -159,6 +159,12 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.measureUnit-to-measureUnitDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'MeasureUnitToMeasureUnitDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
       "name": "component.mapper.ingredientDTO-to-ingredient-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'IngredientDTOToIngredient' mapper type.",
