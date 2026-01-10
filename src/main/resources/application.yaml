@@ -49,3 +49,8 @@ component:
 
   service:
     recipe: v1
+
+api:
+  recipe:
+    v1:
+      enabled: true
