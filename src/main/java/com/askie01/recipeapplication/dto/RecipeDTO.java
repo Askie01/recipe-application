@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -43,11 +43,11 @@ public class RecipeDTO implements
 
     @Valid
     @NotNull(message = "CategoryDTOs in `RecipeDTO` can't be null.")
-    private List<CategoryDTO> categoryDTOs;
+    private Set<CategoryDTO> categoryDTOs;
 
     @Valid
-    @NotEmpty(message = "IngredientDTOs list in `RecipeDTO` can't be empty, nor null.")
-    private List<IngredientDTO> ingredientDTOs;
+    @NotEmpty(message = "IngredientDTOs in `RecipeDTO` can't be empty, nor null.")
+    private Set<IngredientDTO> ingredientDTOs;
 
     @DecimalMin(value = "1.0", message = "Servings in `RecipeDTO` have to be at least 1.0.")
     private Double servings;

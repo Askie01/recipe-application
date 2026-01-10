@@ -5,9 +5,215 @@
       "description": "Property used for spring bean-wiring."
     },
     {
-      "name": "component.auditor.type",
+      "name": "component.auditor-type",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct auditor (AuditorAware implementation)."
+      "description": "Property used to wire a correct auditor (AuditorAware implementation).",
+      "defaultValue": "recipe-service-string-auditor"
+    },
+    {
+      "name": "component.validator",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct validators (Validator implementations)."
+    },
+    {
+      "name": "component.validator.id-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'id' validator type.",
+      "defaultValue": "positive-long-id"
+    },
+    {
+      "name": "component.validator.image-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'image' validator type.",
+      "defaultValue": "five-mega-bytes-image"
+    },
+    {
+      "name": "component.validator.name-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'name' validator type.",
+      "defaultValue": "non-blank-string"
+    },
+    {
+      "name": "component.validator.servings-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'servings' validator type.",
+      "defaultValue": "positive-servings"
+    },
+    {
+      "name": "component.validator.cooking-time-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'cooking time' validator type.",
+      "defaultValue": "positive-cooking-time"
+    },
+    {
+      "name": "component.validator.instructions-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'instructions' validator type.",
+      "defaultValue": "non-blank-instructions"
+    },
+    {
+      "name": "component.validator.version-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'version' validator type.",
+      "defaultValue": "positive-long-version"
+    },
+    {
+      "name": "component.validator.amount-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'amount' validator type.",
+      "defaultValue": "positive-amount"
+    },
+    {
+      "name": "component.validator.description-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'amount' validator type.",
+      "defaultValue": "non-blank-description"
+    },
+    {
+      "name": "component.mapper",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct mapper (Mapper implementations)."
+    },
+    {
+      "name": "component.mapper.id-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'id' mapper type.",
+      "defaultValue": "simple-long-id"
+    },
+    {
+      "name": "component.mapper.image-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'image' mapper type.",
+      "defaultValue": "validated-image"
+    },
+    {
+      "name": "component.mapper.name-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'name' mapper type.",
+      "defaultValue": "validated-string-name"
+    },
+    {
+      "name": "component.mapper.servings-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'servings' mapper type.",
+      "defaultValue": "validated-servings"
+    },
+    {
+      "name": "component.mapper.cooking-time-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'cooking time' mapper type.",
+      "defaultValue": "validated-cooking-time"
+    },
+    {
+      "name": "component.mapper.instructions-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'instructions' mapper type.",
+      "defaultValue": "validated-instructions"
+    },
+    {
+      "name": "component.mapper.version-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'version' mapper type.",
+      "defaultValue": "simple-long-version"
+    },
+    {
+      "name": "component.mapper.amount-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `amount` mapper type.",
+      "defaultValue": "validated-amount"
+    },
+    {
+      "name": "component.mapper.description-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct `description` mapper type.",
+      "defaultValue": "validated-description"
+    },
+    {
+      "name": "component.mapper.difficultyDTO-to-difficulty-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'DifficultyDTOToDifficulty' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.difficulty-to-difficultyDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'DifficultyToDifficultyDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.categoryDTO-to-category-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CategoryDTOToCategory' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.category-to-categoryDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CategoryToCategoryDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.measureUnitDTO-to-measureUnit-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'MeasureUnitDTOToMeasureUnit' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.measureUnit-to-measureUnitDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'MeasureUnitToMeasureUnitDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.ingredientDTO-to-ingredient-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'IngredientDTOToIngredient' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.ingredient-to-ingredientDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'IngredientToIngredientDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.recipeDTO-to-recipe-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeDTOToRecipe' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.mapper.recipe-to-recipeDTO-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeToRecipeDTO' mapper type.",
+      "defaultValue": "simple"
+    },
+    {
+      "name": "component.service.recipe",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeService' implementation.",
+      "defaultValue": "v1"
+    },
+    {
+      "name": "api",
+      "type": "java.lang.String",
+      "description": "Property used to manage APIs."
+    },
+    {
+      "name": "api.recipe",
+      "type": "java.lang.String",
+      "description": "Property used to manage recipe APIs."
+    },
+    {
+      "name": "api.recipe.v1",
+      "type": "java.lang.String",
+      "description": "Property used to manage recipe v1 APIs."
+    },
+    {
+      "name": "api.recipe.v1.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Property used to enable/disable 'RecipeRestControllerV1' API.",
+      "defaultValue": true
     }
   ]
 }

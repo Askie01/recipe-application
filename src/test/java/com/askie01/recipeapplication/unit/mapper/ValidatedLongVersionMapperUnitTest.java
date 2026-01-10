@@ -1,0 +1,77 @@
+package com.askie01.recipeapplication.unit.mapper;
+
+import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
+import com.askie01.recipeapplication.comparator.LongVersionTestComparator;
+import com.askie01.recipeapplication.comparator.LongVersionValueTestComparator;
+import com.askie01.recipeapplication.mapper.LongVersionMapper;
+import com.askie01.recipeapplication.mapper.ValidatedLongVersionMapper;
+import com.askie01.recipeapplication.model.value.HasLongVersion;
+import com.askie01.recipeapplication.validator.LongVersionValidator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("ValidatedLongVersionMapper unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
+class ValidatedLongVersionMapperUnitTest {
+
+    private HasLongVersion source;
+    private HasLongVersion target;
+    private LongVersionMapper mapper;
+
+    @Mock
+    private LongVersionValidator validator;
+    private LongVersionTestComparator comparator;
+
+    @BeforeEach
+    void setUp() {
+        this.mapper = new ValidatedLongVersionMapper(validator);
+        this.source = HasLongVersionTestBuilder.builder()
+                .version(1L)
+                .build();
+        this.target = HasLongVersionTestBuilder.builder()
+                .version(5L)
+                .build();
+        this.comparator = new LongVersionValueTestComparator();
+    }
+
+    @Test
+    @DisplayName("map method should map source version to target version when source is valid")
+    void map_whenSourceIsValid_mapsSourceVersionToTargetVersion() {
+        when(validator.isValid(source)).thenReturn(true);
+        mapper.map(source, target);
+        final boolean equalVersion = comparator.compare(source, target);
+        assertTrue(equalVersion);
+    }
+
+    @Test
+    @DisplayName("map method should not map source version to target version when source is invalid")
+    void map_whenSourceIsInvalid_doesNotMapSourceVersionToTargetVersion() {
+        when(validator.isValid(source)).thenReturn(false);
+        mapper.map(source, target);
+        final boolean equalVersion = comparator.compare(source, target);
+        assertFalse(equalVersion);
+    }
+
+    @Test
+    @DisplayName("map method should throw NullPointerException when source is null")
+    void map_whenSourceIsNull_throwsNullPointerException() {
+        when(validator.isValid(null)).thenThrow(NullPointerException.class);
+        assertThrows(NullPointerException.class, () -> mapper.map(null, target));
+    }
+
+    @Test
+    @DisplayName("map method should throw NullPointerException when target is null")
+    void map_whenTargetIsNull_throwsNullPointerException() {
+        when(validator.isValid(source)).thenReturn(true);
+        assertThrows(NullPointerException.class, () -> mapper.map(source, null));
+    }
+}

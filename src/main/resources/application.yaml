@@ -6,7 +6,7 @@ spring:
     name: recipe-application
 
   datasource:
-    url: jdbc:mysql://localhost:3306/recipe_database
+    url: jdbc:mysql://localhost:3306/recipes
     username: root
     password: root
 
@@ -14,14 +14,43 @@ spring:
     hibernate:
       ddl-auto: none
 
-  docker:
-    compose:
-      enabled: true
-
-  data:
-    jdbc:
-      dialect: mysql
-
 component:
-  auditor:
-    type: service
+  auditor-type: recipe-service-string-auditor
+
+  validator:
+    image-type: five-mega-bytes-image
+    name-type: non-blank-string
+    servings-type: positive-servings
+    cooking-time-type: positive-cooking-time
+    instructions-type: non-blank-instructions
+    amount-type: positive-amount
+    description-type: non-blank-description
+
+  mapper:
+    id-type: simple-long-id
+    image-type: validated-image
+    name-type: validated-string-name
+    servings-type: validated-servings
+    cooking-time-type: validated-cooking-time
+    instructions-type: validated-instructions
+    version-type: simple-long-version
+    amount-type: validated-amount
+    description-type: validated-description
+    difficultyDTO-to-difficulty-type: simple
+    difficulty-to-difficultyDTO-type: simple
+    categoryDTO-to-category-type: simple
+    category-to-categoryDTO-type: simple
+    measureUnitDTO-to-measureUnit-type: simple
+    measureUnit-to-measureUnitDTO-type: simple
+    ingredientDTO-to-ingredient-type: simple
+    ingredient-to-ingredientDTO-type: simple
+    recipeDTO-to-recipe-type: simple
+    recipe-to-recipeDTO-type: simple
+
+  service:
+    recipe: v1
+
+api:
+  recipe:
+    v1:
+      enabled: true
