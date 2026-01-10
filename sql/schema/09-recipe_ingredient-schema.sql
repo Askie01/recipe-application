@@ -14,4 +14,5 @@ ALTER TABLE recipe_ingredient
 
 ALTER TABLE recipe_ingredient
     ADD CONSTRAINT fk_ingredient_id_in_recipe_ingredient_table
-        FOREIGN KEY (ingredient_id) REFERENCES ingredient (id);
+        FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)
+            ON DELETE CASCADE;

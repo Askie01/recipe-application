@@ -14,4 +14,5 @@ ALTER TABLE recipe_category
 
 ALTER TABLE recipe_category
     ADD CONSTRAINT fk_category_id_in_recipe_category_table
-        FOREIGN KEY (category_id) REFERENCES category (id);
+        FOREIGN KEY (category_id) REFERENCES category (id)
+            ON DELETE CASCADE;
