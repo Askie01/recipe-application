@@ -193,6 +193,27 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
       "defaultValue": "v1"
+    },
+    {
+      "name": "api",
+      "type": "java.lang.String",
+      "description": "Property used to manage APIs."
+    },
+    {
+      "name": "api.recipe",
+      "type": "java.lang.String",
+      "description": "Property used to manage recipe APIs."
+    },
+    {
+      "name": "api.recipe.v1",
+      "type": "java.lang.String",
+      "description": "Property used to manage recipe v1 APIs."
+    },
+    {
+      "name": "api.recipe.v1.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Property used to enable/disable 'RecipeRestControllerV1' API.",
+      "defaultValue": true
     }
   ]
 }
