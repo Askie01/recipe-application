@@ -1,10 +1,7 @@
 package com.askie01.recipeapplication.integration.service;
 
 import com.askie01.recipeapplication.checker.RecipeTestPersistenceChecker;
-import com.askie01.recipeapplication.configuration.DefaultRecipeServiceV1DefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.DefaultRecipeTestPersistenceCheckerDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.RandomRecipeDTOUnsavedEntityTestFactoryDefaultTestConfiguration;
-import com.askie01.recipeapplication.configuration.RecipeServiceStringAuditorConfiguration;
+import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.RecipeDTO;
 import com.askie01.recipeapplication.exception.RecipeNotFoundException;
 import com.askie01.recipeapplication.factory.RecipeDTOUnsavedEntityTestFactory;
@@ -29,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import(value = {
+        EnableJpaAuditingConfiguration.class,
         RecipeServiceStringAuditorConfiguration.class,
         DefaultRecipeServiceV1DefaultTestConfiguration.class,
         RandomRecipeDTOUnsavedEntityTestFactoryDefaultTestConfiguration.class,
