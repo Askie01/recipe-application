@@ -46,7 +46,7 @@ public class RecipeDTO implements
     private Set<CategoryDTO> categoryDTOs;
 
     @Valid
-    @NotEmpty(message = "IngredientDTOs list in `RecipeDTO` can't be empty, nor null.")
+    @NotEmpty(message = "IngredientDTOs in `RecipeDTO` can't be empty, nor null.")
     private Set<IngredientDTO> ingredientDTOs;
 
     @DecimalMin(value = "1.0", message = "Servings in `RecipeDTO` have to be at least 1.0.")
