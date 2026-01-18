@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@ToString
+@ToString(exclude = "image")
 @EqualsAndHashCode
 public class RecipeDTO implements
         HasLongId,
