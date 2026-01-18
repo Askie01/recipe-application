@@ -1,7 +1,7 @@
 CREATE TABLE recipe
 (
     id           BIGINT PRIMARY KEY AUTO_INCREMENT,
-    image        BLOB,
+    image        LONGBLOB,
     name         VARCHAR(255)                    NOT NULL,
     description  VARCHAR(255)                    NOT NULL,
     difficulty   ENUM ('EASY', 'MEDIUM', 'HARD') NOT NULL,
