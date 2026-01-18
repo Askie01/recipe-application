@@ -9,8 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("FiveMegaBytesImageValidator unit tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
@@ -54,12 +53,13 @@ class FiveMegaBytesImageValidatorUnitTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if argument's image is null")
-    void isValid_whenArgumentImageIsNull_throwsNullPointerException() {
+    @DisplayName("isValid method should return false if argument's image is null")
+    void isValid_whenArgumentImageIsNull_returnsFalse() {
         final HasImage argument = HasImageTestBuilder.builder()
                 .image(null)
                 .build();
-        assertThrows(NullPointerException.class, () -> validator.isValid(argument));
+        final boolean result = validator.isValid(argument);
+        assertFalse(result);
     }
 
     @Test

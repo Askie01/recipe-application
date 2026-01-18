@@ -12,7 +12,11 @@ public class FiveMegaBytesImageValidator implements ImageValidator {
     }
 
     private boolean hasImageSizeUpToFiveMegaBytes(HasImage hasImage) {
-        final int imageSize = hasImage.getImage().length;
-        return imageSize <= FIVE_MEGA_BYTES;
+        final boolean imageExists = hasImage.getImage() != null;
+        if (imageExists) {
+            final int imageSize = hasImage.getImage().length;
+            return imageSize <= FIVE_MEGA_BYTES;
+        }
+        return false;
     }
 }

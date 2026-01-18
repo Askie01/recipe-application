@@ -14,8 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = FiveMegaBytesImageValidatorConfiguration.class)
@@ -58,12 +57,13 @@ class FiveMegaBytesImageValidatorIntegrationTest {
     }
 
     @Test
-    @DisplayName("isValid method should throw NullPointerException if argument's image is null")
+    @DisplayName("isValid method should return false if argument's image is null")
     void isValid_whenArgumentImageIsNull_throwsNullPointerException() {
         final HasImage argument = HasImageTestBuilder.builder()
                 .image(null)
                 .build();
-        assertThrows(NullPointerException.class, () -> validator.isValid(argument));
+        final boolean result = validator.isValid(argument);
+        assertFalse(result);
     }
 
     @Test
