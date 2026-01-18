@@ -6,7 +6,10 @@ import com.askie01.recipeapplication.mapper.RecipeDTOToRecipeMapper;
 import com.askie01.recipeapplication.model.entity.Recipe;
 import com.askie01.recipeapplication.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +22,11 @@ public class DefaultRecipeServiceV1 implements RecipeServiceV1 {
     public Recipe createRecipe(RecipeDTO recipeDTO) {
         final boolean recipeIsNew = recipeIsNew(recipeDTO);
         if (recipeIsNew) {
+            final boolean missImage = recipeDTO.getImage() == null;
+            if (missImage) {
+                final byte[] defaultImage = getDefaultImage();
+                recipeDTO.setImage(defaultImage);
+            }
             final Recipe recipe = mapper.mapToEntity(recipeDTO);
             return repository.save(recipe);
         }
@@ -29,6 +37,14 @@ public class DefaultRecipeServiceV1 implements RecipeServiceV1 {
         final boolean recipeDoesNotHaveId = recipeDTO.getId() == null;
         final boolean recipeDoesNotHaveVersion = recipeDTO.getVersion() == null;
         return recipeDoesNotHaveId && recipeDoesNotHaveVersion;
+    }
+
+    @SneakyThrows
+    public byte[] getDefaultImage() {
+        final File defaultImageFile = new File("src/main/resources/static/default-recipe.png");
+        try (final FileInputStream defaultImageStream = new FileInputStream(defaultImageFile)) {
+            return defaultImageStream.readAllBytes();
+        }
     }
 
     @Override
