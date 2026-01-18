@@ -42,7 +42,7 @@ public class Recipe implements
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "BLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
     private String name;
     private String description;
