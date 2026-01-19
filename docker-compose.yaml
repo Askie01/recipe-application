@@ -1,34 +1,49 @@
 services:
+
   recipe-application:
-    image: askie01/recipe-application:latest
-    container_name: recipe-application
+    image: "askie01/recipe-application:latest"
+    container_name: "recipe-application"
     ports:
-      - 8081:8080
-    env_file:
-      - recipe-application.env
+      - "8080:8080"
+    environment:
+      - "spring.datasource.url=jdbc:mysql://recipe-database:3306/recipes"
+      - "spring.datasource.username=${recipe_database_username}"
+      - "spring.datasource.password=${recipe_database_password}"
     networks:
-      - recipe-network
+      - recipe-application-network
+    tty: true
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
-      mysql-database:
+      recipe-database:
         condition: service_healthy
 
-  mysql-database:
-    image: mysql:latest
-    container_name: recipe-mysql-database
+  recipe-database:
+    image: "mysql:latest"
+    container_name: "recipe-database"
     ports:
-      - 3306:3306
-    env_file:
-      - mysql.env
+      - "3306:3306"
     volumes:
-      - ./db-init:/docker-entrypoint-initdb.d
+      - "./sql/schema:/docker-entrypoint-initdb.d"
+    environment:
+      - "MYSQL_USER=${recipe_database_username}"
+      - "MYSQL_PASSWORD=${recipe_database_password}"
+      - "MYSQL_DATABASE=recipes"
+      - "MYSQL_ROOT_PASSWORD=${recipe_database_root_password}"
     networks:
-      - recipe-network
+      - recipe-application-network
+    tty: true
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      start_period: 20s
       interval: 10s
       timeout: 5s
       retries: 5
 
 networks:
-  recipe-network:
+  recipe-application-network:
     driver: bridge
