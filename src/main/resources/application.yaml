@@ -17,6 +17,7 @@ spring:
 springdoc:
   api-docs:
     enabled: true
+
   swagger-ui:
     URLs:
       - name: Recipes API v1
