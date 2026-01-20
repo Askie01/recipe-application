@@ -1,0 +1,526 @@
+openapi: 3.0.3
+info:
+  title: "Cooking Recipes API"
+  description: "REST API for managing cooking recipes"
+  version: "1.0.0"
+
+servers:
+  - url: "http://localhost:8080"
+    description: "Local development server"
+
+paths:
+  /api/v1/recipes:
+    post:
+      summary: "Create new cooking recipe"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                name: "Toasts"
+                description: "Easy recipe for home-made toasts"
+                difficultyDTO: "EASY"
+                categoryDTOs:
+                  - name: "Breakfast"
+                  - name: "Fast"
+                  - name: "5 minutes"
+                ingredientDTOs:
+                  - name: "Toasted bread"
+                    amount: 4.0
+                    measureUnitDTO:
+                      name: "slices"
+                  - name: "Cold cuts"
+                    amount: 2.0
+                    measureUnitDTO:
+                      name: "slices"
+                  - name: "Cheese"
+                    amount: 2.0
+                    measureUnitDTO:
+                      name: "slices"
+                  - name: "Meat seasoning"
+                    amount: 2.0
+                    measureUnitDTO:
+                      name: "grams"
+                  - name: "Ketchup"
+                    amount: 5.0
+                    measureUnitDTO:
+                      name: "ml"
+                servings: 2
+                cookingTime: 5
+                instructions: "Place 4 slices of toasted bread on a board, shaped like a small square. 
+                Place 1 slice of cheese and 1 slice of cold cuts on each of the 2 slices. 
+                Sprinkle with a little meat seasoning. 
+                Close the prepared slices to form 2 sandwiches. 
+                Place the sandwiches in the toaster for 5 minutes. 
+                After 5 minutes, when the bread is slightly browned and the cheese begins to melt, 
+                remove the toasted bread, open it, drizzle with ketchup, close it, and enjoy your homemade treats."
+      responses:
+        '201':
+          description: "Returns created recipe"
+          content:
+            application/json:
+              schema:
+                example:
+                  id: 1
+                  name: "Toasts"
+                  image: "default image bytes"
+                  description: "Easy recipe for home-made toasts"
+                  difficultyDTO: "EASY"
+                  categoryDTOs:
+                    - id: 1
+                      name: "Breakfast"
+                      version: 0
+                    - id: 2
+                      name: "Fast"
+                      version: 0
+                    - id: 3
+                      name: "5 minutes"
+                      version: 0
+                  ingredientDTOs:
+                    - id: 1
+                      name: "Toasted bread"
+                      amount: 4.0
+                      measureUnitDTO:
+                        id: 1
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 2
+                      name: "Cold cuts"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 2
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 3
+                      name: "Cheese"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 3
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 4
+                      name: "Meat seasoning"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 4
+                        name: "grams"
+                        version: 0
+                      version: 0
+                    - id: 5
+                      name: "Ketchup"
+                      amount: 5.0
+                      measureUnitDTO:
+                        id: 5
+                        name: "ml"
+                        version: 0
+                      version: 0
+                  servings: 2
+                  cookingTime: 5
+                  instructions: "Place 4 slices of toasted bread on a board, shaped like a small square. 
+                  Place 1 slice of cheese and 1 slice of cold cuts on each of the 2 slices. 
+                  Sprinkle with a little meat seasoning. 
+                  Close the prepared slices to form 2 sandwiches. 
+                  Place the sandwiches in the toaster for 5 minutes. 
+                  After 5 minutes, when the bread is slightly browned and the cheese begins to melt, 
+                  remove the toasted bread, open it, drizzle with ketchup, close it, and enjoy your homemade treats."
+                  version: 0
+    get:
+      summary: "Get list of cooking recipes"
+      responses:
+        '200':
+          description: "Returns list of recipes"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecipeDTO'
+    put:
+      summary: "Update existing cooking recipe"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              example:
+                id: 1
+                name: "Toasts"
+                image: "default image bytes"
+                description: "Easy recipe for home-made toasts"
+                difficultyDTO: "EASY"
+                categoryDTOs:
+                  - id: 1
+                    name: "Breakfast"
+                    version: 0
+                  - id: 2
+                    name: "Fast"
+                    version: 0
+                  - id: 3
+                    name: "5 minutes"
+                    version: 0
+                ingredientDTOs:
+                  - id: 1
+                    name: "Toasted bread"
+                    amount: 4.0
+                    measureUnitDTO:
+                      id: 1
+                      name: "slices"
+                      version: 0
+                    version: 0
+                  - id: 2
+                    name: "Cold cuts"
+                    amount: 2.0
+                    measureUnitDTO:
+                      id: 2
+                      name: "slices"
+                      version: 0
+                    version: 0
+                  - id: 3
+                    name: "Cheese"
+                    amount: 2.0
+                    measureUnitDTO:
+                      id: 3
+                      name: "slices"
+                      version: 0
+                    version: 0
+                  - id: 4
+                    name: "Meat seasoning"
+                    amount: 2.0
+                    measureUnitDTO:
+                      id: 4
+                      name: "grams"
+                      version: 0
+                    version: 0
+                  - id: 5
+                    name: "Ketchup"
+                    amount: 5.0
+                    measureUnitDTO:
+                      id: 5
+                      name: "ml"
+                      version: 0
+                    version: 0
+                servings: 2
+                cookingTime: 5
+                instructions: "Place 4 slices of toasted bread on a board, shaped like a small square. 
+                Place 1 slice of cheese and 1 slice of cold cuts on each of the 2 slices. 
+                Sprinkle with a little meat seasoning. 
+                Close the prepared slices to form 2 sandwiches. 
+                Place the sandwiches in the toaster for 5 minutes. 
+                After 5 minutes, when the bread is slightly browned and the cheese begins to melt, 
+                remove the toasted bread, open it, drizzle with ketchup, close it, and enjoy your homemade treats."
+                version: 0
+      responses:
+        '200':
+          description: "Returns updated recipe"
+          content:
+            application/json:
+              schema:
+                example:
+                  id: 1
+                  name: "Toasts"
+                  image: "default image bytes"
+                  description: "Easy recipe for home-made toasts"
+                  difficultyDTO: "EASY"
+                  categoryDTOs:
+                    - id: 4
+                      name: "Breakfast"
+                      version: 0
+                    - id: 5
+                      name: "Fast"
+                      version: 0
+                    - id: 6
+                      name: "5 minutes"
+                      version: 0
+                  ingredientDTOs:
+                    - id: 6
+                      name: "Toasted bread"
+                      amount: 4.0
+                      measureUnitDTO:
+                        id: 6
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 7
+                      name: "Cold cuts"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 7
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 8
+                      name: "Cheese"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 8
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 9
+                      name: "Meat seasoning"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 9
+                        name: "grams"
+                        version: 0
+                      version: 0
+                    - id: 10
+                      name: "Ketchup"
+                      amount: 5.0
+                      measureUnitDTO:
+                        id: 10
+                        name: "ml"
+                        version: 0
+                      version: 0
+                  servings: 2
+                  cookingTime: 5
+                  instructions: "Place 4 slices of toasted bread on a board, shaped like a small square. 
+                  Place 1 slice of cheese and 1 slice of cold cuts on each of the 2 slices. 
+                  Sprinkle with a little meat seasoning. 
+                  Close the prepared slices to form 2 sandwiches. 
+                  Place the sandwiches in the toaster for 5 minutes. 
+                  After 5 minutes, when the bread is slightly browned and the cheese begins to melt, 
+                  remove the toasted bread, open it, drizzle with ketchup, close it, and enjoy your homemade treats."
+                  version: 1
+  /api/v1/recipes/{id}:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      summary: "Returns recipe by id"
+      responses:
+        '200':
+          description: "Returns recipe"
+          content:
+            application/json:
+              schema:
+                example:
+                  id: 1
+                  name: "Toasts"
+                  image: "default image bytes"
+                  description: "Easy recipe for home-made toasts"
+                  difficultyDTO: "EASY"
+                  categoryDTOs:
+                    - id: 1
+                      name: "Breakfast"
+                      version: 0
+                    - id: 2
+                      name: "Fast"
+                      version: 0
+                    - id: 3
+                      name: "5 minutes"
+                      version: 0
+                  ingredientDTOs:
+                    - id: 1
+                      name: "Toasted bread"
+                      amount: 4.0
+                      measureUnitDTO:
+                        id: 1
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 2
+                      name: "Cold cuts"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 2
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 3
+                      name: "Cheese"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 3
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 4
+                      name: "Meat seasoning"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 4
+                        name: "grams"
+                        version: 0
+                      version: 0
+                    - id: 5
+                      name: "Ketchup"
+                      amount: 5.0
+                      measureUnitDTO:
+                        id: 5
+                        name: "ml"
+                        version: 0
+                      version: 0
+                  servings: 2
+                  cookingTime: 5
+                  instructions: "Place 4 slices of toasted bread on a board, shaped like a small square. 
+                  Place 1 slice of cheese and 1 slice of cold cuts on each of the 2 slices. 
+                  Sprinkle with a little meat seasoning. 
+                  Close the prepared slices to form 2 sandwiches. 
+                  Place the sandwiches in the toaster for 5 minutes. 
+                  After 5 minutes, when the bread is slightly browned and the cheese begins to melt, 
+                  remove the toasted bread, open it, drizzle with ketchup, close it, and enjoy your homemade treats."
+                  version: 0
+    delete:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      summary: "Deletes recipe by id"
+      responses:
+        '200':
+          description: "Returns deleted recipe"
+          content:
+            application/json:
+              schema:
+                example:
+                  id: 1
+                  name: "Toasts"
+                  image: "default image bytes"
+                  description: "Easy recipe for home-made toasts"
+                  difficultyDTO: "EASY"
+                  categoryDTOs:
+                    - id: 1
+                      name: "Breakfast"
+                      version: 0
+                    - id: 2
+                      name: "Fast"
+                      version: 0
+                    - id: 3
+                      name: "5 minutes"
+                      version: 0
+                  ingredientDTOs:
+                    - id: 1
+                      name: "Toasted bread"
+                      amount: 4.0
+                      measureUnitDTO:
+                        id: 1
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 2
+                      name: "Cold cuts"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 2
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 3
+                      name: "Cheese"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 3
+                        name: "slices"
+                        version: 0
+                      version: 0
+                    - id: 4
+                      name: "Meat seasoning"
+                      amount: 2.0
+                      measureUnitDTO:
+                        id: 4
+                        name: "grams"
+                        version: 0
+                      version: 0
+                    - id: 5
+                      name: "Ketchup"
+                      amount: 5.0
+                      measureUnitDTO:
+                        id: 5
+                        name: "ml"
+                        version: 0
+                      version: 0
+                  servings: 2
+                  cookingTime: 5
+                  instructions: "Place 4 slices of toasted bread on a board, shaped like a small square. 
+                  Place 1 slice of cheese and 1 slice of cold cuts on each of the 2 slices. 
+                  Sprinkle with a little meat seasoning. 
+                  Close the prepared slices to form 2 sandwiches. 
+                  Place the sandwiches in the toaster for 5 minutes. 
+                  After 5 minutes, when the bread is slightly browned and the cheese begins to melt, 
+                  remove the toasted bread, open it, drizzle with ketchup, close it, and enjoy your homemade treats."
+                  version: 0
+components:
+  schemas:
+    RecipeDTO:
+      type: object
+      required: [
+        name,
+        description,
+        difficultyDTO,
+        categoryDTOs,
+        ingredientDTOs,
+        servings,
+        cookingTime,
+        instructions
+      ]
+      properties:
+        id:
+          type: integer
+        image:
+          type: array
+        name:
+          type: string
+        description:
+          type: string
+        difficultyDTO:
+          type: string
+        categoryDTOs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDTO'
+        ingredientDTOs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientDTO'
+        servings:
+          type: integer
+        cookingTime:
+          type: integer
+        instructions:
+          type: string
+        version:
+          type: integer
+    CategoryDTO:
+      type: object
+      required: [ name ]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        version:
+          type: integer
+    IngredientDTO:
+      type: object
+      required: [ name, measureUnitDTO ]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        amount:
+          type: number
+        measureUnitDTO:
+          $ref: '#/components/schemas/MeasureUnitDTO'
+        version:
+          type: integer
+    MeasureUnitDTO:
+      type: object
+      required: [ name ]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        version:
+          type: integer

@@ -14,6 +14,14 @@ spring:
     hibernate:
       ddl-auto: none
 
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    URLs:
+      - name: Recipes API v1
+        url: /openapi/recipes-v1-api.yaml
+
 component:
   auditor-type: recipe-service-string-auditor
 
