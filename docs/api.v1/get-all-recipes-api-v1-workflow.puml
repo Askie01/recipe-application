@@ -1,0 +1,28 @@
+@startuml
+title Get all Recipes - Sequence
+
+autonumber
+
+skinparam sequence {
+  MessageAlign center
+}
+skinparam NoteBackgroundColor #1C2330
+skinparam NoteBorderColor #E7E7E7
+skinparam NoteFontColor #F5F5F5
+skinparam ActorStyle awesome
+
+actor Client
+boundary Application
+control RecipeRestControllerV1
+control RecipeServiceV1
+database database
+
+Client -> Application : GET /api/v1/recipes
+Application -> RecipeRestControllerV1 : delegate request
+RecipeRestControllerV1 -> RecipeServiceV1 : delegate request
+RecipeServiceV1 -> database : fetch all
+database -> RecipeServiceV1 : List<Recipe> recipes
+RecipeServiceV1 -> RecipeRestControllerV1 : List<Recipe> recipes
+RecipeRestControllerV1 -> Application : List<RecipeDTO> recipeDTOs
+Application -> Client : OK (200) + List<RecipeDTO> recipeDTOs
+@enduml
