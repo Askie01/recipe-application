@@ -1,0 +1,40 @@
+@startuml
+title Create Recipe - Sequence
+
+autonumber
+
+skinparam sequence {
+  MessageAlign center
+}
+skinparam NoteBackgroundColor #1C2330
+skinparam NoteBorderColor #E7E7E7
+skinparam NoteFontColor #F5F5F5
+skinparam ActorStyle awesome
+
+actor Client
+boundary Application
+control RecipeRestControllerV1
+control RecipeServiceV1
+database database
+control GlobalExceptionHandler
+
+Client -> Application : POST /api/v1/recipes
+Application -> RecipeRestControllerV1 : delegate request
+note right of RecipeRestControllerV1
+Validates request data
+end note
+
+alt Validation OK
+  RecipeRestControllerV1 -> RecipeServiceV1 : delegate request
+  RecipeServiceV1 -> database : persist recipe
+  database -> RecipeServiceV1 : persisted recipe
+  RecipeServiceV1 -> RecipeRestControllerV1 : persisted recipe
+  RecipeRestControllerV1 -> Application : RecipeDTO
+  Application -> Client : Created (201) + RecipeDTO
+else Validation failed
+  RecipeRestControllerV1 -> GlobalExceptionHandler : exception
+  GlobalExceptionHandler -> RecipeRestControllerV1 : ErrorHttpResponse
+  RecipeRestControllerV1 -> Application : ErrorHttpResponse
+  Application -> Client : Bad Request (400) + ErrorHttpResponse
+end
+@enduml
