@@ -49,15 +49,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          REPO_LOWER=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
           docker build \
-            -t ghcr.io/$REPO_LOWER:${{ inputs.version }} \
-            -t ghcr.io/$REPO_LOWER:latest \
-            .
-        env:
-          GITHUB_REPOSITORY: ${{ github.repository }}
+           -t ghcr.io/askie01/recipe-application:${{ inputs.version }} \
+           -t ghcr.io/askie01/recipe-application:latest \
+           .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository }}:${{ inputs.version }}
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/askie01/recipe-application:${{ inputs.version }}
+          docker push ghcr.io/askie01/recipe-application:latest
