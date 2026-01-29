@@ -49,10 +49,13 @@ jobs:
 
       - name: Build Docker image
         run: |
+          REPO_LOWER=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
           docker build \
-           -t ghcr.io/${{ github.repository }}:${{ inputs.version }} \
-           -t ghcr.io/${{ github.repository }}:latest \
-           .
+            -t ghcr.io/$REPO_LOWER:${{ inputs.version }} \
+            -t ghcr.io/$REPO_LOWER:latest \
+            .
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Push Docker image
         run: |
