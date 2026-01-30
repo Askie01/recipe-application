@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.cooking-time-type", havingValue = "validated-cooking-time")
-public class ValidatedCookingTimeMapperConfiguration {
+public class CookingTimeMapperConfiguration {
 
     @Bean
-    public CookingTimeMapper cookingTimeMapper(CookingTimeValidator cookingTimeValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.cooking-time-type",
+            havingValue = "validated-cooking-time",
+            matchIfMissing = true
+    )
+    public CookingTimeMapper validatedCookingMapper(CookingTimeValidator cookingTimeValidator) {
         return new ValidatedCookingTimeMapper(cookingTimeValidator);
     }
 }
