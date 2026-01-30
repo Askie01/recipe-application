@@ -1,23 +1,20 @@
 package com.askie01.recipeapplication.integration.validator;
 
 import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
-import com.askie01.recipeapplication.configuration.PositiveLongVersionValidatorConfiguration;
+import com.askie01.recipeapplication.configuration.LongVersionValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.validator.LongVersionValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = PositiveLongVersionValidatorConfiguration.class)
+@SpringJUnitConfig(classes = LongVersionValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.version-type=positive-long-version")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("PositiveLongVersionValidator integration tests")

@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasDescriptionTestBuilder;
-import com.askie01.recipeapplication.comparator.DescriptionTestComparator;
-import com.askie01.recipeapplication.comparator.DescriptionValueTestComparator;
 import com.askie01.recipeapplication.mapper.DescriptionMapper;
 import com.askie01.recipeapplication.mapper.ValidatedDescriptionMapper;
 import com.askie01.recipeapplication.model.value.HasDescription;
@@ -29,18 +27,16 @@ class ValidatedDescriptionMapperUnitTest {
 
     @Mock
     private DescriptionValidator validator;
-    private DescriptionTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedDescriptionMapper(validator);
         this.source = HasDescriptionTestBuilder.builder()
                 .description("source description")
                 .build();
         this.target = HasDescriptionTestBuilder.builder()
                 .description("target description")
                 .build();
-        this.comparator = new DescriptionValueTestComparator();
+        this.mapper = new ValidatedDescriptionMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedDescriptionMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceDescriptionToTargetDescription() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalDescription = comparator.compare(source, target);
-        assertTrue(equalDescription);
+        final String sourceDescription = source.getDescription();
+        final String targetDescription = target.getDescription();
+        assertEquals(sourceDescription, targetDescription);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedDescriptionMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceDescriptionToTargetDescription() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalDescription = comparator.compare(source, target);
-        assertFalse(equalDescription);
+        final String sourceDescription = source.getDescription();
+        final String targetDescription = target.getDescription();
+        assertNotEquals(sourceDescription, targetDescription);
     }
 
     @Test

@@ -1,9 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasImageTestBuilder;
-import com.askie01.recipeapplication.comparator.ImageTestComparator;
-import com.askie01.recipeapplication.configuration.ImageValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedImageMapperDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.ImageMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ImageValidatorConfiguration;
 import com.askie01.recipeapplication.mapper.ImageMapper;
 import com.askie01.recipeapplication.model.value.HasImage;
 import lombok.RequiredArgsConstructor;
@@ -11,20 +10,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        ValidatedImageMapperDefaultTestConfiguration.class,
-        ImageValueTestComparatorTestConfiguration.class
+@SpringJUnitConfig(classes = ImageMapperConfiguration.class)
+@Import(value = ImageValidatorConfiguration.class)
+@TestPropertySource(properties = {
+        "component.mapper.image-type=validated-image",
+        "component.validator.image-type=five-mega-bytes-image"
 })
-@TestPropertySource(locations = "classpath:validated-image-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("ValidatedImageMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -33,7 +31,6 @@ class ValidatedImageMapperIntegrationTest {
     private HasImage source;
     private HasImage target;
     private final ImageMapper mapper;
-    private final ImageTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +46,9 @@ class ValidatedImageMapperIntegrationTest {
     @DisplayName("map method should map source image to target image when source image is valid")
     void map_whenSourceIsValid_mapsSourceImageToTargetImage() {
         mapper.map(source, target);
-        final boolean equalImage = comparator.compare(source, target);
-        assertTrue(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertArrayEquals(sourceImage, targetImage);
     }
 
     @Test
@@ -58,8 +56,9 @@ class ValidatedImageMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceImageToTargetImage() {
         source.setImage(new byte[6 * 1024 * 1024]);
         mapper.map(source, target);
-        final boolean equalImage = comparator.compare(source, target);
-        assertFalse(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertNotEquals(sourceImage, targetImage);
     }
 
     @Test

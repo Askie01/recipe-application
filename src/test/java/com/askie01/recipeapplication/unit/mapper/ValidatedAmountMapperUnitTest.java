@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
-import com.askie01.recipeapplication.comparator.AmountTestComparator;
-import com.askie01.recipeapplication.comparator.AmountValueTestComparator;
 import com.askie01.recipeapplication.mapper.AmountMapper;
 import com.askie01.recipeapplication.mapper.ValidatedAmountMapper;
 import com.askie01.recipeapplication.model.value.HasAmount;
@@ -29,18 +27,16 @@ class ValidatedAmountMapperUnitTest {
 
     @Mock
     private AmountValidator validator;
-    private AmountTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedAmountMapper(validator);
         this.source = HasAmountTestBuilder.builder()
                 .amount(1.0)
                 .build();
         this.target = HasAmountTestBuilder.builder()
                 .amount(2.0)
                 .build();
-        this.comparator = new AmountValueTestComparator();
+        this.mapper = new ValidatedAmountMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedAmountMapperUnitTest {
     void map_whenSourceAmountIsValid_mapsSourceAmountToTargetAmount() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalAmount = comparator.compare(source, target);
-        assertTrue(equalAmount);
+        final Double sourceAmount = source.getAmount();
+        final Double targetAmount = target.getAmount();
+        assertEquals(sourceAmount, targetAmount);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedAmountMapperUnitTest {
     void map_whenSourceAmountIsInvalid_doesNotMapSourceAmountToTargetAmount() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalAmount = comparator.compare(source, target);
-        assertFalse(equalAmount);
+        final Double sourceAmount = source.getAmount();
+        final Double targetAmount = target.getAmount();
+        assertNotEquals(sourceAmount, targetAmount);
     }
 
     @Test

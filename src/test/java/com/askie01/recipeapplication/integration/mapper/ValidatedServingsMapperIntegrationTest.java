@@ -1,9 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
-import com.askie01.recipeapplication.comparator.ServingsTestComparator;
-import com.askie01.recipeapplication.configuration.ServingsValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedServingsMapperDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.ServingsMapperConfiguration;
+import com.askie01.recipeapplication.configuration.ServingsValidatorConfiguration;
 import com.askie01.recipeapplication.mapper.ServingsMapper;
 import com.askie01.recipeapplication.model.value.HasServings;
 import lombok.RequiredArgsConstructor;
@@ -11,20 +10,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        ValidatedServingsMapperDefaultTestConfiguration.class,
-        ServingsValueTestComparatorTestConfiguration.class
+@SpringJUnitConfig(classes = ServingsMapperConfiguration.class)
+@Import(value = ServingsValidatorConfiguration.class)
+@TestPropertySource(properties = {
+        "component.mapper.servings-type=validated-servings",
+        "component.validator.servings-type=positive-servings"
 })
-@TestPropertySource(locations = "classpath:validated-servings-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("ValidatedServingsMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -33,7 +31,6 @@ class ValidatedServingsMapperIntegrationTest {
     private HasServings source;
     private HasServings target;
     private final ServingsMapper mapper;
-    private final ServingsTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +46,9 @@ class ValidatedServingsMapperIntegrationTest {
     @DisplayName("map method should map source servings to target servings when source is valid")
     void map_whenSourceIsValid_mapsSourceServingsToTargetServings() {
         mapper.map(source, target);
-        final boolean equalServings = comparator.compare(source, target);
-        assertTrue(equalServings);
+        final double sourceServings = source.getServings();
+        final double targetServings = target.getServings();
+        assertEquals(sourceServings, targetServings);
     }
 
     @Test
@@ -58,8 +56,9 @@ class ValidatedServingsMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceServingsToTargetServings() {
         source.setServings(-1.0);
         mapper.map(source, target);
-        final boolean equalServings = comparator.compare(source, target);
-        assertFalse(equalServings);
+        final double sourceServings = source.getServings();
+        final double targetServings = target.getServings();
+        assertNotEquals(sourceServings, targetServings);
     }
 
     @Test

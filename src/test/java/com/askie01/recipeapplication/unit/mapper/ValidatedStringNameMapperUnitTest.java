@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasStringNameTestBuilder;
-import com.askie01.recipeapplication.comparator.StringNameTestComparator;
-import com.askie01.recipeapplication.comparator.StringNameValueTestComparator;
 import com.askie01.recipeapplication.mapper.StringNameMapper;
 import com.askie01.recipeapplication.mapper.ValidatedStringNameMapper;
 import com.askie01.recipeapplication.model.value.HasStringName;
@@ -29,18 +27,16 @@ class ValidatedStringNameMapperUnitTest {
 
     @Mock
     private StringNameValidator validator;
-    private StringNameTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedStringNameMapper(validator);
         this.source = HasStringNameTestBuilder.builder()
                 .name("Source name")
                 .build();
         this.target = HasStringNameTestBuilder.builder()
                 .name("Target name")
                 .build();
-        this.comparator = new StringNameValueTestComparator();
+        this.mapper = new ValidatedStringNameMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedStringNameMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceNameToTargetName() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalNames = comparator.compare(source, target);
-        assertTrue(equalNames);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedStringNameMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceNameToTargetName() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalNames = comparator.compare(source, target);
-        assertFalse(equalNames);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertNotEquals(sourceName, targetName);
     }
 
     @Test

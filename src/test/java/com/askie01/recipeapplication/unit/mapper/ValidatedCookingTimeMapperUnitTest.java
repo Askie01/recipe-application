@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
-import com.askie01.recipeapplication.comparator.CookingTimeTestComparator;
-import com.askie01.recipeapplication.comparator.CookingTimeValueTestComparator;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
 import com.askie01.recipeapplication.mapper.ValidatedCookingTimeMapper;
 import com.askie01.recipeapplication.model.value.HasCookingTime;
@@ -29,18 +27,16 @@ class ValidatedCookingTimeMapperUnitTest {
 
     @Mock
     private CookingTimeValidator validator;
-    private CookingTimeTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedCookingTimeMapper(validator);
         this.source = HasCookingTimeTestBuilder.builder()
                 .cookingTime(10)
                 .build();
         this.target = HasCookingTimeTestBuilder.builder()
                 .cookingTime(20)
                 .build();
-        this.comparator = new CookingTimeValueTestComparator();
+        this.mapper = new ValidatedCookingTimeMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedCookingTimeMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceCookingTimeToTargetCookingTime() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalCookingTime = comparator.compare(source, target);
-        assertTrue(equalCookingTime);
+        final int sourceCookingTime = source.getCookingTime();
+        final int targetCookingTime = target.getCookingTime();
+        assertEquals(sourceCookingTime, targetCookingTime);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedCookingTimeMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceCookingTimeToTargetCookingTime() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalCookingTime = comparator.compare(source, target);
-        assertFalse(equalCookingTime);
+        final int sourceCookingTime = source.getCookingTime();
+        final int targetCookingTime = target.getCookingTime();
+        assertNotEquals(sourceCookingTime, targetCookingTime);
     }
 
     @Test

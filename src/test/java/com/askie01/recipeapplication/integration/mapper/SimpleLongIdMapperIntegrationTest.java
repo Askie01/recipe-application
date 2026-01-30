@@ -1,9 +1,7 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
-import com.askie01.recipeapplication.comparator.LongIdTestComparator;
-import com.askie01.recipeapplication.configuration.LongIdValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.SimpleLongIdMapperConfiguration;
+import com.askie01.recipeapplication.configuration.LongIdMapperConfiguration;
 import com.askie01.recipeapplication.mapper.LongIdMapper;
 import com.askie01.recipeapplication.model.value.HasLongId;
 import lombok.RequiredArgsConstructor;
@@ -11,21 +9,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        SimpleLongIdMapperConfiguration.class,
-        LongIdValueTestComparatorTestConfiguration.class
-})
-@TestPropertySource(properties = "component.mapper.id-type=simple-long-id")
+@SpringJUnitConfig(classes = LongIdMapperConfiguration.class)
+@TestPropertySource(properties = "component.mapper.long-id-type=simple")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("SimpleLongIdMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -34,7 +26,6 @@ class SimpleLongIdMapperIntegrationTest {
     private HasLongId source;
     private HasLongId target;
     private final LongIdMapper mapper;
-    private final LongIdTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -50,8 +41,9 @@ class SimpleLongIdMapperIntegrationTest {
     @DisplayName("map method should map source id to target id when source and target are present")
     void map_shouldMapSourceIdToTargetId_whenSourceAndTargetArePresent() {
         mapper.map(source, target);
-        final boolean equalId = comparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
     @Test

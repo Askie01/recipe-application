@@ -1,9 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasCookingTimeTestBuilder;
-import com.askie01.recipeapplication.comparator.CookingTimeTestComparator;
-import com.askie01.recipeapplication.configuration.CookingTimeValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedCookingTimeMapperDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.CookingTimeMapperConfiguration;
+import com.askie01.recipeapplication.configuration.CookingTimeValidatorConfiguration;
 import com.askie01.recipeapplication.mapper.CookingTimeMapper;
 import com.askie01.recipeapplication.model.value.HasCookingTime;
 import lombok.RequiredArgsConstructor;
@@ -11,21 +10,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        ValidatedCookingTimeMapperDefaultTestConfiguration.class,
-        CookingTimeValueTestComparatorTestConfiguration.class
+@SpringJUnitConfig(classes = CookingTimeMapperConfiguration.class)
+@Import(value = CookingTimeValidatorConfiguration.class)
+@TestPropertySource(properties = {
+        "component.mapper.cooking-time-type=validated-cooking-time",
+        "component.validator.cooking-time-type=positive-cooking-time"
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@TestPropertySource(locations = "classpath:validated-cooking-time-mapper-default-test-configuration.properties")
 @DisplayName("ValidatedCookingTimeMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
 class ValidatedCookingTimeMapperIntegrationTest {
@@ -33,7 +31,6 @@ class ValidatedCookingTimeMapperIntegrationTest {
     private HasCookingTime source;
     private HasCookingTime target;
     private final CookingTimeMapper mapper;
-    private final CookingTimeTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +46,9 @@ class ValidatedCookingTimeMapperIntegrationTest {
     @DisplayName("map method should map source cooking time to target cooking time when source is valid")
     void map_whenSourceIsValid_mapsSourceCookingTimeToTargetCookingTime() {
         mapper.map(source, target);
-        final boolean equalCookingTime = comparator.compare(source, target);
-        assertTrue(equalCookingTime);
+        final int sourceCookingTime = source.getCookingTime();
+        final int targetCookingTime = target.getCookingTime();
+        assertEquals(sourceCookingTime, targetCookingTime);
     }
 
     @Test
@@ -58,8 +56,9 @@ class ValidatedCookingTimeMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceCookingTimeToTargetCookingTime() {
         source.setCookingTime(0);
         mapper.map(source, target);
-        final boolean equalCookingTime = comparator.compare(source, target);
-        assertFalse(equalCookingTime);
+        final int sourceCookingTime = source.getCookingTime();
+        final int targetCookingTime = target.getCookingTime();
+        assertNotEquals(sourceCookingTime, targetCookingTime);
     }
 
     @Test

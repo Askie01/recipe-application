@@ -1,23 +1,20 @@
 package com.askie01.recipeapplication.integration.validator;
 
 import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
-import com.askie01.recipeapplication.configuration.PositiveLongIdValidatorConfiguration;
+import com.askie01.recipeapplication.configuration.LongIdValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasLongId;
 import com.askie01.recipeapplication.validator.LongIdValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = PositiveLongIdValidatorConfiguration.class)
+@SpringJUnitConfig(classes = LongIdValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.id-type=positive-long-id")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("PositiveLongIdValidator integration tests")

@@ -1,23 +1,20 @@
 package com.askie01.recipeapplication.integration.validator;
 
 import com.askie01.recipeapplication.builder.HasImageTestBuilder;
-import com.askie01.recipeapplication.configuration.FiveMegaBytesImageValidatorConfiguration;
+import com.askie01.recipeapplication.configuration.ImageValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasImage;
 import com.askie01.recipeapplication.validator.ImageValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = FiveMegaBytesImageValidatorConfiguration.class)
+@SpringJUnitConfig(classes = ImageValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.image-type=five-mega-bytes-image")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("FiveMegaBytesImageValidator integration tests")

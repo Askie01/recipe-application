@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
-import com.askie01.recipeapplication.comparator.ServingsTestComparator;
-import com.askie01.recipeapplication.comparator.ServingsValueTestComparator;
 import com.askie01.recipeapplication.mapper.ServingsMapper;
 import com.askie01.recipeapplication.mapper.ValidatedServingsMapper;
 import com.askie01.recipeapplication.model.value.HasServings;
@@ -29,18 +27,16 @@ class ValidatedServingsMapperUnitTest {
 
     @Mock
     private ServingsValidator validator;
-    private ServingsTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedServingsMapper(validator);
         this.source = HasServingsTestBuilder.builder()
                 .servings(1.0)
                 .build();
         this.target = HasServingsTestBuilder.builder()
                 .servings(5.0)
                 .build();
-        this.comparator = new ServingsValueTestComparator();
+        this.mapper = new ValidatedServingsMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedServingsMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceServingsToTargetServings() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalServings = comparator.compare(source, target);
-        assertTrue(equalServings);
+        final Double sourceServings = source.getServings();
+        final Double targetServings = target.getServings();
+        assertEquals(sourceServings, targetServings);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedServingsMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceServingsToTargetServings() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalServings = comparator.compare(source, target);
-        assertFalse(equalServings);
+        final Double sourceServings = source.getServings();
+        final Double targetServings = target.getServings();
+        assertNotEquals(sourceServings, targetServings);
     }
 
     @Test

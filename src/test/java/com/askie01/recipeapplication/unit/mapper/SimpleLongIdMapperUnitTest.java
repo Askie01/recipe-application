@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
-import com.askie01.recipeapplication.comparator.LongIdTestComparator;
-import com.askie01.recipeapplication.comparator.LongIdValueTestComparator;
 import com.askie01.recipeapplication.mapper.LongIdMapper;
 import com.askie01.recipeapplication.mapper.SimpleLongIdMapper;
 import com.askie01.recipeapplication.model.value.HasLongId;
@@ -11,8 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("SimpleLongIdMapper unit tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "unit")
@@ -21,7 +19,6 @@ class SimpleLongIdMapperUnitTest {
     private HasLongId source;
     private HasLongId target;
     private LongIdMapper mapper;
-    private LongIdTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -32,15 +29,15 @@ class SimpleLongIdMapperUnitTest {
         this.target = HasLongIdTestBuilder.builder()
                 .id(2L)
                 .build();
-        this.comparator = new LongIdValueTestComparator();
     }
 
     @Test
     @DisplayName("map method should map source id to target id when source and target are present")
     void map_shouldMapSourceIdToTargetId_whenSourceAndTargetArePresent() {
         mapper.map(source, target);
-        final boolean equalId = comparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
     @Test

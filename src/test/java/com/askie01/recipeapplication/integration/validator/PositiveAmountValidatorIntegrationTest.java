@@ -1,23 +1,20 @@
 package com.askie01.recipeapplication.integration.validator;
 
 import com.askie01.recipeapplication.builder.HasAmountTestBuilder;
-import com.askie01.recipeapplication.configuration.PositiveAmountValidatorConfiguration;
+import com.askie01.recipeapplication.configuration.AmountValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasAmount;
 import com.askie01.recipeapplication.validator.AmountValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = PositiveAmountValidatorConfiguration.class)
+@SpringJUnitConfig(classes = AmountValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.amount-type=positive-amount")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("PositiveAmountValidator integration tests")

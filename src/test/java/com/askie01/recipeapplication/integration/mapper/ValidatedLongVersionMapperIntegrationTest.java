@@ -1,9 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
-import com.askie01.recipeapplication.comparator.LongVersionTestComparator;
-import com.askie01.recipeapplication.configuration.LongVersionValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedLongVersionMapperDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.LongVersionMapperConfiguration;
+import com.askie01.recipeapplication.configuration.LongVersionValidatorConfiguration;
 import com.askie01.recipeapplication.mapper.LongVersionMapper;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import lombok.RequiredArgsConstructor;
@@ -11,20 +10,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        ValidatedLongVersionMapperDefaultTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class
+@SpringJUnitConfig(classes = LongVersionMapperConfiguration.class)
+@Import(value = LongVersionValidatorConfiguration.class)
+@TestPropertySource(properties = {
+        "component.mapper.version-type=validated-long-version",
+        "component.validator.version-type=positive-long-version"
 })
-@TestPropertySource(locations = "classpath:validated-long-version-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("ValidatedLongVersionMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -33,7 +31,6 @@ class ValidatedLongVersionMapperIntegrationTest {
     private HasLongVersion source;
     private HasLongVersion target;
     private final LongVersionMapper mapper;
-    private final LongVersionTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +46,9 @@ class ValidatedLongVersionMapperIntegrationTest {
     @DisplayName("map method should map source version to target version when source is valid")
     void map_whenSourceIsValid_mapsSourceVersionToTargetVersion() {
         mapper.map(source, target);
-        final boolean equalVersion = comparator.compare(source, target);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -58,8 +56,9 @@ class ValidatedLongVersionMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceVersionToTargetVersion() {
         source.setVersion(-1L);
         mapper.map(source, target);
-        final boolean equalVersion = comparator.compare(source, target);
-        assertFalse(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertNotEquals(sourceVersion, targetVersion);
     }
 
     @Test
