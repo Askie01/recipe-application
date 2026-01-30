@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.instructions-type", havingValue = "non-blank-instructions")
-public class NonBlankInstructionsValidatorConfiguration {
+public class InstructionsValidatorConfiguration {
 
     @Bean
-    public InstructionsValidator instructionsValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.instructions-type",
+            havingValue = "non-blank-instructions",
+            matchIfMissing = true
+    )
+    public InstructionsValidator nonBlankInstructionsValidator() {
         return new NonBlankInstructionsValidator();
     }
 }
