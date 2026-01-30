@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.id-type", havingValue = "positive-long-id")
-public class PositiveLongIdValidatorConfiguration {
+public class LongIdValidatorConfiguration {
 
     @Bean
-    public LongIdValidator longIdValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.id-type",
+            havingValue = "positive-long-id",
+            matchIfMissing = true
+    )
+    public LongIdValidator positiveLongIdValidator() {
         return new PositiveLongIdValidator();
     }
 }
