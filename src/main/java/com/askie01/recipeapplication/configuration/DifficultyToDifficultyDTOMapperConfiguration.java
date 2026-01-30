@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.difficulty-to-difficultyDTO-type", havingValue = "simple")
-public class SimpleDifficultyToDifficultyDTOMapperConfiguration {
+public class DifficultyToDifficultyDTOMapperConfiguration {
 
     @Bean
-    public DifficultyToDifficultyDTOMapper difficultyToDifficultyDTOMapper() {
+    @ConditionalOnProperty(
+            name = "component.mapper.difficulty-to-difficultyDTO-type",
+            havingValue = "simple",
+            matchIfMissing = true
+    )
+    public DifficultyToDifficultyDTOMapper simpleDifficultyToDifficultyDTOMapper() {
         return new SimpleDifficultyToDifficultyDTOMapper();
     }
 }
