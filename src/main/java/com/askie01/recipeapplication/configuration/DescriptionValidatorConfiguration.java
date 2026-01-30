@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.description-type", havingValue = "non-blank-description")
-public class NonBlankDescriptionValidatorConfiguration {
+public class DescriptionValidatorConfiguration {
 
     @Bean
-    public DescriptionValidator descriptionValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.description-type",
+            havingValue = "non-blank-description",
+            matchIfMissing = true
+    )
+    public DescriptionValidator nonBlankDescriptionValidator() {
         return new NonBlankDescriptionValidator();
     }
 }
