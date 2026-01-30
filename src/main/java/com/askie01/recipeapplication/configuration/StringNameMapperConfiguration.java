@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.name-type", havingValue = "validated-string-name")
-public class ValidatedStringNameMapperConfiguration {
+public class StringNameMapperConfiguration {
 
     @Bean
-    public StringNameMapper stringNameMapper(StringNameValidator stringNameValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.name-type",
+            havingValue = "validated-string-name",
+            matchIfMissing = true
+    )
+    public StringNameMapper validatedStringNameMapper(StringNameValidator stringNameValidator) {
         return new ValidatedStringNameMapper(stringNameValidator);
     }
 }
