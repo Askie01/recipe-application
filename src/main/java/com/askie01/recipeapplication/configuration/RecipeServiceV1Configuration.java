@@ -9,12 +9,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.service.recipe", havingValue = "v1")
-public class DefaultRecipeServiceV1Configuration {
+public class RecipeServiceV1Configuration {
 
     @Bean
-    public RecipeServiceV1 recipeServiceV1(RecipeRepository repository,
-                                           RecipeDTOToRecipeMapper mapper) {
+    @ConditionalOnProperty(
+            name = "component.service.recipe",
+            havingValue = "v1",
+            matchIfMissing = true
+    )
+    public RecipeServiceV1 defaultRecipeServiceV1(RecipeRepository repository,
+                                                  RecipeDTOToRecipeMapper mapper) {
         return new DefaultRecipeServiceV1(repository, mapper);
     }
 }
