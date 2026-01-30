@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.image-type", havingValue = "validated-image")
-public class ValidatedImageMapperConfiguration {
+public class ImageMapperConfiguration {
 
     @Bean
-    public ImageMapper imageMapper(ImageValidator imageValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.image-type",
+            havingValue = "validated-image",
+            matchIfMissing = true
+    )
+    public ImageMapper validatedImageMapper(ImageValidator imageValidator) {
         return new ValidatedImageMapper(imageValidator);
     }
 }
