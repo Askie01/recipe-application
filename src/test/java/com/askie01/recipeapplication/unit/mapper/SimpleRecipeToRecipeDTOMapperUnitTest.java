@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.comparator.*;
 import com.askie01.recipeapplication.dto.*;
-import com.askie01.recipeapplication.factory.*;
 import com.askie01.recipeapplication.mapper.*;
 import com.askie01.recipeapplication.model.entity.Category;
 import com.askie01.recipeapplication.model.entity.Ingredient;
@@ -10,7 +8,6 @@ import com.askie01.recipeapplication.model.entity.MeasureUnit;
 import com.askie01.recipeapplication.model.entity.Recipe;
 import com.askie01.recipeapplication.model.entity.value.Difficulty;
 import com.askie01.recipeapplication.model.value.*;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +15,9 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -65,21 +65,11 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
 
     @Mock
     private LongVersionMapper versionMapper;
-    private LongIdTestComparator idComparator;
-    private ImageTestComparator imageComparator;
-    private StringNameTestComparator nameComparator;
-    private DescriptionTestComparator descriptionComparator;
-    private DifficultyDifficultyDTOTestComparator difficultyComparator;
-    private ServingsTestComparator servingsComparator;
-    private CookingTimeTestComparator cookingTimeComparator;
-    private InstructionsTestComparator instructionsComparator;
-    private LongVersionTestComparator versionComparator;
-    private RecipeRecipeDTOTestComparator recipeComparator;
 
     @BeforeEach
     void setUp() {
-        this.source = getRecipeTestFactory().createRecipe();
-        this.target = getRecipeDTOTestFactory().createRecipeDTO();
+        this.source = getTestRecipe();
+        this.target = getTestRecipeDTO();
         this.recipeMapper = new SimpleRecipeToRecipeDTOMapper(
                 idMapper,
                 imageMapper,
@@ -93,74 +83,70 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 instructionsMapper,
                 versionMapper
         );
-        this.idComparator = new LongIdValueTestComparator();
-        this.imageComparator = new ImageValueTestComparator();
-        this.nameComparator = new StringNameValueTestComparator();
-        this.descriptionComparator = new DescriptionValueTestComparator();
-        this.difficultyComparator = new DifficultyDifficultyDTOValueTestComparator();
-        this.versionComparator = new LongVersionValueTestComparator();
-        this.servingsComparator = new ServingsValueTestComparator();
-        this.cookingTimeComparator = new CookingTimeValueTestComparator();
-        this.instructionsComparator = new InstructionsValueTestComparator();
-        this.recipeComparator = getRecipeComparator();
     }
 
-    private static RecipeDTOTestFactory getRecipeDTOTestFactory() {
-        final Faker faker = new Faker();
-        final DifficultyDTOTestFactory difficultyDTOFactory = new RandomDifficultyDTOTestFactory(faker);
-        final CategoryDTOTestFactory categoryDTOFactory = new RandomCategoryDTOTestFactory(faker);
-        final MeasureUnitDTOTestFactory measureUnitDTOFactory = new RandomMeasureUnitDTOTestFactory(faker);
-        final IngredientDTOTestFactory ingredientDTOFactory = new RandomIngredientDTOTestFactory(faker, measureUnitDTOFactory);
-        return new RandomRecipeDTOTestFactory(
-                faker,
-                difficultyDTOFactory,
-                categoryDTOFactory,
-                ingredientDTOFactory
-        );
+    private static Recipe getTestRecipe() {
+        final Category category = Category.builder()
+                .id(2L)
+                .name("Test category")
+                .version(2L)
+                .build();
+        final MeasureUnit measureUnit = MeasureUnit.builder()
+                .id(2L)
+                .name("Test measure unit")
+                .version(2L)
+                .build();
+        final Ingredient ingredient = Ingredient.builder()
+                .id(2L)
+                .name("Test ingredient")
+                .amount(2.0)
+                .measureUnit(measureUnit)
+                .version(2L)
+                .build();
+        return Recipe.builder()
+                .id(2L)
+                .name("Test recipe")
+                .description("Test description")
+                .difficulty(Difficulty.EASY)
+                .categories(new HashSet<>(Set.of(category)))
+                .ingredients(new HashSet<>(Set.of(ingredient)))
+                .servings(2.0)
+                .cookingTime(20)
+                .instructions("Test instructions in Recipe")
+                .version(2L)
+                .build();
     }
 
-    private static RecipeTestFactory getRecipeTestFactory() {
-        final Faker faker = new Faker();
-        final DifficultyTestFactory difficultyFactory = new RandomDifficultyTestFactory(faker);
-        final CategoryTestFactory categoryFactory = new RandomCategoryTestFactory(faker);
-        final MeasureUnitTestFactory measureUnitFactory = new RandomMeasureUnitTestFactory(faker);
-        final IngredientTestFactory ingredientFactory = new RandomIngredientTestFactory(faker, measureUnitFactory);
-        return new RandomRecipeTestFactory(
-                faker,
-                difficultyFactory,
-                categoryFactory,
-                ingredientFactory
-        );
-    }
-
-    private RecipeRecipeDTOValueTestComparator getRecipeComparator() {
-        return new RecipeRecipeDTOValueTestComparator(
-                idComparator,
-                imageComparator,
-                nameComparator,
-                descriptionComparator,
-                difficultyComparator,
-                new CategoryCategoryDTOValueTestComparator(
-                        idComparator,
-                        nameComparator,
-                        versionComparator
-                ),
-                new IngredientIngredientDTOValueTestComparator(
-                        idComparator,
-                        nameComparator,
-                        new AmountValueTestComparator(),
-                        new MeasureUnitMeasureUnitDTOValueTestComparator(
-                                idComparator,
-                                nameComparator,
-                                versionComparator
-                        ),
-                        versionComparator
-                ),
-                servingsComparator,
-                cookingTimeComparator,
-                instructionsComparator,
-                versionComparator
-        );
+    private static RecipeDTO getTestRecipeDTO() {
+        final CategoryDTO categoryDTO = CategoryDTO.builder()
+                .id(1L)
+                .name("Test categoryDTO")
+                .version(1L)
+                .build();
+        final MeasureUnitDTO measureUnitDTO = MeasureUnitDTO.builder()
+                .id(1L)
+                .name("Test measure unitDTO")
+                .version(1L)
+                .build();
+        final IngredientDTO ingredientDTO = IngredientDTO.builder()
+                .id(1L)
+                .name("Test ingredientDTO")
+                .amount(1.0)
+                .measureUnitDTO(measureUnitDTO)
+                .version(1L)
+                .build();
+        return RecipeDTO.builder()
+                .id(1L)
+                .name("Test recipeDTO")
+                .description("Test description")
+                .difficultyDTO(DifficultyDTO.MEDIUM)
+                .categoryDTOs(new HashSet<>(Set.of(categoryDTO)))
+                .ingredientDTOs(new HashSet<>(Set.of(ingredientDTO)))
+                .servings(1.0)
+                .cookingTime(10)
+                .instructions("Test instructions in RecipeDTO")
+                .version(1L)
+                .build();
     }
 
     @Test
@@ -177,8 +163,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasLongId.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalId = idComparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
     @Test
@@ -195,8 +182,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasImage.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalImage = imageComparator.compare(source, target);
-        assertTrue(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertArrayEquals(sourceImage, targetImage);
     }
 
     @Test
@@ -213,8 +201,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasStringName.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalName = nameComparator.compare(source, target);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
     }
 
     @Test
@@ -231,8 +220,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasDescription.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalDescription = descriptionComparator.compare(source, target);
-        assertTrue(equalDescription);
+        final String sourceDescription = source.getDescription();
+        final String targetDescription = target.getDescription();
+        assertEquals(sourceDescription, targetDescription);
     }
 
     @Test
@@ -245,10 +235,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                     return DifficultyDTO.valueOf(difficultyName);
                 });
         recipeMapper.map(source, target);
-        final Difficulty difficulty = source.getDifficulty();
-        final DifficultyDTO difficultyDTO = target.getDifficultyDTO();
-        final boolean equalDifficulties = difficultyComparator.compare(difficulty, difficultyDTO);
-        assertTrue(equalDifficulties);
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = target.getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
     }
 
     @Test
@@ -267,36 +256,7 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                             .build();
                 });
         recipeMapper.map(source, target);
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getId)
-                        .sorted()
-                        .toList(),
-                target.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getName)
-                        .sorted()
-                        .toList(),
-                target.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getVersion)
-                        .sorted()
-                        .toList(),
-                target.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
+        equalCategories(source, target);
     }
 
     @Test
@@ -329,82 +289,7 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                             .build();
                 });
         recipeMapper.map(source, target);
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getId)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getName)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getAmount)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getAmount)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getVersion)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getId)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getName)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getVersion)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
+        equalIngredients(source, target);
     }
 
     @Test
@@ -421,8 +306,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasServings.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalServings = servingsComparator.compare(source, target);
-        assertTrue(equalServings);
+        final Double sourceServings = source.getServings();
+        final Double targetServings = target.getServings();
+        assertEquals(sourceServings, targetServings);
     }
 
     @Test
@@ -439,8 +325,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasCookingTime.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
-        assertTrue(equalCookingTime);
+        final Integer sourceCookingTime = source.getCookingTime();
+        final Integer targetCookingTime = target.getCookingTime();
+        assertEquals(sourceCookingTime, targetCookingTime);
     }
 
     @Test
@@ -457,8 +344,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasInstructions.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalInstructions = instructionsComparator.compare(source, target);
-        assertTrue(equalInstructions);
+        final String sourceInstructions = source.getInstructions();
+        final String targetInstructions = target.getInstructions();
+        assertEquals(sourceInstructions, targetInstructions);
     }
 
     @Test
@@ -475,8 +363,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalVersion = versionComparator.compare(source, target);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -607,8 +496,43 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         recipeMapper.map(source, target);
-        final boolean equalRecipes = recipeComparator.compare(source, target);
-        assertTrue(equalRecipes);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
+
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertArrayEquals(sourceImage, targetImage);
+
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
+
+        final String sourceDescription = source.getDescription();
+        final String targetDescription = target.getDescription();
+        assertEquals(sourceDescription, targetDescription);
+
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = target.getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
+        equalCategories(source, target);
+        equalIngredients(source, target);
+
+        final Double sourceServings = source.getServings();
+        final Double targetServings = target.getServings();
+        assertEquals(sourceServings, targetServings);
+
+        final Integer sourceCookingTime = source.getCookingTime();
+        final Integer targetCookingTime = target.getCookingTime();
+        assertEquals(sourceCookingTime, targetCookingTime);
+
+        final String sourceInstructions = source.getInstructions();
+        final String targetInstructions = target.getInstructions();
+        assertEquals(sourceInstructions, targetInstructions);
+
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -643,8 +567,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasLongId.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalId = idComparator.compare(source, recipeDTO);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long recipeDTOId = recipeDTO.getId();
+        assertEquals(sourceId, recipeDTOId);
     }
 
     @Test
@@ -661,8 +586,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasImage.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalImage = imageComparator.compare(source, recipeDTO);
-        assertTrue(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] recipeDTOImage = recipeDTO.getImage();
+        assertArrayEquals(sourceImage, recipeDTOImage);
     }
 
     @Test
@@ -679,8 +605,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasStringName.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalName = nameComparator.compare(source, recipeDTO);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String recipeDTOName = recipeDTO.getName();
+        assertEquals(sourceName, recipeDTOName);
     }
 
     @Test
@@ -697,8 +624,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasDescription.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalDescription = descriptionComparator.compare(source, recipeDTO);
-        assertTrue(equalDescription);
+        final String sourceDescription = source.getDescription();
+        final String recipeDTODescription = recipeDTO.getDescription();
+        assertEquals(sourceDescription, recipeDTODescription);
     }
 
     @Test
@@ -710,10 +638,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                     final String difficultyName = difficulty.name();
                     return DifficultyDTO.valueOf(difficultyName);
                 });
-        final DifficultyDTO difficultyDTO = recipeMapper.mapToDTO(source).getDifficultyDTO();
-        final Difficulty difficulty = source.getDifficulty();
-        final boolean equalDifficulties = difficultyComparator.compare(difficulty, difficultyDTO);
-        assertTrue(equalDifficulties);
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = recipeMapper.mapToDTO(source).getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
     }
 
     @Test
@@ -732,36 +659,7 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                             .build();
                 });
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getId)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getName)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getVersion)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
+        equalCategories(source, recipeDTO);
     }
 
     @Test
@@ -794,82 +692,7 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                             .build();
                 });
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getId)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getName)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getAmount)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getAmount)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getVersion)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getId)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getName)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getVersion)
-                        .sorted()
-                        .toList(),
-                recipeDTO.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
+        equalIngredients(source, recipeDTO);
     }
 
     @Test
@@ -886,8 +709,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasServings.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalServings = servingsComparator.compare(source, recipeDTO);
-        assertTrue(equalServings);
+        final Double sourceServings = source.getServings();
+        final Double recipeDTOServings = recipeDTO.getServings();
+        assertEquals(sourceServings, recipeDTOServings);
     }
 
     @Test
@@ -904,8 +728,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasCookingTime.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, recipeDTO);
-        assertTrue(equalCookingTime);
+        final Integer sourceCookingTime = source.getCookingTime();
+        final Integer recipeDTOCookingTime = recipeDTO.getCookingTime();
+        assertEquals(sourceCookingTime, recipeDTOCookingTime);
     }
 
     @Test
@@ -922,8 +747,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasInstructions.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalInstructions = instructionsComparator.compare(source, recipeDTO);
-        assertTrue(equalInstructions);
+        final String sourceInstructions = source.getInstructions();
+        final String recipeDTOInstructions = recipeDTO.getInstructions();
+        assertEquals(sourceInstructions, recipeDTOInstructions);
     }
 
     @Test
@@ -940,8 +766,9 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalVersion = versionComparator.compare(source, recipeDTO);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long recipeDTOVersion = recipeDTO.getVersion();
+        assertEquals(sourceVersion, recipeDTOVersion);
     }
 
     @Test
@@ -1072,8 +899,43 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         final RecipeDTO recipeDTO = recipeMapper.mapToDTO(source);
-        final boolean equalRecipes = recipeComparator.compare(source, recipeDTO);
-        assertTrue(equalRecipes);
+        final Long sourceId = source.getId();
+        final Long recipeDTOId = recipeDTO.getId();
+        assertEquals(sourceId, recipeDTOId);
+
+        final byte[] sourceImage = source.getImage();
+        final byte[] recipeDTOImage = recipeDTO.getImage();
+        assertArrayEquals(sourceImage, recipeDTOImage);
+
+        final String sourceName = source.getName();
+        final String recipeDTOName = recipeDTO.getName();
+        assertEquals(sourceName, recipeDTOName);
+
+        final String sourceDescription = source.getDescription();
+        final String recipeDTODescription = recipeDTO.getDescription();
+        assertEquals(sourceDescription, recipeDTODescription);
+
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = recipeDTO.getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
+        equalCategories(source, recipeDTO);
+        equalIngredients(source, recipeDTO);
+
+        final Double sourceServings = source.getServings();
+        final Double recipeDTOServings = recipeDTO.getServings();
+        assertEquals(sourceServings, recipeDTOServings);
+
+        final Integer sourceCookingTime = source.getCookingTime();
+        final Integer recipeDTOCookingTime = recipeDTO.getCookingTime();
+        assertEquals(sourceCookingTime, recipeDTOCookingTime);
+
+        final String sourceInstructions = source.getInstructions();
+        final String recipeDTOInstructions = recipeDTO.getInstructions();
+        assertEquals(sourceInstructions, recipeDTOInstructions);
+
+        final Long sourceVersion = source.getVersion();
+        final Long recipeDTOVersion = recipeDTO.getVersion();
+        assertEquals(sourceVersion, recipeDTOVersion);
     }
 
     @Test
@@ -1083,5 +945,117 @@ class SimpleRecipeToRecipeDTOMapperUnitTest {
                 .when(idMapper)
                 .map(isNull(), any());
         assertThrows(NullPointerException.class, () -> recipeMapper.mapToDTO(null));
+    }
+
+    private static void equalCategories(Recipe recipe, RecipeDTO recipeDTO) {
+        assertIterableEquals(
+                recipe.getCategories().stream()
+                        .map(Category::getId)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getId)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getCategories().stream()
+                        .map(Category::getName)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getName)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getCategories().stream()
+                        .map(Category::getVersion)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getCategoryDTOs().stream()
+                        .map(CategoryDTO::getVersion)
+                        .sorted()
+                        .toList()
+        );
+    }
+
+    private static void equalIngredients(Recipe recipe, RecipeDTO recipeDTO) {
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getId)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getId)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getName)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getName)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getAmount)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getAmount)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getVersion)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getVersion)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getId)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getId)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getName)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getName)
+                        .sorted()
+                        .toList()
+        );
+        assertIterableEquals(
+                recipe.getIngredients().stream()
+                        .map(Ingredient::getMeasureUnit)
+                        .map(MeasureUnit::getVersion)
+                        .sorted()
+                        .toList(),
+                recipeDTO.getIngredientDTOs().stream()
+                        .map(IngredientDTO::getMeasureUnitDTO)
+                        .map(MeasureUnitDTO::getVersion)
+                        .sorted()
+                        .toList()
+        );
     }
 }

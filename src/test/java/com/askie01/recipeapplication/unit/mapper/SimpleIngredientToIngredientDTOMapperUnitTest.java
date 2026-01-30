@@ -1,9 +1,7 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.comparator.*;
 import com.askie01.recipeapplication.dto.IngredientDTO;
 import com.askie01.recipeapplication.dto.MeasureUnitDTO;
-import com.askie01.recipeapplication.factory.*;
 import com.askie01.recipeapplication.mapper.*;
 import com.askie01.recipeapplication.model.entity.Ingredient;
 import com.askie01.recipeapplication.model.entity.MeasureUnit;
@@ -11,7 +9,6 @@ import com.askie01.recipeapplication.model.value.HasAmount;
 import com.askie01.recipeapplication.model.value.HasLongId;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.model.value.HasStringName;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,8 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doAnswer;
@@ -50,41 +47,47 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
 
     @Mock
     private MeasureUnitToMeasureUnitDTOMapper measureUnitToMeasureUnitDTOMapper;
-    private LongIdTestComparator idComparator;
-    private StringNameTestComparator nameComparator;
-    private AmountTestComparator amountComparator;
-    private LongVersionTestComparator versionComparator;
-    private MeasureUnitMeasureUnitDTOTestComparator measureUnitComparator;
-    private IngredientIngredientDTOTestComparator ingredientComparator;
 
     @BeforeEach
     void setUp() {
+        this.source = getTestIngredient();
+        this.target = getTestIngredientDTO();
         this.mapper = new SimpleIngredientToIngredientDTOMapper(
                 idMapper,
                 nameMapper,
                 amountMapper,
                 measureUnitToMeasureUnitDTOMapper,
                 versionMapper);
-        final Faker faker = new Faker();
-        final MeasureUnitDTOTestFactory measureUnitDTOTestFactory = new RandomMeasureUnitDTOTestFactory(faker);
-        final MeasureUnitTestFactory measureUnitTestFactory = new RandomMeasureUnitTestFactory(faker);
-        this.source = new RandomIngredientTestFactory(faker, measureUnitTestFactory).createIngredient();
-        this.target = new RandomIngredientDTOTestFactory(faker, measureUnitDTOTestFactory).createIngredientDTO();
+    }
 
-        this.idComparator = new LongIdValueTestComparator();
-        this.nameComparator = new StringNameValueTestComparator();
-        this.amountComparator = new AmountValueTestComparator();
-        this.versionComparator = new LongVersionValueTestComparator();
-        this.measureUnitComparator = new MeasureUnitMeasureUnitDTOValueTestComparator(
-                idComparator,
-                nameComparator,
-                versionComparator);
-        this.ingredientComparator = new IngredientIngredientDTOValueTestComparator(
-                idComparator,
-                nameComparator,
-                amountComparator,
-                measureUnitComparator,
-                versionComparator);
+    private static Ingredient getTestIngredient() {
+        final MeasureUnit measureUnit = MeasureUnit.builder()
+                .id(2L)
+                .name("Test measure unit")
+                .version(2L)
+                .build();
+        return Ingredient.builder()
+                .id(2L)
+                .name("Test ingredient")
+                .amount(2.0)
+                .measureUnit(measureUnit)
+                .version(2L)
+                .build();
+    }
+
+    private static IngredientDTO getTestIngredientDTO() {
+        final MeasureUnitDTO measureUnitDTO = MeasureUnitDTO.builder()
+                .id(1L)
+                .name("Test measure unitDTO")
+                .version(1L)
+                .build();
+        return IngredientDTO.builder()
+                .id(1L)
+                .name("Test ingredientDTO")
+                .amount(1.0)
+                .measureUnitDTO(measureUnitDTO)
+                .version(1L)
+                .build();
     }
 
     @Test
@@ -101,8 +104,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongId.class)
         );
         mapper.map(source, target);
-        final boolean equalId = idComparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
     @Test
@@ -119,8 +123,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasStringName.class)
         );
         mapper.map(source, target);
-        final boolean equalName = nameComparator.compare(source, target);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
     }
 
     @Test
@@ -137,35 +142,41 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasAmount.class)
         );
         mapper.map(source, target);
-        final boolean equalAmount = amountComparator.compare(source, target);
-        assertTrue(equalAmount);
+        final Double sourceAmount = source.getAmount();
+        final Double targetAmount = target.getAmount();
+        assertEquals(sourceAmount, targetAmount);
     }
 
     @Test
     @DisplayName("map method should map source measureUnit to target measureUnitDTO when source is present")
     void map_whenSourceIsPresent_mapsSourceMeasureUnitToTargetMeasureUnitDTO() {
-        final MeasureUnit measureUnit = source.getMeasureUnit();
-        final MeasureUnitDTO measureUnitDTO = target.getMeasureUnitDTO();
-
         doAnswer(invocation -> {
             final MeasureUnit source = invocation.getArgument(0);
             final MeasureUnitDTO target = invocation.getArgument(1);
 
-            final Long sourceMeasureUnitId = source.getId();
-            final String sourceMeasureUnitName = source.getName();
-            final Long sourceMeasureUnitVersion = source.getVersion();
-            target.setId(sourceMeasureUnitId);
-            target.setName(sourceMeasureUnitName);
-            target.setVersion(sourceMeasureUnitVersion);
+            final Long sourceId = source.getId();
+            final String sourceName = source.getName();
+            final Long sourceVersion = source.getVersion();
+            target.setId(sourceId);
+            target.setName(sourceName);
+            target.setVersion(sourceVersion);
             return null;
         }).when(measureUnitToMeasureUnitDTOMapper).map(
                 any(MeasureUnit.class),
                 any(MeasureUnitDTO.class)
         );
-
         mapper.map(source, target);
-        final boolean equalMeasureUnit = measureUnitComparator.compare(measureUnit, measureUnitDTO);
-        assertTrue(equalMeasureUnit);
+        final Long measureUnitId = source.getMeasureUnit().getId();
+        final Long measureUnitDTOId = target.getMeasureUnitDTO().getId();
+        assertEquals(measureUnitId, measureUnitDTOId);
+
+        final String measureUnitName = source.getMeasureUnit().getName();
+        final String measureUnitDTOName = target.getMeasureUnitDTO().getName();
+        assertEquals(measureUnitName, measureUnitDTOName);
+
+        final Long measureUnitVersion = source.getMeasureUnit().getVersion();
+        final Long measureUnitDTOVersion = target.getMeasureUnitDTO().getVersion();
+        assertEquals(measureUnitVersion, measureUnitDTOVersion);
     }
 
     @Test
@@ -182,8 +193,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         mapper.map(source, target);
-        final boolean equalVersion = versionComparator.compare(source, target);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -199,7 +211,6 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongId.class),
                 any(HasLongId.class)
         );
-
         doAnswer(invocation -> {
             final HasStringName source = invocation.getArgument(0);
             final HasStringName target = invocation.getArgument(1);
@@ -210,7 +221,6 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasStringName.class),
                 any(HasStringName.class)
         );
-
         doAnswer(invocation -> {
             final HasAmount source = invocation.getArgument(0);
             final HasAmount target = invocation.getArgument(1);
@@ -221,23 +231,21 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasAmount.class),
                 any(HasAmount.class)
         );
-
         doAnswer(invocation -> {
             final MeasureUnit source = invocation.getArgument(0);
             final MeasureUnitDTO target = invocation.getArgument(1);
 
-            final Long sourceMeasureUnitId = source.getId();
-            final String sourceMeasureUnitName = source.getName();
-            final Long sourceMeasureUnitVersion = source.getVersion();
-            target.setId(sourceMeasureUnitId);
-            target.setName(sourceMeasureUnitName);
-            target.setVersion(sourceMeasureUnitVersion);
+            final Long sourceId = source.getId();
+            final String sourceName = source.getName();
+            final Long sourceVersion = source.getVersion();
+            target.setId(sourceId);
+            target.setName(sourceName);
+            target.setVersion(sourceVersion);
             return null;
         }).when(measureUnitToMeasureUnitDTOMapper).map(
                 any(MeasureUnit.class),
                 any(MeasureUnitDTO.class)
         );
-
         doAnswer(invocation -> {
             final HasLongVersion source = invocation.getArgument(0);
             final HasLongVersion target = invocation.getArgument(1);
@@ -248,10 +256,34 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongVersion.class),
                 any(HasLongVersion.class)
         );
-
         mapper.map(source, target);
-        final boolean equalIngredients = ingredientComparator.compare(source, target);
-        assertTrue(equalIngredients);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
+
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
+
+        final Double sourceAmount = source.getAmount();
+        final Double targetAmount = target.getAmount();
+        assertEquals(sourceAmount, targetAmount);
+
+        final Long measureUnitId = source.getMeasureUnit().getId();
+        final Long measureUnitDTOId = target.getMeasureUnitDTO().getId();
+        assertEquals(measureUnitId, measureUnitDTOId);
+
+        final String measureUnitName = source.getMeasureUnit().getName();
+        final String measureUnitDTOName = target.getMeasureUnitDTO().getName();
+        assertEquals(measureUnitName, measureUnitDTOName);
+
+        final Long measureUnitVersion = source.getMeasureUnit().getVersion();
+        final Long measureUnitDTOVersion = target.getMeasureUnitDTO().getVersion();
+        assertEquals(measureUnitVersion, measureUnitDTOVersion);
+
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -280,8 +312,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongId.class)
         );
         final IngredientDTO ingredientDTO = mapper.mapToDTO(source);
-        final boolean equalId = idComparator.compare(ingredientDTO, source);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long ingredientDTOId = ingredientDTO.getId();
+        assertEquals(sourceId, ingredientDTOId);
     }
 
     @Test
@@ -298,8 +331,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasStringName.class)
         );
         final IngredientDTO ingredientDTO = mapper.mapToDTO(source);
-        final boolean equalName = nameComparator.compare(ingredientDTO, source);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String ingredientDTOName = ingredientDTO.getName();
+        assertEquals(sourceName, ingredientDTOName);
     }
 
     @Test
@@ -316,8 +350,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasAmount.class)
         );
         final IngredientDTO ingredientDTO = mapper.mapToDTO(source);
-        final boolean equalAmount = amountComparator.compare(ingredientDTO, source);
-        assertTrue(equalAmount);
+        final Double sourceAmount = source.getAmount();
+        final Double ingredientDTOAmount = ingredientDTO.getAmount();
+        assertEquals(sourceAmount, ingredientDTOAmount);
     }
 
     @Test
@@ -339,10 +374,18 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(MeasureUnitDTO.class)
         );
 
-        final MeasureUnit measureUnit = source.getMeasureUnit();
-        final MeasureUnitDTO measureUnitDTO = mapper.mapToDTO(source).getMeasureUnitDTO();
-        final boolean equalMeasureUnits = measureUnitComparator.compare(measureUnit, measureUnitDTO);
-        assertTrue(equalMeasureUnits);
+        final IngredientDTO ingredientDTO = mapper.mapToDTO(source);
+        final Long measureUnitId = source.getMeasureUnit().getId();
+        final Long measureUnitDTOId = ingredientDTO.getMeasureUnitDTO().getId();
+        assertEquals(measureUnitId, measureUnitDTOId);
+
+        final String measureUnitName = source.getMeasureUnit().getName();
+        final String measureUnitDTOName = ingredientDTO.getMeasureUnitDTO().getName();
+        assertEquals(measureUnitName, measureUnitDTOName);
+
+        final Long measureUnitVersion = source.getMeasureUnit().getVersion();
+        final Long measureUnitDTOVersion = ingredientDTO.getMeasureUnitDTO().getVersion();
+        assertEquals(measureUnitVersion, measureUnitDTOVersion);
     }
 
     @Test
@@ -359,8 +402,9 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         final IngredientDTO ingredientDTO = mapper.mapToDTO(source);
-        final boolean equalVersion = versionComparator.compare(ingredientDTO, source);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long ingredientDTOVersion = ingredientDTO.getVersion();
+        assertEquals(sourceVersion, ingredientDTOVersion);
     }
 
     @Test
@@ -376,7 +420,6 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongId.class),
                 any(HasLongId.class)
         );
-
         doAnswer(invocation -> {
             final HasStringName source = invocation.getArgument(0);
             final HasStringName target = invocation.getArgument(1);
@@ -387,7 +430,6 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasStringName.class),
                 any(HasStringName.class)
         );
-
         doAnswer(invocation -> {
             final HasAmount source = invocation.getArgument(0);
             final HasAmount target = invocation.getArgument(1);
@@ -398,7 +440,6 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasAmount.class),
                 any(HasAmount.class)
         );
-
         doAnswer(invocation -> {
             final MeasureUnit source = invocation.getArgument(0);
             final MeasureUnitDTO target = invocation.getArgument(1);
@@ -414,7 +455,6 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(MeasureUnit.class),
                 any(MeasureUnitDTO.class)
         );
-
         doAnswer(invocation -> {
             final HasLongVersion source = invocation.getArgument(0);
             final HasLongVersion target = invocation.getArgument(1);
@@ -425,10 +465,34 @@ class SimpleIngredientToIngredientDTOMapperUnitTest {
                 any(HasLongVersion.class),
                 any(HasLongVersion.class)
         );
-
         final IngredientDTO ingredientDTO = mapper.mapToDTO(source);
-        final boolean equalIngredients = ingredientComparator.compare(source, ingredientDTO);
-        assertTrue(equalIngredients);
+        final Long sourceId = source.getId();
+        final Long ingredientDTOId = ingredientDTO.getId();
+        assertEquals(sourceId, ingredientDTOId);
+
+        final String sourceName = source.getName();
+        final String ingredientDTOName = ingredientDTO.getName();
+        assertEquals(sourceName, ingredientDTOName);
+
+        final Double sourceAmount = source.getAmount();
+        final Double ingredientDTOAmount = ingredientDTO.getAmount();
+        assertEquals(sourceAmount, ingredientDTOAmount);
+
+        final Long measureUnitId = source.getMeasureUnit().getId();
+        final Long measureUnitDTOId = ingredientDTO.getMeasureUnitDTO().getId();
+        assertEquals(measureUnitId, measureUnitDTOId);
+
+        final String measureUnitName = source.getMeasureUnit().getName();
+        final String measureUnitDTOName = ingredientDTO.getMeasureUnitDTO().getName();
+        assertEquals(measureUnitName, measureUnitDTOName);
+
+        final Long measureUnitVersion = source.getMeasureUnit().getVersion();
+        final Long measureUnitDTOVersion = ingredientDTO.getMeasureUnitDTO().getVersion();
+        assertEquals(measureUnitVersion, measureUnitDTOVersion);
+
+        final Long sourceVersion = source.getVersion();
+        final Long ingredientDTOVersion = ingredientDTO.getVersion();
+        assertEquals(sourceVersion, ingredientDTOVersion);
     }
 
     @Test

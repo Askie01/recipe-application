@@ -1,15 +1,11 @@
 package com.askie01.recipeapplication.unit.mapper;
 
-import com.askie01.recipeapplication.comparator.*;
 import com.askie01.recipeapplication.dto.CategoryDTO;
-import com.askie01.recipeapplication.factory.RandomCategoryDTOTestFactory;
-import com.askie01.recipeapplication.factory.RandomCategoryTestFactory;
 import com.askie01.recipeapplication.mapper.*;
 import com.askie01.recipeapplication.model.entity.Category;
 import com.askie01.recipeapplication.model.value.HasLongId;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
 import com.askie01.recipeapplication.model.value.HasStringName;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doAnswer;
@@ -42,24 +38,28 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
 
     @Mock
     private LongVersionMapper versionMapper;
-    private CategoryCategoryDTOTestComparator categoryComparator;
-    private LongIdTestComparator idComparator;
-    private StringNameTestComparator nameComparator;
-    private LongVersionTestComparator versionComparator;
 
     @BeforeEach
     void setUp() {
-        final Faker faker = new Faker();
+        this.source = getTestCategory();
+        this.target = getTestCategoryDTO();
         this.mapper = new SimpleCategoryToCategoryDTOMapper(idMapper, nameMapper, versionMapper);
-        this.source = new RandomCategoryTestFactory(faker).createCategory();
-        this.target = new RandomCategoryDTOTestFactory(faker).createCategoryDTO();
-        this.idComparator = new LongIdValueTestComparator();
-        this.nameComparator = new StringNameValueTestComparator();
-        this.versionComparator = new LongVersionValueTestComparator();
-        this.categoryComparator = new CategoryCategoryDTOValueTestComparator(
-                idComparator,
-                nameComparator,
-                versionComparator);
+    }
+
+    private static Category getTestCategory() {
+        return Category.builder()
+                .id(2L)
+                .name("Test category")
+                .version(2L)
+                .build();
+    }
+
+    private static CategoryDTO getTestCategoryDTO() {
+        return CategoryDTO.builder()
+                .id(1L)
+                .name("Test categoryDTO")
+                .version(1L)
+                .build();
     }
 
     @Test
@@ -76,8 +76,9 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasLongId.class)
         );
         mapper.map(source, target);
-        final boolean equalId = idComparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
 
@@ -95,8 +96,9 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasStringName.class)
         );
         mapper.map(source, target);
-        final boolean equalName = nameComparator.compare(source, target);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
     }
 
     @Test
@@ -113,8 +115,9 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         mapper.map(source, target);
-        final boolean equalVersion = versionComparator.compare(source, target);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -151,8 +154,17 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         mapper.map(source, target);
-        final boolean equalCategories = categoryComparator.compare(source, target);
-        assertTrue(equalCategories);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
+
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
+
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -187,8 +199,9 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasLongId.class)
         );
         final CategoryDTO categoryDTO = mapper.mapToDTO(source);
-        final boolean equalId = idComparator.compare(source, categoryDTO);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long categoryDTOId = categoryDTO.getId();
+        assertEquals(sourceId, categoryDTOId);
     }
 
     @Test
@@ -205,8 +218,9 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasStringName.class)
         );
         final CategoryDTO categoryDTO = mapper.mapToDTO(source);
-        final boolean equalName = nameComparator.compare(source, categoryDTO);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String categoryDTOName = categoryDTO.getName();
+        assertEquals(sourceName, categoryDTOName);
     }
 
     @Test
@@ -223,8 +237,9 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         final CategoryDTO categoryDTO = mapper.mapToDTO(source);
-        final boolean equalVersion = versionComparator.compare(source, categoryDTO);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long categoryDTOVersion = categoryDTO.getVersion();
+        assertEquals(sourceVersion, categoryDTOVersion);
     }
 
 
@@ -262,8 +277,17 @@ class SimpleCategoryToCategoryDTOMapperUnitTest {
                 any(HasLongVersion.class)
         );
         final CategoryDTO categoryDTO = mapper.mapToDTO(source);
-        final boolean equalCategories = categoryComparator.compare(source, categoryDTO);
-        assertTrue(equalCategories);
+        final Long sourceId = source.getId();
+        final Long categoryDTOId = categoryDTO.getId();
+        assertEquals(sourceId, categoryDTOId);
+
+        final String sourceName = source.getName();
+        final String categoryDTOName = categoryDTO.getName();
+        assertEquals(sourceName, categoryDTOName);
+
+        final Long sourceVersion = source.getVersion();
+        final Long categoryDTOVersion = categoryDTO.getVersion();
+        assertEquals(sourceVersion, categoryDTOVersion);
     }
 
     @Test

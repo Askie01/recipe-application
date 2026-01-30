@@ -1,31 +1,28 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasInstructionsTestBuilder;
-import com.askie01.recipeapplication.comparator.InstructionsTestComparator;
-import com.askie01.recipeapplication.configuration.InstructionsValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedInstructionsMapperDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.InstructionsMapperConfiguration;
+import com.askie01.recipeapplication.configuration.InstructionsValidatorConfiguration;
 import com.askie01.recipeapplication.mapper.InstructionsMapper;
 import com.askie01.recipeapplication.model.value.HasInstructions;
-import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        ValidatedInstructionsMapperDefaultTestConfiguration.class,
-        InstructionsValueTestComparatorTestConfiguration.class
+@SpringJUnitConfig(classes = InstructionsMapperConfiguration.class)
+@Import(value = InstructionsValidatorConfiguration.class)
+@TestPropertySource(properties = {
+        "component.mapper.instructions-type=validated-instructions",
+        "component.validator.instructions-type=non-blank-instructions"
 })
-@TestPropertySource(locations = "classpath:validated-instructions-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("ValidatedInstructionsMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -34,18 +31,14 @@ class ValidatedInstructionsMapperIntegrationTest {
     private HasInstructions source;
     private HasInstructions target;
     private final InstructionsMapper mapper;
-    private final InstructionsTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        final Faker faker = new Faker();
-        final String sourceInstructions = faker.lorem().paragraph();
-        final String targetInstructions = faker.lorem().paragraph();
         this.source = HasInstructionsTestBuilder.builder()
-                .instructions(sourceInstructions)
+                .instructions("Source instructions")
                 .build();
         this.target = HasInstructionsTestBuilder.builder()
-                .instructions(targetInstructions)
+                .instructions("Target instructions")
                 .build();
     }
 
@@ -53,8 +46,9 @@ class ValidatedInstructionsMapperIntegrationTest {
     @DisplayName("map method should map source instructions to target instructions when source is valid")
     void map_whenSourceInstructionsIsValid_mapsSourceInstructionsToTargetInstructions() {
         mapper.map(source, target);
-        final boolean equalInstructions = comparator.compare(source, target);
-        assertTrue(equalInstructions);
+        final String sourceInstructions = source.getInstructions();
+        final String targetInstructions = target.getInstructions();
+        assertEquals(sourceInstructions, targetInstructions);
     }
 
     @Test
@@ -62,8 +56,9 @@ class ValidatedInstructionsMapperIntegrationTest {
     void map_whenSourceInstructionsIsInvalid_doesNotMapSourceInstructionsToTargetInstructions() {
         source.setInstructions("");
         mapper.map(source, target);
-        final boolean equalInstructions = comparator.compare(source, target);
-        assertFalse(equalInstructions);
+        final String sourceInstructions = source.getInstructions();
+        final String targetInstructions = target.getInstructions();
+        assertNotEquals(sourceInstructions, targetInstructions);
     }
 
     @Test

@@ -1,10 +1,7 @@
 package com.askie01.recipeapplication.integration.mapper;
 
-import com.askie01.recipeapplication.comparator.*;
 import com.askie01.recipeapplication.configuration.*;
 import com.askie01.recipeapplication.dto.*;
-import com.askie01.recipeapplication.factory.RecipeDTOTestFactory;
-import com.askie01.recipeapplication.factory.RecipeTestFactory;
 import com.askie01.recipeapplication.mapper.RecipeToRecipeDTOMapper;
 import com.askie01.recipeapplication.model.entity.Category;
 import com.askie01.recipeapplication.model.entity.Ingredient;
@@ -16,31 +13,61 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        SimpleRecipeToRecipeDTOMapperDefaultTestConfiguration.class,
-        RandomRecipeDTOTestFactoryDefaultTestConfiguration.class,
-        RandomRecipeTestFactoryDefaultTestConfiguration.class,
-        RecipeRecipeDTOValueTestComparatorDefaultTestConfiguration.class,
-        LongIdValueTestComparatorTestConfiguration.class,
-        ImageValueTestComparatorTestConfiguration.class,
-        StringNameValueTestComparatorTestConfiguration.class,
-        DescriptionValueTestComparatorTestConfiguration.class,
-        DifficultyDifficultyDTOValueTestComparatorTestConfiguration.class,
-        ServingsValueTestComparatorTestConfiguration.class,
-        CookingTimeValueTestComparatorTestConfiguration.class,
-        InstructionsValueTestComparatorTestConfiguration.class,
-        LongVersionValueTestComparatorTestConfiguration.class
+@SpringJUnitConfig(classes = RecipeToRecipeDTOMapperConfiguration.class)
+@Import(value = {
+        LongIdMapperConfiguration.class,
+        ImageMapperConfiguration.class,
+        ImageValidatorConfiguration.class,
+        StringNameMapperConfiguration.class,
+        StringNameValidatorConfiguration.class,
+        DescriptionMapperConfiguration.class,
+        DescriptionValidatorConfiguration.class,
+        DifficultyToDifficultyDTOMapperConfiguration.class,
+        CategoryToCategoryDTOMapperConfiguration.class,
+        LongVersionMapperConfiguration.class,
+        IngredientToIngredientDTOMapperConfiguration.class,
+        AmountMapperConfiguration.class,
+        AmountValidatorConfiguration.class,
+        MeasureUnitToMeasureUnitDTOMapperConfiguration.class,
+        ServingsMapperConfiguration.class,
+        ServingsValidatorConfiguration.class,
+        CookingTimeMapperConfiguration.class,
+        CookingTimeValidatorConfiguration.class,
+        InstructionsMapperConfiguration.class,
+        InstructionsValidatorConfiguration.class
 })
-@TestPropertySource(locations = "classpath:simple-recipe-to-recipeDTO-mapper-default-test-configuration.properties")
+@TestPropertySource(properties = {
+        "component.mapper.recipe-to-recipeDTO-type=simple",
+        "component.mapper.image-type=validated-image",
+        "component.validator.image-type=five-mega-bytes-image",
+        "component.mapper.id-type=simple-long-id",
+        "component.mapper.name-type=validated-string-name",
+        "component.validator.name-type=non-blank-string",
+        "component.mapper.description-type=validated-description",
+        "component.validator.description-type=non-blank-description",
+        "component.mapper.difficulty-to-difficultyDTO-type=simple",
+        "component.mapper.category-to-categoryDTO-type=simple",
+        "component.mapper.version-type=simple-long-version",
+        "component.mapper.amount-type=validated-amount",
+        "component.validator.amount-type=positive-amount",
+        "component.mapper.measureUnit-to-measureUnitDTO-type=simple",
+        "component.mapper.servings-type=validated-servings",
+        "component.validator.servings-type=positive-servings",
+        "component.mapper.cooking-time-type=validated-cooking-time",
+        "component.validator.cooking-time-type=positive-cooking-time",
+        "component.mapper.instructions-type=validated-instructions",
+        "component.validator.instructions-type=non-blank-instructions"
+})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("SimpleRecipeToRecipeDTOMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -48,224 +75,214 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
 
     private Recipe source;
     private RecipeDTO target;
-    private final RecipeTestFactory recipeFactory;
-    private final RecipeDTOTestFactory recipeDTOFactory;
     private final RecipeToRecipeDTOMapper mapper;
-    private final LongIdTestComparator idComparator;
-    private final ImageTestComparator imageComparator;
-    private final StringNameTestComparator nameComparator;
-    private final DescriptionTestComparator descriptionComparator;
-    private final DifficultyDifficultyDTOTestComparator difficultyComparator;
-    private final ServingsTestComparator servingsComparator;
-    private final CookingTimeTestComparator cookingTimeComparator;
-    private final InstructionsTestComparator instructionsComparator;
-    private final LongVersionTestComparator versionComparator;
-    private final RecipeRecipeDTOTestComparator recipeComparator;
 
     @BeforeEach
     void setUp() {
-        this.source = recipeFactory.createRecipe();
-        this.target = recipeDTOFactory.createRecipeDTO();
+        this.source = getTestRecipe();
+        this.target = getTestRecipeDTO();
+    }
+
+    private static Recipe getTestRecipe() {
+        final Category category = Category.builder()
+                .id(2L)
+                .name("Test category")
+                .version(2L)
+                .build();
+        final MeasureUnit measureUnit = MeasureUnit.builder()
+                .id(2L)
+                .name("Test measure unit")
+                .version(2L)
+                .build();
+        final Ingredient ingredient = Ingredient.builder()
+                .id(2L)
+                .name("Test ingredient")
+                .amount(2.0)
+                .measureUnit(measureUnit)
+                .version(2L)
+                .build();
+        return Recipe.builder()
+                .id(2L)
+                .name("Test recipe")
+                .description("Test description")
+                .difficulty(Difficulty.EASY)
+                .categories(new HashSet<>(Set.of(category)))
+                .ingredients(new HashSet<>(Set.of(ingredient)))
+                .servings(2.0)
+                .cookingTime(20)
+                .instructions("Test instructions in Recipe")
+                .version(2L)
+                .build();
+    }
+
+    private static RecipeDTO getTestRecipeDTO() {
+        final CategoryDTO categoryDTO = CategoryDTO.builder()
+                .id(1L)
+                .name("Test categoryDTO")
+                .version(1L)
+                .build();
+        final MeasureUnitDTO measureUnitDTO = MeasureUnitDTO.builder()
+                .id(1L)
+                .name("Test measure unitDTO")
+                .version(1L)
+                .build();
+        final IngredientDTO ingredientDTO = IngredientDTO.builder()
+                .id(1L)
+                .name("Test ingredientDTO")
+                .amount(1.0)
+                .measureUnitDTO(measureUnitDTO)
+                .version(1L)
+                .build();
+        return RecipeDTO.builder()
+                .id(1L)
+                .name("Test recipeDTO")
+                .description("Test description")
+                .difficultyDTO(DifficultyDTO.MEDIUM)
+                .categoryDTOs(new HashSet<>(Set.of(categoryDTO)))
+                .ingredientDTOs(new HashSet<>(Set.of(ingredientDTO)))
+                .servings(1.0)
+                .cookingTime(10)
+                .instructions("Test instructions in RecipeDTO")
+                .version(1L)
+                .build();
     }
 
     @Test
     @DisplayName("map method should map source id to target id when source is present")
     void map_whenSourceIsPresent_mapsSourceIdToTargetId() {
         mapper.map(source, target);
-        final boolean equalId = idComparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
     @Test
     @DisplayName("map method should map source image to target image when source is present")
     void map_whenSourceIsPresent_mapsSourceImageToTargetImage() {
         mapper.map(source, target);
-        final boolean equalImage = imageComparator.compare(source, target);
-        assertTrue(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertArrayEquals(sourceImage, targetImage);
     }
 
     @Test
     @DisplayName("map method should map source name to target name when source is present")
     void map_whenSourceIsPresent_mapsSourceNameToTargetName() {
         mapper.map(source, target);
-        final boolean equalName = nameComparator.compare(source, target);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
     }
 
     @Test
     @DisplayName("map method should map source description to target description when source is present")
     void map_whenSourceIsPresent_mapsSourceDescriptionToTargetDescription() {
         mapper.map(source, target);
-        final boolean equalDescription = descriptionComparator.compare(source, target);
-        assertTrue(equalDescription);
+        final String sourceDescription = source.getDescription();
+        final String targetDescription = target.getDescription();
+        assertEquals(sourceDescription, targetDescription);
     }
 
     @Test
     @DisplayName("map method should map source difficulty to target difficultyDTO when source is present")
     void map_whenSourceIsPresent_mapsSourceDifficultyToTargetDifficultyDTO() {
         mapper.map(source, target);
-        final Difficulty difficulty = source.getDifficulty();
-        final DifficultyDTO difficultyDTO = target.getDifficultyDTO();
-        final boolean equalDifficulties = difficultyComparator.compare(difficulty, difficultyDTO);
-        assertTrue(equalDifficulties);
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = target.getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
     }
 
     @Test
     @DisplayName("map method should map source categories to target categoryDTOs when source is present")
     void map_whenSourceIsPresent_mapsSourceCategoriesToTargetCategoryDTOs() {
         mapper.map(source, target);
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getId)
-                        .sorted()
-                        .toList(),
-                target.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getName)
-                        .sorted()
-                        .toList(),
-                target.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getCategories().stream()
-                        .map(Category::getVersion)
-                        .sorted()
-                        .toList(),
-                target.getCategoryDTOs().stream()
-                        .map(CategoryDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
+        equalCategories(source, target);
     }
 
     @Test
     @DisplayName("map method should map source ingredients to target ingredientDTOs when source is present")
     void map_whenSourceIsPresent_mapsSourceIngredientsToTargetIngredientDTOs() {
         mapper.map(source, target);
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getId)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getName)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getAmount)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getAmount)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getVersion)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getId)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getId)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getName)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getName)
-                        .sorted()
-                        .toList()
-        );
-        assertIterableEquals(
-                source.getIngredients().stream()
-                        .map(Ingredient::getMeasureUnit)
-                        .map(MeasureUnit::getVersion)
-                        .sorted()
-                        .toList(),
-                target.getIngredientDTOs().stream()
-                        .map(IngredientDTO::getMeasureUnitDTO)
-                        .map(MeasureUnitDTO::getVersion)
-                        .sorted()
-                        .toList()
-        );
+        equalIngredients(source, target);
     }
 
     @Test
     @DisplayName("map method should map source servings to target servings when source is present")
     void map_whenSourceIsPresent_mapsSourceServingsToTargetServings() {
         mapper.map(source, target);
-        final boolean equalServings = servingsComparator.compare(source, target);
-        assertTrue(equalServings);
+        final double sourceServings = source.getServings();
+        final double targetServings = target.getServings();
+        assertEquals(sourceServings, targetServings);
     }
 
     @Test
     @DisplayName("map method should map source cookingTime to target cookingTime when source is present")
     void map_whenSourceIsPresent_mapsSourceCookingTimeToTargetCookingTime() {
         mapper.map(source, target);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, target);
-        assertTrue(equalCookingTime);
+        final int sourceCookingTime = source.getCookingTime();
+        final int targetCookingTime = target.getCookingTime();
+        assertEquals(sourceCookingTime, targetCookingTime);
     }
 
     @Test
     @DisplayName("map method should map source instructions to target instructions when source is present")
     void map_whenSourceIsPresent_mapsSourceInstructionsToTargetInstructions() {
         mapper.map(source, target);
-        final boolean equalInstructions = instructionsComparator.compare(source, target);
-        assertTrue(equalInstructions);
+        final String sourceInstructions = source.getInstructions();
+        final String targetInstructions = target.getInstructions();
+        assertEquals(sourceInstructions, targetInstructions);
     }
 
     @Test
     @DisplayName("map method should map source version to target version when source is present")
     void map_whenSourceIsPresent_mapsSourceVersionToTargetVersion() {
         mapper.map(source, target);
-        final boolean equalVersion = versionComparator.compare(source, target);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
     @DisplayName("map method should map all common fields from source to target when source is present")
     void map_whenSourceIsPresent_mapsAllCommonFieldsFromSourceToTarget() {
         mapper.map(source, target);
-        final boolean equalRecipes = recipeComparator.compare(source, target);
-        assertTrue(equalRecipes);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
+
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertArrayEquals(sourceImage, targetImage);
+
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
+
+        final String sourceDescription = source.getDescription();
+        final String targetDescription = target.getDescription();
+        assertEquals(sourceDescription, targetDescription);
+
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = target.getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
+        equalCategories(source, target);
+        equalIngredients(source, target);
+
+        final double sourceServings = source.getServings();
+        final double targetServings = target.getServings();
+        assertEquals(sourceServings, targetServings);
+
+        final int sourceCookingTime = source.getCookingTime();
+        final int targetCookingTime = target.getCookingTime();
+        assertEquals(sourceCookingTime, targetCookingTime);
+
+        final String sourceInstructions = source.getInstructions();
+        final String targetInstructions = target.getInstructions();
+        assertEquals(sourceInstructions, targetInstructions);
+
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -284,49 +301,132 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
     @DisplayName("mapToDTO method should map source id to new recipeDTO id when source is present and return that new RecipeDTO object")
     void mapToDTO_whenSourceIsPresent_mapsSourceIdToNewRecipeDTOIdAndReturnThatNewRecipeDTOObject() {
         final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalId = idComparator.compare(source, recipeDTO);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long recipeDTOId = recipeDTO.getId();
+        assertEquals(sourceId, recipeDTOId);
     }
 
     @Test
     @DisplayName("mapToDTO method should map source image to new recipeDTO image when source is present and return that new RecipeDTO object")
     void mapToDTO_whenSourceIsPresent_mapsSourceImageToNewRecipeDTOImageAndReturnThatNewRecipeDTOObject() {
         final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalImage = imageComparator.compare(source, recipeDTO);
-        assertTrue(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] recipeDTOImage = recipeDTO.getImage();
+        assertArrayEquals(sourceImage, recipeDTOImage);
     }
 
     @Test
     @DisplayName("mapToDTO method should map source name to new recipeDTO name when source is present and return that new RecipeDTO object")
     void mapToDTO_whenSourceIsPresent_mapsSourceNameToNewRecipeDTONameAndReturnThatNewRecipeDTOObject() {
         final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalName = nameComparator.compare(source, recipeDTO);
-        assertTrue(equalName);
+        final String sourceName = source.getName();
+        final String recipeDTOName = recipeDTO.getName();
+        assertEquals(sourceName, recipeDTOName);
     }
 
     @Test
     @DisplayName("mapToDTO method should map source description to new recipeDTO description when source is present and return that new RecipeDTO object")
     void mapToDTO_whenSourceIsPresent_mapsSourceDescriptionToNewRecipeDTODescriptionAndReturnThatNewRecipeDTOObject() {
         final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalDescription = descriptionComparator.compare(source, recipeDTO);
-        assertTrue(equalDescription);
+        final String sourceDescription = source.getDescription();
+        final String recipeDTODescription = recipeDTO.getDescription();
+        assertEquals(sourceDescription, recipeDTODescription);
     }
 
     @Test
     @DisplayName("mapToDTO method should map source difficulty to new recipeDTO difficultyDTO when source is present and return that new RecipeDTO object")
     void mapToDTO_whenSourceIsPresent_mapsSourceDifficultyToNewRecipeDTODifficultyDTOAndReturnThatNewRecipeDTOObject() {
-        final Difficulty difficulty = source.getDifficulty();
-        final DifficultyDTO difficultyDTO = mapper.mapToDTO(source).getDifficultyDTO();
-        final boolean equalDifficulties = difficultyComparator.compare(difficulty, difficultyDTO);
-        assertTrue(equalDifficulties);
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = mapper.mapToDTO(source).getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
     }
 
     @Test
     @DisplayName("mapToDTO method should map source categories to new recipeDTO categoryDTOs when source is present and return that new RecipeDTO object")
     void mapToDTO_whenSourceIsPresent_mapsSourceCategoriesToNewRecipeDTOCategoryDTOsAndReturnThatNewRecipeDTOObject() {
         final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        equalCategories(source, recipeDTO);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should map source ingredients to new recipeDTO ingredientDTOs when source is present and return that new RecipeDTO object")
+    void mapToDTO_whenSourceIsPresent_mapsSourceIngredientsToNewRecipeDTOIngredientDTOsAndReturnThatNewRecipeDTOObject() {
+        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        equalIngredients(source, recipeDTO);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should map source servings to new recipeDTO servings when source is present and return that new RecipeDTO object")
+    void mapToDTO_whenSourceIsPresent_mapsSourceServingsToNewRecipeDTOServingsAndReturnThatNewRecipeDTOObject() {
+        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        final double sourceServings = source.getServings();
+        final double recipeDTOServings = recipeDTO.getServings();
+        assertEquals(sourceServings, recipeDTOServings);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should map source cookingTime to new recipeDTO cookingTime when source is present and return that new RecipeDTO object")
+    void mapToDTO_whenSourceIsPresent_mapsSourceCookingTimeToNewRecipeDTOCookingTimeAndReturnThatNewRecipeDTOObject() {
+        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        final int sourceCookingTime = source.getCookingTime();
+        final int recipeDTOCookingTime = recipeDTO.getCookingTime();
+        assertEquals(sourceCookingTime, recipeDTOCookingTime);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should map source instructions to new recipeDTO instructions when source is present and return that new RecipeDTO object")
+    void mapToDTO_whenSourceIsPresent_mapsSourceInstructionsToNewRecipeDTOInstructionsAndReturnThatNewRecipeDTOObject() {
+        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        final String sourceInstructions = source.getInstructions();
+        final String recipeDTOInstructions = recipeDTO.getInstructions();
+        assertEquals(sourceInstructions, recipeDTOInstructions);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should map source version to new recipeDTO version when source is present and return that new RecipeDTO object")
+    void mapToDTO_whenSourceIsPresent_mapsSourceVersionToNewRecipeDTOVersionAndReturnThatNewRecipeDTOObject() {
+        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        final Long sourceVersion = source.getVersion();
+        final Long recipeDTOVersion = recipeDTO.getVersion();
+        assertEquals(sourceVersion, recipeDTOVersion);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should map all common fields from source to new RecipeDTO and return that new RecipeDTO object")
+    void mapToDTO_whenSourceIsPresent_mapsAllCommonFieldsFromSourceToNewRecipeDTOAndReturnThatNewRecipeDTOObject() {
+        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+        final Long sourceId = source.getId();
+        final Long recipeDTOId = recipeDTO.getId();
+        assertEquals(sourceId, recipeDTOId);
+
+        final byte[] sourceImage = source.getImage();
+        final byte[] recipeDTOImage = recipeDTO.getImage();
+        assertArrayEquals(sourceImage, recipeDTOImage);
+
+        final String sourceName = source.getName();
+        final String recipeDTOName = recipeDTO.getName();
+        assertEquals(sourceName, recipeDTOName);
+
+        final String sourceDescription = source.getDescription();
+        final String recipeDTODescription = recipeDTO.getDescription();
+        assertEquals(sourceDescription, recipeDTODescription);
+
+        final String difficultyName = source.getDifficulty().name();
+        final String difficultyDTOName = recipeDTO.getDifficultyDTO().name();
+        assertEquals(difficultyName, difficultyDTOName);
+        equalCategories(source, recipeDTO);
+        equalIngredients(source, recipeDTO);
+    }
+
+    @Test
+    @DisplayName("mapToDTO method should throw NullPointerException when source is null")
+    void mapToDTO_whenSourceIsNull_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> mapper.mapToDTO(null));
+    }
+
+    private static void equalCategories(Recipe recipe, RecipeDTO recipeDTO) {
         assertIterableEquals(
-                source.getCategories().stream()
+                recipe.getCategories().stream()
                         .map(Category::getId)
                         .sorted()
                         .toList(),
@@ -336,7 +436,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getCategories().stream()
+                recipe.getCategories().stream()
                         .map(Category::getName)
                         .sorted()
                         .toList(),
@@ -346,7 +446,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getCategories().stream()
+                recipe.getCategories().stream()
                         .map(Category::getVersion)
                         .sorted()
                         .toList(),
@@ -357,12 +457,9 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
         );
     }
 
-    @Test
-    @DisplayName("mapToDTO method should map source ingredients to new recipeDTO ingredientDTOs when source is present and return that new RecipeDTO object")
-    void mapToDTO_whenSourceIsPresent_mapsSourceIngredientsToNewRecipeDTOIngredientDTOsAndReturnThatNewRecipeDTOObject() {
-        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
+    private static void equalIngredients(Recipe recipe, RecipeDTO recipeDTO) {
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getId)
                         .sorted()
                         .toList(),
@@ -372,7 +469,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getName)
                         .sorted()
                         .toList(),
@@ -382,7 +479,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getAmount)
                         .sorted()
                         .toList(),
@@ -392,7 +489,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getVersion)
                         .sorted()
                         .toList(),
@@ -402,7 +499,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getMeasureUnit)
                         .map(MeasureUnit::getId)
                         .sorted()
@@ -414,7 +511,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getMeasureUnit)
                         .map(MeasureUnit::getName)
                         .sorted()
@@ -426,7 +523,7 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .toList()
         );
         assertIterableEquals(
-                source.getIngredients().stream()
+                recipe.getIngredients().stream()
                         .map(Ingredient::getMeasureUnit)
                         .map(MeasureUnit::getVersion)
                         .sorted()
@@ -437,51 +534,5 @@ class SimpleRecipeToRecipeDTOMapperIntegrationTest {
                         .sorted()
                         .toList()
         );
-    }
-
-    @Test
-    @DisplayName("mapToDTO method should map source servings to new recipeDTO servings when source is present and return that new RecipeDTO object")
-    void mapToDTO_whenSourceIsPresent_mapsSourceServingsToNewRecipeDTOServingsAndReturnThatNewRecipeDTOObject() {
-        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalServings = servingsComparator.compare(source, recipeDTO);
-        assertTrue(equalServings);
-    }
-
-    @Test
-    @DisplayName("mapToDTO method should map source cookingTime to new recipeDTO cookingTime when source is present and return that new RecipeDTO object")
-    void mapToDTO_whenSourceIsPresent_mapsSourceCookingTimeToNewRecipeDTOCookingTimeAndReturnThatNewRecipeDTOObject() {
-        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalCookingTime = cookingTimeComparator.compare(source, recipeDTO);
-        assertTrue(equalCookingTime);
-    }
-
-    @Test
-    @DisplayName("mapToDTO method should map source instructions to new recipeDTO instructions when source is present and return that new RecipeDTO object")
-    void mapToDTO_whenSourceIsPresent_mapsSourceInstructionsToNewRecipeDTOInstructionsAndReturnThatNewRecipeDTOObject() {
-        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalInstructions = instructionsComparator.compare(source, recipeDTO);
-        assertTrue(equalInstructions);
-    }
-
-    @Test
-    @DisplayName("mapToDTO method should map source version to new recipeDTO version when source is present and return that new RecipeDTO object")
-    void mapToDTO_whenSourceIsPresent_mapsSourceVersionToNewRecipeDTOVersionAndReturnThatNewRecipeDTOObject() {
-        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalVersion = versionComparator.compare(source, recipeDTO);
-        assertTrue(equalVersion);
-    }
-
-    @Test
-    @DisplayName("mapToDTO method should map all common fields from source to new RecipeDTO and return that new RecipeDTO object")
-    void mapToDTO_whenSourceIsPresent_mapsAllCommonFieldsFromSourceToNewRecipeDTOAndReturnThatNewRecipeDTOObject() {
-        final RecipeDTO recipeDTO = mapper.mapToDTO(source);
-        final boolean equalRecipes = recipeComparator.compare(source, recipeDTO);
-        assertTrue(equalRecipes);
-    }
-
-    @Test
-    @DisplayName("mapToDTO method should throw NullPointerException when source is null")
-    void mapToDTO_whenSourceIsNull_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> mapper.mapToDTO(null));
     }
 }

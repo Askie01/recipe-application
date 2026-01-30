@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasLongIdTestBuilder;
-import com.askie01.recipeapplication.comparator.LongIdTestComparator;
-import com.askie01.recipeapplication.comparator.LongIdValueTestComparator;
 import com.askie01.recipeapplication.mapper.LongIdMapper;
 import com.askie01.recipeapplication.mapper.ValidatedLongIdMapper;
 import com.askie01.recipeapplication.model.value.HasLongId;
@@ -29,18 +27,16 @@ class ValidatedLongIdMapperUnitTest {
 
     @Mock
     private LongIdValidator validator;
-    private LongIdTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedLongIdMapper(validator);
         this.source = HasLongIdTestBuilder.builder()
                 .id(1L)
                 .build();
         this.target = HasLongIdTestBuilder.builder()
                 .id(2L)
                 .build();
-        this.comparator = new LongIdValueTestComparator();
+        this.mapper = new ValidatedLongIdMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedLongIdMapperUnitTest {
     void map_whenSourceIdIsValid_mapsSourceIdToTargetId() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalId = comparator.compare(source, target);
-        assertTrue(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertEquals(sourceId, targetId);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedLongIdMapperUnitTest {
     void map_whenSourceIdIsInvalid_doesNotMapSourceIdToTargetId() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalId = comparator.compare(source, target);
-        assertFalse(equalId);
+        final Long sourceId = source.getId();
+        final Long targetId = target.getId();
+        assertNotEquals(sourceId, targetId);
     }
 
     @Test

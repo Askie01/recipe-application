@@ -1,13 +1,14 @@
 package com.askie01.recipeapplication.unit.api.v1;
 
 import com.askie01.recipeapplication.api.v1.RecipeRestControllerV1;
+import com.askie01.recipeapplication.dto.CategoryDTO;
+import com.askie01.recipeapplication.dto.IngredientDTO;
+import com.askie01.recipeapplication.dto.MeasureUnitDTO;
 import com.askie01.recipeapplication.dto.RecipeDTO;
 import com.askie01.recipeapplication.exception.RecipeNotFoundException;
-import com.askie01.recipeapplication.factory.*;
 import com.askie01.recipeapplication.mapper.RecipeToRecipeDTOMapper;
 import com.askie01.recipeapplication.model.entity.Recipe;
 import com.askie01.recipeapplication.service.RecipeServiceV1;
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,26 +43,31 @@ class RecipeRestControllerV1UnitTest {
 
     @BeforeEach
     void setUp() {
-        this.source = getUnsavedRecipeDTO();
+        this.source = getTestRecipeDTO();
         this.controller = new RecipeRestControllerV1(service, mapper);
     }
 
-    private static RecipeDTO getUnsavedRecipeDTO() {
-        final Faker faker = new Faker();
-        final DifficultyDTOTestFactory difficultyDTOTestFactory = new RandomDifficultyDTOTestFactory(faker);
-        final CategoryDTOUnsavedEntityTestFactory categoryDTOUnsavedEntityTestFactory = new RandomCategoryDTOUnsavedEntityTestFactory(faker);
-        final MeasureUnitDTOUnsavedEntityTestFactory measureUnitDTOUnsavedEntityTestFactory = new RandomMeasureUnitDTOUnsavedEntityTestFactory(faker);
-        final IngredientDTOUnsavedEntityTestFactory ingredientDTOUnsavedEntityTestFactory = new RandomIngredientDTOUnsavedEntityTestFactory(
-                faker,
-                measureUnitDTOUnsavedEntityTestFactory
-        );
-        return new RandomRecipeDTOUnsavedEntityTestFactory(
-                faker,
-                difficultyDTOTestFactory,
-                categoryDTOUnsavedEntityTestFactory,
-                ingredientDTOUnsavedEntityTestFactory
-        )
-                .createRecipeDTO();
+    private static RecipeDTO getTestRecipeDTO() {
+        final CategoryDTO categoryDTO = CategoryDTO.builder()
+                .name("Test categoryDTO")
+                .build();
+        final MeasureUnitDTO measureUnitDTO = MeasureUnitDTO.builder()
+                .name("Test measure unitDTO")
+                .build();
+        final IngredientDTO ingredientDTO = IngredientDTO.builder()
+                .name("Test ingredientDTO")
+                .amount(1.0)
+                .measureUnitDTO(measureUnitDTO)
+                .build();
+        return RecipeDTO.builder()
+                .name("Test recipeDTO")
+                .description("Test description")
+                .categoryDTOs(Set.of(categoryDTO))
+                .ingredientDTOs(Set.of(ingredientDTO))
+                .servings(1.0)
+                .cookingTime(10)
+                .instructions("Test instructions")
+                .build();
     }
 
     @Test

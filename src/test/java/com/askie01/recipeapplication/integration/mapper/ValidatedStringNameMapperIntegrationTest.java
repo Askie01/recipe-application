@@ -1,9 +1,8 @@
 package com.askie01.recipeapplication.integration.mapper;
 
 import com.askie01.recipeapplication.builder.HasStringNameTestBuilder;
-import com.askie01.recipeapplication.comparator.StringNameTestComparator;
-import com.askie01.recipeapplication.configuration.StringNameValueTestComparatorTestConfiguration;
-import com.askie01.recipeapplication.configuration.ValidatedStringNameMapperDefaultTestConfiguration;
+import com.askie01.recipeapplication.configuration.StringNameMapperConfiguration;
+import com.askie01.recipeapplication.configuration.StringNameValidatorConfiguration;
 import com.askie01.recipeapplication.mapper.StringNameMapper;
 import com.askie01.recipeapplication.model.value.HasStringName;
 import lombok.RequiredArgsConstructor;
@@ -11,20 +10,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        StringNameValueTestComparatorTestConfiguration.class,
-        ValidatedStringNameMapperDefaultTestConfiguration.class
+@SpringJUnitConfig(classes = StringNameMapperConfiguration.class)
+@Import(StringNameValidatorConfiguration.class)
+@TestPropertySource(properties = {
+        "component.mapper.name-type=validated-string-name",
+        "component.validator.name-type=non-blank-string"
 })
-@TestPropertySource(locations = "classpath:validated-string-name-mapper-default-test-configuration.properties")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("ValidatedStringNameMapper integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -33,7 +31,6 @@ class ValidatedStringNameMapperIntegrationTest {
     private HasStringName source;
     private HasStringName target;
     private final StringNameMapper mapper;
-    private final StringNameTestComparator comparator;
 
     @BeforeEach
     void setUp() {
@@ -49,8 +46,9 @@ class ValidatedStringNameMapperIntegrationTest {
     @DisplayName("map method should map source name to target name when source name is valid")
     void map_whenSourceIsValid_mapsSourceNameToTargetName() {
         mapper.map(source, target);
-        final boolean equalNames = comparator.compare(source, target);
-        assertTrue(equalNames);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertEquals(sourceName, targetName);
     }
 
     @Test
@@ -58,8 +56,9 @@ class ValidatedStringNameMapperIntegrationTest {
     void map_whenSourceIsInvalid_doesNotMapSourceNameToTargetName() {
         source.setName("");
         mapper.map(source, target);
-        final boolean equalNames = comparator.compare(source, target);
-        assertFalse(equalNames);
+        final String sourceName = source.getName();
+        final String targetName = target.getName();
+        assertNotEquals(sourceName, targetName);
     }
 
     @Test

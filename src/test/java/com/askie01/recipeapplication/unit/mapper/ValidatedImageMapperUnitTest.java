@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasImageTestBuilder;
-import com.askie01.recipeapplication.comparator.ImageTestComparator;
-import com.askie01.recipeapplication.comparator.ImageValueTestComparator;
 import com.askie01.recipeapplication.mapper.ImageMapper;
 import com.askie01.recipeapplication.mapper.ValidatedImageMapper;
 import com.askie01.recipeapplication.model.value.HasImage;
@@ -29,18 +27,16 @@ class ValidatedImageMapperUnitTest {
 
     @Mock
     private ImageValidator validator;
-    private ImageTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedImageMapper(validator);
         this.source = HasImageTestBuilder.builder()
                 .image(new byte[1024])
                 .build();
         this.target = HasImageTestBuilder.builder()
                 .image(new byte[2 * 1024])
                 .build();
-        this.comparator = new ImageValueTestComparator();
+        this.mapper = new ValidatedImageMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedImageMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceImageToTargetImage() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalImage = comparator.compare(source, target);
-        assertTrue(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertArrayEquals(sourceImage, targetImage);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedImageMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceImageToTargetImage() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalImage = comparator.compare(source, target);
-        assertFalse(equalImage);
+        final byte[] sourceImage = source.getImage();
+        final byte[] targetImage = target.getImage();
+        assertNotEquals(sourceImage, targetImage);
     }
 
     @Test

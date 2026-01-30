@@ -1,23 +1,20 @@
 package com.askie01.recipeapplication.integration.validator;
 
 import com.askie01.recipeapplication.builder.HasServingsTestBuilder;
-import com.askie01.recipeapplication.configuration.PositiveServingsValidatorConfiguration;
+import com.askie01.recipeapplication.configuration.ServingsValidatorConfiguration;
 import com.askie01.recipeapplication.model.value.HasServings;
 import com.askie01.recipeapplication.validator.ServingsValidator;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = PositiveServingsValidatorConfiguration.class)
+@SpringJUnitConfig(classes = ServingsValidatorConfiguration.class)
 @TestPropertySource(properties = "component.validator.servings-type=positive-servings")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("PositiveServingsValidator integration tests")

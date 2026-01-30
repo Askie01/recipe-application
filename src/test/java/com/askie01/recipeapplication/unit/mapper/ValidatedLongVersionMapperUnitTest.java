@@ -1,8 +1,6 @@
 package com.askie01.recipeapplication.unit.mapper;
 
 import com.askie01.recipeapplication.builder.HasLongVersionTestBuilder;
-import com.askie01.recipeapplication.comparator.LongVersionTestComparator;
-import com.askie01.recipeapplication.comparator.LongVersionValueTestComparator;
 import com.askie01.recipeapplication.mapper.LongVersionMapper;
 import com.askie01.recipeapplication.mapper.ValidatedLongVersionMapper;
 import com.askie01.recipeapplication.model.value.HasLongVersion;
@@ -29,18 +27,16 @@ class ValidatedLongVersionMapperUnitTest {
 
     @Mock
     private LongVersionValidator validator;
-    private LongVersionTestComparator comparator;
 
     @BeforeEach
     void setUp() {
-        this.mapper = new ValidatedLongVersionMapper(validator);
         this.source = HasLongVersionTestBuilder.builder()
                 .version(1L)
                 .build();
         this.target = HasLongVersionTestBuilder.builder()
                 .version(5L)
                 .build();
-        this.comparator = new LongVersionValueTestComparator();
+        this.mapper = new ValidatedLongVersionMapper(validator);
     }
 
     @Test
@@ -48,8 +44,9 @@ class ValidatedLongVersionMapperUnitTest {
     void map_whenSourceIsValid_mapsSourceVersionToTargetVersion() {
         when(validator.isValid(source)).thenReturn(true);
         mapper.map(source, target);
-        final boolean equalVersion = comparator.compare(source, target);
-        assertTrue(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertEquals(sourceVersion, targetVersion);
     }
 
     @Test
@@ -57,8 +54,9 @@ class ValidatedLongVersionMapperUnitTest {
     void map_whenSourceIsInvalid_doesNotMapSourceVersionToTargetVersion() {
         when(validator.isValid(source)).thenReturn(false);
         mapper.map(source, target);
-        final boolean equalVersion = comparator.compare(source, target);
-        assertFalse(equalVersion);
+        final Long sourceVersion = source.getVersion();
+        final Long targetVersion = target.getVersion();
+        assertNotEquals(sourceVersion, targetVersion);
     }
 
     @Test
