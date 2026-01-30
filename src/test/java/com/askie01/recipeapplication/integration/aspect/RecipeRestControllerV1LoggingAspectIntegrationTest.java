@@ -1,9 +1,7 @@
 package com.askie01.recipeapplication.integration.aspect;
 
 import com.askie01.recipeapplication.aspect.RecipeRestControllerV1LoggingAspect;
-import com.askie01.recipeapplication.configuration.RandomRecipeDTOUnsavedEntityTestFactoryDefaultTestConfiguration;
-import com.askie01.recipeapplication.dto.RecipeDTO;
-import com.askie01.recipeapplication.factory.RecipeDTOUnsavedEntityTestFactory;
+import com.askie01.recipeapplication.dto.*;
 import com.askie01.recipeapplication.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,25 +13,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.AutoConfigureDataJpa;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@Disabled("This test has been disabled, because the behaviour is different than expected when ran via maven wrapper command")
 @Transactional
 @SpringBootTest
 @AutoConfigureDataJpa
 @AutoConfigureRestTestClient
-@Import(value = RandomRecipeDTOUnsavedEntityTestFactoryDefaultTestConfiguration.class)
-@TestPropertySource(locations = "classpath:h2-database-default-test-configuration.properties")
+@TestPropertySource(properties = "api.recipe.v1.enabled=true")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("RecipeRestControllerLoggingAspect integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
+@Disabled("This test has been disabled, because the behaviour is different than expected when ran via maven wrapper command")
 class RecipeRestControllerV1LoggingAspectIntegrationTest {
 
     private RecipeDTO source;
@@ -42,12 +41,33 @@ class RecipeRestControllerV1LoggingAspectIntegrationTest {
 
     @MockitoSpyBean
     private final RecipeRestControllerV1LoggingAspect aspect;
-    private final RecipeDTOUnsavedEntityTestFactory factory;
 
     @BeforeEach
     void test() {
-        this.source = factory.createRecipeDTO();
-        this.source.setImage(new byte[1]);
+        this.source = getTestRecipeDTO();
+    }
+
+    private static RecipeDTO getTestRecipeDTO() {
+        final CategoryDTO categoryDTO = CategoryDTO.builder()
+                .name("Test category")
+                .build();
+        final MeasureUnitDTO measureUnitDTO = MeasureUnitDTO.builder()
+                .name("Test measure unit")
+                .build();
+        final IngredientDTO ingredientDTO = IngredientDTO.builder()
+                .name("Test ingredient")
+                .amount(1.0).measureUnitDTO(measureUnitDTO)
+                .build();
+        return RecipeDTO.builder()
+                .name("Test recipe")
+                .description("Test description")
+                .difficultyDTO(DifficultyDTO.EASY)
+                .categoryDTOs(new HashSet<>(Set.of(categoryDTO)))
+                .ingredientDTOs(new HashSet<>(Set.of(ingredientDTO)))
+                .servings(1.0)
+                .cookingTime(10)
+                .instructions("Test instructions")
+                .build();
     }
 
     @Test
