@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.cooking-time-type", havingValue = "positive-cooking-time")
-public class PositiveCookingTimeValidatorConfiguration {
+public class CookingTimeValidatorConfiguration {
 
     @Bean
-    public CookingTimeValidator cookingTimeValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.cooking-time-type",
+            havingValue = "positive-cooking-time",
+            matchIfMissing = true
+    )
+    public CookingTimeValidator positiveCookingTimeValidator() {
         return new PositiveCookingTimeValidator();
     }
 }
