@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.name-type", havingValue = "non-blank-string")
-public class NonBlankStringNameValidatorConfiguration {
+public class StringNameValidatorConfiguration {
 
     @Bean
-    public StringNameValidator stringNameValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.name-type",
+            havingValue = "non-blank-string",
+            matchIfMissing = true
+    )
+    public StringNameValidator nonBlankStringNameValidator() {
         return new NonBlankStringNameValidator();
     }
 }
