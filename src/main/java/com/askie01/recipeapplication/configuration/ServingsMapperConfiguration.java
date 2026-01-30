@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.servings-type", havingValue = "validated-servings")
-public class ValidatedServingsMapperConfiguration {
+public class ServingsMapperConfiguration {
 
     @Bean
-    public ServingsMapper servingsMapper(ServingsValidator servingsValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.servings-type",
+            havingValue = "validated-servings",
+            matchIfMissing = true
+    )
+    public ServingsMapper validatedServingsMapper(ServingsValidator servingsValidator) {
         return new ValidatedServingsMapper(servingsValidator);
     }
 }
