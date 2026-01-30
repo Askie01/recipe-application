@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.amount-type", havingValue = "positive-amount")
-public class PositiveAmountValidatorConfiguration {
+public class AmountValidatorConfiguration {
 
     @Bean
-    public AmountValidator amountValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.amount-type",
+            havingValue = "positive-amount",
+            matchIfMissing = true
+    )
+    public AmountValidator positiveAmountValidator() {
         return new PositiveAmountValidator();
     }
 }
