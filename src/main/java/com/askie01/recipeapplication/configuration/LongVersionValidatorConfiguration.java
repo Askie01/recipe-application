@@ -7,10 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.version-type", havingValue = "positive-long-version")
-public class PositiveLongVersionValidatorConfiguration {
+public class LongVersionValidatorConfiguration {
 
     @Bean
+    @ConditionalOnProperty(
+            name = "component.validator.version-type",
+            havingValue = "positive-long-version",
+            matchIfMissing = true
+    )
     public LongVersionValidator longVersionValidator() {
         return new PositiveLongVersionValidator();
     }
