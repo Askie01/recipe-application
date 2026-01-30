@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.description-type", havingValue = "validated-description")
-public class ValidatedDescriptionMapperConfiguration {
+public class DescriptionMapperConfiguration {
 
     @Bean
-    public DescriptionMapper descriptionMapper(DescriptionValidator descriptionValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.description-type",
+            havingValue = "validated-description",
+            matchIfMissing = true
+    )
+    public DescriptionMapper validatedDescriptionMapper(DescriptionValidator descriptionValidator) {
         return new ValidatedDescriptionMapper(descriptionValidator);
     }
 }
