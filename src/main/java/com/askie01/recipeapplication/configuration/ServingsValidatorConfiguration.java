@@ -7,11 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.validator.servings-type", havingValue = "positive-servings")
-public class PositiveServingsValidatorConfiguration {
+public class ServingsValidatorConfiguration {
 
     @Bean
-    public ServingsValidator servingsValidator() {
+    @ConditionalOnProperty(
+            name = "component.validator.servings-type",
+            havingValue = "positive-servings",
+            matchIfMissing = true
+    )
+    public ServingsValidator positiveServingsValidator() {
         return new PositiveServingsValidator();
     }
 }
