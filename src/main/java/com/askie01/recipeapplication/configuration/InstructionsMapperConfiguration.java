@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.instructions-type", havingValue = "validated-instructions")
-public class ValidatedInstructionsMapperConfiguration {
+public class InstructionsMapperConfiguration {
 
     @Bean
-    public InstructionsMapper instructionsMapper(InstructionsValidator instructionsValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.instructions-type",
+            havingValue = "validated-instructions",
+            matchIfMissing = true
+    )
+    public InstructionsMapper validatedInstructionsMapper(InstructionsValidator instructionsValidator) {
         return new ValidatedInstructionsMapper(instructionsValidator);
     }
 }
