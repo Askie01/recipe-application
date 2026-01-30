@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(name = "component.mapper.amount-type", havingValue = "validated-amount")
-public class ValidatedAmountMapperConfiguration {
+public class AmountMapperConfiguration {
 
     @Bean
-    public AmountMapper amountMapper(AmountValidator amountValidator) {
+    @ConditionalOnProperty(
+            name = "component.mapper.amount-type",
+            havingValue = "validated-amount",
+            matchIfMissing = true
+    )
+    public AmountMapper validatedAmountMapper(AmountValidator amountValidator) {
         return new ValidatedAmountMapper(amountValidator);
     }
 }
