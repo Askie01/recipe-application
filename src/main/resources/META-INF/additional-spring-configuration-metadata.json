@@ -189,6 +189,12 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.recipe-to-recipe-response-body-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeToRecipeResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.recipe",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
