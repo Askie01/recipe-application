@@ -129,6 +129,9 @@
     <profiles>
         <profile>
             <id>h2</id>
+            <build>
+                <finalName>recipe-application-h2-${project.version}</finalName>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>com.h2database</groupId>
@@ -139,6 +142,9 @@
         </profile>
         <profile>
             <id>mysql</id>
+            <build>
+                <finalName>recipe-application-mysql-${project.version}</finalName>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>com.mysql</groupId>
