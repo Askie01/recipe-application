@@ -8,6 +8,6 @@ RUN apt-get update \
 USER appuser
 WORKDIR /app
 
-COPY --chown=appuser:appuser target/recipe-application-*.jar /app/app.jar
+COPY --chown=appuser:appuser target/recipe-application-mysql-*.jar /app/app.jar
 
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar", "--spring.profiles.active=mysql"]
