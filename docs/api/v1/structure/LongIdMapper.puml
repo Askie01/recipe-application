@@ -1,0 +1,39 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include LongIdValidator.puml
+
+interface LongIdMapper extends Mapper {
+    + void map(HasLongId source, HasLongId target)
+}
+
+class SimpleLongIdMapper implements LongIdMapper {
+    + void map(HasLongId source, HasLongId target)
+    - void mapId(HasLongId source, HasLongId target)
+}
+
+class ValidatedLongIdMapper implements LongIdMapper {
+    - LongIdValidator longIdValidator
+
+    + void map(HasLongId source, HasLongId target)
+    - boolean isValid(HasLongId hasLongId)
+    - void mapId(HasLongId source, HasLongId target)
+}
+
+ValidatedLongIdMapper --> LongIdValidator
+@enduml

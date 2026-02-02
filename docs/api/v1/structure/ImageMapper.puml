@@ -1,0 +1,34 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include ImageValidator.puml
+
+interface ImageMapper extends Mapper {
+    + void map(HasImage source, HasImage target)
+}
+
+class ValidatedImageMapper implements ImageMapper {
+    - ImageValidator imageValidator
+
+    + void map(HasImage source, HasImage target)
+    - boolean isValid(HasImage hasImage)
+    - mapImage(HasImage source, HasImage target)
+}
+
+ValidatedImageMapper --> ImageValidator
+@enduml
