@@ -207,6 +207,12 @@
       "defaultValue": "v1"
     },
     {
+      "name": "component.service.recipe-v2",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeServiceV2' implementation.",
+      "defaultValue": "default"
+    },
+    {
       "name": "api",
       "type": "java.lang.String",
       "description": "Property used to manage APIs."
