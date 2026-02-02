@@ -24,7 +24,7 @@ springdoc:
         url: /openapi/recipes-v1-api.yaml
 
 component:
-  auditor-type: recipe-service-string-auditor
+  auditor-type: recipe-service-auditor
 
   validator:
     image-type: five-mega-bytes-image
