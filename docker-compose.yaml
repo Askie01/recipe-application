@@ -29,6 +29,7 @@ services:
       - "3306:3306"
     volumes:
       - "./sql/schema:/docker-entrypoint-initdb.d"
+      - "./sql/data:/var/lib/mysql"
     environment:
       - "MYSQL_USER=${recipe_database_username}"
       - "MYSQL_PASSWORD=${recipe_database_password}"
