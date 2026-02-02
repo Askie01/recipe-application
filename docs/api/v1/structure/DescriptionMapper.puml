@@ -1,0 +1,34 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include DescriptionValidator.puml
+
+interface DescriptionMapper extends Mapper {
+    + void map(HasDescription source, HasDescription target)
+}
+
+class ValidatedDescriptionMapper implements DescriptionMapper {
+    - DescriptionValidator descriptionValidator
+
+    + void map(HasDescription source, HasDescription target)
+    - boolean isValid(HasDescription hasDescription)
+    - void mapDescription(HasDescription source, HasDescription target)
+}
+
+ValidatedDescriptionMapper --> DescriptionValidator
+@enduml

@@ -1,0 +1,76 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include ToEntityMapper.puml
+!include LongIdMapper.puml
+!include ImageMapper.puml
+!include StringNameMapper.puml
+!include DescriptionMapper.puml
+!include DifficultyDTOToDifficultyMapper.puml
+!include CategoryDTOToCategoryMapper.puml
+!include IngredientDTOToIngredientMapper.puml
+!include ServingsMapper.puml
+!include CookingTimeMapper.puml
+!include InstructionsMapper.puml
+!include LongVersionMapper.puml
+
+interface RecipeDTOToRecipeMapper extends Mapper, ToEntityMapper {
+    + void map(RecipeDTO source, Recipe target)
+    + Recipe mapToEntity(RecipeDTO recipeDTO)
+}
+
+class SimpleRecipeDTOToRecipeMapper implements RecipeDTOToRecipeMapper {
+    - LongIdMapper longIdMapper
+    - ImageMapper imageMapper
+    - StringNameMapper stringNameMapper
+    - DescriptionMapper descriptionMapper
+    - DifficultyDTOToDifficultyMapper difficultyDTOToDifficultyMapper
+    - CategoryDTOToCategoryMapper categoryDTOToCategoryMapper
+    - IngredientDTOToIngredientMapper ingredientDTOToIngredientMapper
+    - ServingsMapper servingsMapper
+    - CookingTimeMapper cookingTimeMapper
+    - InstructionsMapper instructionsMapper
+    - LongVersionMapper longVersionMapper
+
+    + Recipe mapToEntity(RecipeDTO recipeDTO)
+    + void map(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapId(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapImage(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapName(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapDescription(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapDifficultyDTOToDifficulty(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapCategoryDTOsToCategories(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapIngredientDTosToIngredients(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapServings(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapCookingTime(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapInstructions(RecipeDTO recipeDTO, Recipe recipe)
+    - void mapVersion(RecipeDTO recipeDTO, Recipe recipe)
+}
+
+SimpleRecipeDTOToRecipeMapper --> LongIdMapper
+SimpleRecipeDTOToRecipeMapper --> ImageMapper
+SimpleRecipeDTOToRecipeMapper --> StringNameMapper
+SimpleRecipeDTOToRecipeMapper --> DescriptionMapper
+SimpleRecipeDTOToRecipeMapper --> DifficultyDTOToDifficultyMapper
+SimpleRecipeDTOToRecipeMapper --> CategoryDTOToCategoryMapper
+SimpleRecipeDTOToRecipeMapper --> IngredientDTOToIngredientMapper
+SimpleRecipeDTOToRecipeMapper --> ServingsMapper
+SimpleRecipeDTOToRecipeMapper --> CookingTimeMapper
+SimpleRecipeDTOToRecipeMapper --> InstructionsMapper
+SimpleRecipeDTOToRecipeMapper --> LongVersionMapper
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include ToEntityMapper.puml
+!include LongIdMapper.puml
+!include StringNameMapper.puml
+!include LongVersionMapper.puml
+
+interface MeasureUnitDTOToMeasureUnitMapper extends Mapper, ToEntityMapper {
+    + void map(MeasureUnitDTO source, MeasureUnit target)
+    + MeasureUnit mapToEntity(MeasureUnitDTO measureUnitDTO)
+}
+
+class SimpleMeasureUnitDTOToMeasureUnitMapper implements MeasureUnitDTOToMeasureUnitMapper {
+    - LongIdMapper longIdMapper
+    - StringNameMapper stringNameMapper
+    - LongVersionMapper longVersionMapper
+
+    + MeasureUnit mapToEntity(MeasureUnitDTO measureUnitDTO)
+    + void map(MeasureUnitDTO measureUnitDTO, MeasureUnit measureUnit)
+    - void mapId(MeasureUnitDTO measureUnitDTO, MeasureUnit measureUnit)
+    - void mapName(MeasureUnitDTO measureUnitDTO, MeasureUnit measureUnit)
+    - void mapVersion(MeasureUnitDTO measureUnitDTO, MeasureUnit measureUnit)
+}
+
+SimpleMeasureUnitDTOToMeasureUnitMapper --> LongIdMapper
+SimpleMeasureUnitDTOToMeasureUnitMapper --> StringNameMapper
+SimpleMeasureUnitDTOToMeasureUnitMapper --> LongVersionMapper
+@enduml
