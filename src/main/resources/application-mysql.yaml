@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/recipes
+    username: recipes
+    password: recipes
+
+  jpa:
+    hibernate:
+      ddl-auto: none
