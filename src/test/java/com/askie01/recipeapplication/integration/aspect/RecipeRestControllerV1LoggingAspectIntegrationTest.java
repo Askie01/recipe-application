@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.AutoConfigureDataJpa;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -27,7 +26,6 @@ import static org.mockito.Mockito.*;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @Transactional
 @SpringBootTest
-@AutoConfigureDataJpa
 @AutoConfigureRestTestClient
 @TestPropertySource(properties = "api.recipe.v1.enabled=true")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -43,7 +41,7 @@ class RecipeRestControllerV1LoggingAspectIntegrationTest {
     private final RecipeRestControllerV1LoggingAspect aspect;
 
     @BeforeEach
-    void test() {
+    void setUp() {
         this.source = getTestRecipeDTO();
     }
 
