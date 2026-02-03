@@ -5,7 +5,6 @@ import com.askie01.recipeapplication.dto.*;
 import com.askie01.recipeapplication.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.AutoConfigureDataJpa;
 import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
@@ -24,6 +24,7 @@ import java.util.Set;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @Transactional
 @SpringBootTest
 @AutoConfigureDataJpa
@@ -32,7 +33,6 @@ import static org.mockito.Mockito.*;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("RecipeRestControllerLoggingAspect integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
-@Disabled("This test has been disabled, because the behaviour is different than expected when ran via maven wrapper command")
 class RecipeRestControllerV1LoggingAspectIntegrationTest {
 
     private RecipeDTO source;
