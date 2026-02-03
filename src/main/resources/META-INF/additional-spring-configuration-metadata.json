@@ -8,7 +8,7 @@
       "name": "component.auditor-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct auditor (AuditorAware implementation).",
-      "defaultValue": "recipe-service-string-auditor"
+      "defaultValue": "recipe-service-auditor"
     },
     {
       "name": "component.validator",
@@ -231,6 +231,12 @@
       "name": "api.recipe.v1.enabled",
       "type": "java.lang.Boolean",
       "description": "Property used to enable/disable 'RecipeRestControllerV1' API.",
+      "defaultValue": true
+    },
+    {
+      "name": "api.recipe.v2.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Property used to enable/disable 'RecipeRestControllerV2' API.",
       "defaultValue": true
     }
   ]
