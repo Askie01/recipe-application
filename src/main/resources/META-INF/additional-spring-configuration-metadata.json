@@ -8,7 +8,7 @@
       "name": "component.auditor-type",
       "type": "java.lang.String",
       "description": "Property used to wire a correct auditor (AuditorAware implementation).",
-      "defaultValue": "recipe-service-string-auditor"
+      "defaultValue": "recipe-service-auditor"
     },
     {
       "name": "component.validator",
@@ -189,10 +189,28 @@
       "defaultValue": "simple"
     },
     {
+      "name": "component.mapper.recipe-request-body-to-recipe-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeRequestBodyToRecipe' mapper type.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.mapper.recipe-to-recipe-response-body-type",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeToRecipeResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.recipe",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
       "defaultValue": "v1"
+    },
+    {
+      "name": "component.service.recipe-v2",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeServiceV2' implementation.",
+      "defaultValue": "default"
     },
     {
       "name": "api",
@@ -213,6 +231,12 @@
       "name": "api.recipe.v1.enabled",
       "type": "java.lang.Boolean",
       "description": "Property used to enable/disable 'RecipeRestControllerV1' API.",
+      "defaultValue": true
+    },
+    {
+      "name": "api.recipe.v2.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Property used to enable/disable 'RecipeRestControllerV2' API.",
       "defaultValue": true
     }
   ]
