@@ -13,6 +13,8 @@ springdoc:
     URLs:
       - name: Recipes API v1
         url: /openapi/recipes-v1-api.yaml
+      - name: Recipes API v2
+        url: /openapi/recipes-v2-api.yaml
 
 component:
   auditor-type: recipe-service-auditor
@@ -53,4 +55,7 @@ component:
 api:
   recipe:
     v1:
+      enabled: true
+
+    v2:
       enabled: true
