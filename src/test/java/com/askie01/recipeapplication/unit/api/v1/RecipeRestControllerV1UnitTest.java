@@ -1,10 +1,8 @@
 package com.askie01.recipeapplication.unit.api.v1;
 
 import com.askie01.recipeapplication.api.v1.RecipeRestControllerV1;
-import com.askie01.recipeapplication.dto.CategoryDTO;
-import com.askie01.recipeapplication.dto.IngredientDTO;
-import com.askie01.recipeapplication.dto.MeasureUnitDTO;
-import com.askie01.recipeapplication.dto.RecipeDTO;
+import com.askie01.recipeapplication.dto.*;
+import com.askie01.recipeapplication.exception.GlobalExceptionHandler;
 import com.askie01.recipeapplication.exception.RecipeNotFoundException;
 import com.askie01.recipeapplication.mapper.RecipeToRecipeDTOMapper;
 import com.askie01.recipeapplication.model.entity.Recipe;
@@ -16,16 +14,20 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("RecipeRestControllerV1 unit tests")
@@ -33,7 +35,7 @@ import static org.mockito.Mockito.when;
 class RecipeRestControllerV1UnitTest {
 
     private RecipeDTO source;
-    private RecipeRestControllerV1 controller;
+    private MockMvc mockMvc;
 
     @Mock
     private RecipeServiceV1 service;
@@ -44,7 +46,7 @@ class RecipeRestControllerV1UnitTest {
     @BeforeEach
     void setUp() {
         this.source = getTestRecipeDTO();
-        this.controller = new RecipeRestControllerV1(service, mapper);
+        this.mockMvc = setUpMockMVC();
     }
 
     private static RecipeDTO getTestRecipeDTO() {
@@ -62,6 +64,7 @@ class RecipeRestControllerV1UnitTest {
         return RecipeDTO.builder()
                 .name("Test recipeDTO")
                 .description("Test description")
+                .difficultyDTO(DifficultyDTO.EASY)
                 .categoryDTOs(Set.of(categoryDTO))
                 .ingredientDTOs(Set.of(ingredientDTO))
                 .servings(1.0)
@@ -70,137 +73,148 @@ class RecipeRestControllerV1UnitTest {
                 .build();
     }
 
+    private MockMvc setUpMockMVC() {
+        final RecipeRestControllerV1 controller = new RecipeRestControllerV1(service, mapper);
+        final LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.afterPropertiesSet();
+        return MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .setValidator(validator)
+                .build();
+    }
+
     @Test
     @DisplayName("createRecipe method should return saved recipe in DTO format when request body is valid")
-    void createRecipe_whenRequestBodyIsValid_returnsSavedRecipeDTO() {
+    void createRecipe_whenRequestBodyIsValid_returnsSavedRecipeDTO() throws Exception {
         when(service.createRecipe(any(RecipeDTO.class)))
-                .thenAnswer(invocation -> {
-                    final Recipe recipe = new Recipe();
-                    recipe.setId(1L);
-                    return recipe;
-                });
+                .thenReturn(Recipe.builder().id(1L).build());
         when(mapper.mapToDTO(any(Recipe.class)))
-                .thenReturn(source);
-        final ResponseEntity<RecipeDTO> response = controller.createRecipe(source);
-        final HttpStatusCode responseStatus = response.getStatusCode();
-        final RecipeDTO responseBody = response.getBody();
-        assertEquals(HttpStatus.CREATED, responseStatus);
-        assertNotNull(responseBody);
+                .thenReturn(RecipeDTO.builder().id(1L).build());
+        mockMvc.perform(post("/api/v1/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(source)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
-    @DisplayName("createRecipe method should throw IllegalArgumentException when request body is invalid")
-    void createRecipe_whenRequestBodyIsInvalid_throwsIllegalArgumentException() {
-        when(service.createRecipe(any(RecipeDTO.class)))
-                .thenThrow(IllegalArgumentException.class);
-        assertThrows(IllegalArgumentException.class, () -> controller.createRecipe(source));
+    @DisplayName("createRecipe method should return HTTP BadRequest status code when request body is invalid")
+    void createRecipe_whenRequestBodyIsInvalid_returnsHttpBadRequest() throws Exception {
+        mockMvc.perform(post("/api/v1/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(new RecipeDTO())))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("createRecipe method should throw NullPointerException when request body is null")
-    void createRecipe_whenRequestBodyIsNull_throwsNullPointerException() {
-        when(service.createRecipe(null))
-                .thenThrow(NullPointerException.class);
-        assertThrows(NullPointerException.class, () -> controller.createRecipe(null));
+    @DisplayName("createRecipe method should return HTTP BadRequest status code when request body is null")
+    void createRecipe_whenRequestBodyIsNull_returnsHttpBadRequest() throws Exception {
+        mockMvc.perform(post("/api/v1/recipes")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("getRecipe method should return recipe in DTO format when id exists")
-    void getRecipe_whenIdExists_returnsRecipeDTOWithThatId() {
+    void getRecipe_whenIdExists_returnsRecipeDTOWithThatId() throws Exception {
         when(service.getRecipe(any(Long.class)))
-                .thenReturn(new Recipe());
+                .thenReturn(Recipe.builder().id(1L).build());
         when(mapper.mapToDTO(any(Recipe.class)))
-                .thenReturn(new RecipeDTO());
-        final ResponseEntity<RecipeDTO> response = controller.getRecipe(1L);
-        final HttpStatusCode responseStatus = response.getStatusCode();
-        final RecipeDTO responseBody = response.getBody();
-        assertEquals(HttpStatus.OK, responseStatus);
-        assertNotNull(responseBody);
+                .thenReturn(RecipeDTO.builder().id(1L).build());
+        mockMvc.perform(get("/api/v1/recipes/{id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
-    @DisplayName("getRecipe method should throw RecipeNotFoundException when id does not exist")
-    void getRecipe_whenIdDoesNotExist_throwRecipeNotFoundException() {
+    @DisplayName("getRecipe method should return HTTP Not Found status code when id does not exist")
+    void getRecipe_whenIdDoesNotExist_returnsHttpNotFound() throws Exception {
         when(service.getRecipe(any(Long.class)))
                 .thenThrow(RecipeNotFoundException.class);
-        assertThrows(RecipeNotFoundException.class, () -> controller.getRecipe(1L));
+        final Long id = Long.MAX_VALUE;
+        mockMvc.perform(get("/api/v1/recipes/{id}", id))
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    @DisplayName("getRecipe method should throw NumberFormatException when id is not a number")
-    void getRecipe_whenIdIsNotNumber_throwsNumberFormatException() {
-        assertThrows(NumberFormatException.class, () -> controller.getRecipe(Long.valueOf("abc")));
+    @DisplayName("getRecipe method should return HTTP BadRequest status code when id is not a number")
+    void getRecipe_whenIdIsNotNumber_returnsHttpBadRequest() throws Exception {
+        final String id = "notANumber";
+        mockMvc.perform(get("/api/v1/recipes/{id}", id))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("getRecipes method should return list of RecipeDTO objects.")
-    void getRecipes_returnsListOfRecipeDTO() {
+    void getRecipes_returnsListOfRecipeDTO() throws Exception {
         when(service.getRecipes())
-                .thenReturn(List.of(new Recipe()));
+                .thenReturn(List.of(Recipe.builder().id(1L).build()));
         when(mapper.mapToDTO(any(Recipe.class)))
-                .thenReturn(new RecipeDTO());
-        final ResponseEntity<List<RecipeDTO>> response = controller.getRecipes();
-        final HttpStatusCode responseStatus = response.getStatusCode();
-        final List<RecipeDTO> responseBody = response.getBody();
-        assertEquals(HttpStatus.OK, responseStatus);
-        assertNotNull(responseBody);
+                .thenReturn(RecipeDTO.builder().id(1L).build());
+        mockMvc.perform(get("/api/v1/recipes"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test
     @DisplayName("updateRecipe method should return updated recipe in DTO format when request body is valid")
-    void updateRecipe_whenRequestBodyIsValid_returnsUpdatedRecipeDTO() {
+    void updateRecipe_whenRequestBodyIsValid_returnsUpdatedRecipeDTO() throws Exception {
         when(service.updateRecipe(any(RecipeDTO.class)))
-                .thenReturn(new Recipe());
+                .thenReturn(Recipe.builder().id(1L).build());
         when(mapper.mapToDTO(any(Recipe.class)))
-                .thenReturn(source);
-        final ResponseEntity<RecipeDTO> response = controller.updateRecipe(source);
-        final HttpStatusCode responseStatus = response.getStatusCode();
-        final RecipeDTO responseBody = response.getBody();
-        assertEquals(HttpStatus.OK, responseStatus);
-        assertNotNull(responseBody);
+                .thenReturn(RecipeDTO.builder().id(1L).build());
+        mockMvc.perform(put("/api/v1/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(source)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
-    @DisplayName("updateRecipe method should throw RecipeNotFoundException when request body is invalid")
-    void updateRecipe_whenRequestBodyIsInvalid_throwsRecipeNotFoundException() {
-        when(service.updateRecipe(any(RecipeDTO.class)))
-                .thenThrow(RecipeNotFoundException.class);
-        assertThrows(RecipeNotFoundException.class, () -> controller.updateRecipe(source));
+    @DisplayName("updateRecipe method should return HTTP BadRequest status code when request body is invalid")
+    void updateRecipe_whenRequestBodyIsInvalid_returnsHttpBadRequest() throws Exception {
+        mockMvc.perform(put("/api/v1/recipes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(new RecipeDTO())))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    @DisplayName("updateRecipe method should throw NullPointerException when request body is null")
-    void updateRecipe_whenRequestBodyIsNotPresent_throwsNullPointerException() {
-        when(service.updateRecipe(null))
-                .thenThrow(NullPointerException.class);
-        assertThrows(NullPointerException.class, () -> controller.updateRecipe(null));
+    @DisplayName("updateRecipe method should return HTTP BadRequest status code when request body is not present")
+    void updateRecipe_whenRequestBodyIsNotPresent_returnsHttpBadRequest() throws Exception {
+        mockMvc.perform(put("/api/v1/recipes")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("deleteRecipe method should return deleted recipe in DTO format when id is valid")
-    void deleteRecipe_whenIdIsValid_returnsDeletedRecipeDTO() {
+    void deleteRecipe_whenIdIsValid_returnsDeletedRecipeDTO() throws Exception {
         when(service.deleteRecipe(any(Long.class)))
-                .thenReturn(new Recipe());
+                .thenReturn(Recipe.builder().id(1L).build());
         when(mapper.mapToDTO(any(Recipe.class)))
-                .thenReturn(source);
-        final ResponseEntity<RecipeDTO> response = controller.deleteRecipe(1L);
-        final HttpStatusCode responseStatus = response.getStatusCode();
-        final RecipeDTO responseBody = response.getBody();
-        assertEquals(HttpStatus.OK, responseStatus);
-        assertNotNull(responseBody);
+                .thenReturn(RecipeDTO.builder().id(1L).build());
+        mockMvc.perform(delete("/api/v1/recipes/{id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L));
     }
 
     @Test
-    @DisplayName("deleteRecipe method should throw RecipeNotFoundException when id is invalid")
-    void deleteRecipe_whenIdIsInvalid_throwRecipeNotFoundException() {
+    @DisplayName("deleteRecipe method should return HTTP Not Found status code when id is invalid")
+    void deleteRecipe_whenIdIsInvalid_returnsHttpNotFound() throws Exception {
         when(service.deleteRecipe(any(Long.class)))
                 .thenThrow(RecipeNotFoundException.class);
-        assertThrows(RecipeNotFoundException.class, () -> controller.deleteRecipe(1L));
+        final Long id = Long.MAX_VALUE;
+        mockMvc.perform(delete("/api/v1/recipes/{id}", id))
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    @DisplayName("deleteRecipe method should throw NumberFormatException when id is not a number")
-    void deleteRecipe_whenIsIsNotNumber_throwsNumberFormatException() {
-        assertThrows(NumberFormatException.class, () -> controller.deleteRecipe(Long.valueOf("abc")));
+    @DisplayName("deleteRecipe method should return HTTP BadRequest status code when id is not a number")
+    void deleteRecipe_whenIsIsNotNumber_returnsHttpBadRequest() throws Exception {
+        final String id = "notANumber";
+        mockMvc.perform(delete("/api/v1/recipes/{id}", id))
+                .andExpect(status().isBadRequest());
     }
 }
