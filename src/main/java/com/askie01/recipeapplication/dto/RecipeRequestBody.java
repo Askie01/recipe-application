@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "image")
 @EqualsAndHashCode
 public class RecipeRequestBody {
 
