@@ -238,6 +238,12 @@
       "type": "java.lang.Boolean",
       "description": "Property used to enable/disable 'RecipeRestControllerV2' API.",
       "defaultValue": true
+    },
+    {
+      "name": "component.manager.user-details",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'UserDetailsManager' implementation.",
+      "defaultValue": "in-memory"
     }
   ]
 }
