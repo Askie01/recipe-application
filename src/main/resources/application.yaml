@@ -5,6 +5,24 @@ spring:
   application:
     name: recipe-application
 
+  datasource:
+    url: jdbc:h2:mem:embedded-database;MODE=MySQL
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+  sql:
+    init:
+      mode: always
+      schema-locations: "classpath:schema/*.sql"
+
+  h2:
+    console:
+      enabled: true
+
 springdoc:
   api-docs:
     enabled: true

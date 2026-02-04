@@ -41,14 +41,11 @@ jobs:
       - name: Set project version
         run: mvn -B versions:set -DnewVersion=${{ inputs.version }}
 
-      - name: Publish JAR with H2
-        run: mvn -B clean deploy -P h2 -D"skipTests"
+      - name: Publish application JAR
+        run: mvn -B clean deploy -D "skipTests"
 
       - name: Login to Github Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Build JAR with MySQL
-        run: mvn -B clean package -P mysql -D"skipTests"
 
       - name: Build Docker image
         run: |
