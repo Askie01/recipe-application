@@ -87,10 +87,10 @@ The result is a backend-focused application with:
 
 ### Run locally
 
-1. Download the latest application JAR [there](https://github-registry-files.githubusercontent.com/1034018437/594aea00-0196-11f1-930c-6187043ef8dd?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260204%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260204T070724Z&X-Amz-Expires=300&X-Amz-Signature=c512ba58ed9d95b8a0abfcc70e963ebe781dc4b30a9d1939edef29bfa002f3c7&X-Amz-SignedHeaders=host&response-content-disposition=filename%3Drecipe-application-2.0.0.jar&response-content-type=application%2Foctet-stream)
+1. Download the latest application JAR [there](https://github-registry-files.githubusercontent.com/1034018437/68fe1900-01fe-11f1-9180-16bdae7555cc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260204%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260204T192149Z&X-Amz-Expires=300&X-Amz-Signature=12da936d6bd366b1d3b6a32c46dc4588fb10fa695d4db9da5c224ffe94a9aa28&X-Amz-SignedHeaders=host&response-content-disposition=filename%3Drecipe-application-2.0.0.jar&response-content-type=application%2Foctet-stream)
 2. Run the application locally with no extra setup!
 ```bash
-java -jar recipe-application-2.0.0.jar --spring.profiles.active=h2
+java -jar recipe-application-2.0.0.jar
 ```
 3. Application will start on: `http://localhost:8080`
 
