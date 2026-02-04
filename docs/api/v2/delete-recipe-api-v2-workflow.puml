@@ -1,0 +1,76 @@
+@startuml
+title Delete recipe by id - Sequence
+
+autonumber
+
+skinparam backgroundColor #0E1117
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam dpi 160
+
+skinparam sequence {
+  MessageAlign center
+  ArrowColor #58A6FF
+  LifeLineBorderColor #30363D
+  LifeLineBackgroundColor #161B22
+  ActorBorderColor #58A6FF
+  ActorBackgroundColor #0D1117
+  BoxBorderColor #30363D
+  BoxBackgroundColor #0D1117
+}
+
+skinparam TitleFontColor #C9D1D9
+skinparam SequenceGroupBorderColor #30363D
+skinparam SequenceGroupBackgroundColor #161B22
+skinparam NoteBackgroundColor #1C2330
+skinparam NoteBorderColor #E7E7E7
+skinparam NoteFontColor #F5F5F5
+skinparam ActorStyle awesome
+skinparam DefaultFontColor #C9D1D9
+
+skinparam BoundaryBorderColor #58A6FF
+skinparam BoundaryBackgroundColor #0D1117
+
+skinparam ControlBorderColor #58A6FF
+skinparam ControlBackgroundColor #0D1117
+
+skinparam DatabaseBorderColor #58A6FF
+skinparam DatabaseBackgroundColor #0D1117
+
+skinparam ParticipantBorderColor #58A6FF
+skinparam ParticipantBackgroundColor #0D1117
+
+actor User
+boundary Application
+control RecipeRestControllerV2
+control RecipeServiceV2
+database RecipesDatabase
+control RecipeRestControllerV2LoggingAspect
+control GlobalExceptionsHandler
+
+User -> Application : DELETE /api/v2/recipes/{id}
+note right of Application : authenticates user
+alt User authenticated
+    Application -> RecipeRestControllerV2 : delegate request
+    note right of RecipeRestControllerV2 : validates id
+
+    alt Validation OK
+    note right of RecipeRestControllerV2LoggingAspect : log entry
+        RecipeRestControllerV2 -> RecipeServiceV2 : delegate request
+        RecipeServiceV2 -> RecipesDatabase : delete recipe by ID
+        note right of RecipesDatabase : deletes recipe
+        RecipeRestControllerV2 -> Application : Http ok (200)
+        note right of RecipeRestControllerV2LoggingAspect : log response
+        Application -> User : Http ok (200)
+    else Validation failed
+        RecipeRestControllerV2 -> RecipeRestControllerV2LoggingAspect : throw exception
+        note right of RecipeRestControllerV2LoggingAspect : log error
+        RecipeRestControllerV2LoggingAspect -> GlobalExceptionsHandler : re-throw exception
+        note right of GlobalExceptionsHandler : log error
+        RecipeRestControllerV2 -> Application : Http bad request (400)
+        Application -> User : Http bad request (400)
+    end
+else User not authenticated
+    Application -> User : Http forbidden (403)
+end
+@enduml
