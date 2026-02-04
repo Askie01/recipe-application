@@ -7,3 +7,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+  sql:
+    init:
+      mode: never
+
+  h2:
+    console:
+      enabled: false
