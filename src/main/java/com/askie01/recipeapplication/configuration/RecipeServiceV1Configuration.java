@@ -7,11 +7,13 @@ import com.askie01.recipeapplication.service.RecipeServiceV1;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class RecipeServiceV1Configuration {
 
     @Bean
+    @Primary
     @ConditionalOnProperty(
             name = "component.service.recipe",
             havingValue = "v1",
