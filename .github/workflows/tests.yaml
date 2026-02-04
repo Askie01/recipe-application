@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Run unit tests
-        run: mvn -B test -D"test.type=unit"
+        run: mvn -B test -D "test.type=unit"
 
       - name: Run integration tests
-        run: mvn -B test -D"test.type=integration"
+        run: mvn -B test -D "test.type=integration"

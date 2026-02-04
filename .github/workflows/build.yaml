@@ -20,14 +20,7 @@ jobs:
           cache: maven
 
       - name: Build application JAR with H2
-        run: mvn -B clean package -P h2 -D"skipTests"
-        env:
-          SPRING_PROFILES_ACTIVE: h2
-
-      - name: Build application JAR with MySQL
-        run: mvn -B clean package -P mysql -D"skipTests"
-        env:
-          SPRING_PROFILES_ACTIVE: mysql
+        run: mvn -B clean package -D "skipTests"
 
       - name: Build Docker image
         run: docker build -t askie01/recipe-application:latest .
