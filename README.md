@@ -53,8 +53,8 @@ The main goal of this project was to:
 
 ### How it started
 
-The project started as a simple idea:
-> “Let me build a small CRUD app for recipes.”
+The project began with a simple goal:
+> “Build a small CRUD-based application for managing cooking recipes.”
 
 Very quickly, it turned into something more serious once I started asking:
 
@@ -83,15 +83,16 @@ The result is a backend-focused application with:
 ### Requirements
 
 - Java 21+
-- Maven
-- MySQL (can run with Docker)
-- Docker
+- Docker (Optional)
 
 ### Run locally
 
+1. Download the latest application JAR [there](https://github-registry-files.githubusercontent.com/1034018437/594aea00-0196-11f1-930c-6187043ef8dd?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260204%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260204T070724Z&X-Amz-Expires=300&X-Amz-Signature=c512ba58ed9d95b8a0abfcc70e963ebe781dc4b30a9d1939edef29bfa002f3c7&X-Amz-SignedHeaders=host&response-content-disposition=filename%3Drecipe-application-2.0.0.jar&response-content-type=application%2Foctet-stream)
+2. Run the application locally with no extra setup!
 ```bash
-mvn clean spring-boot:run
+java -jar recipe-application-2.0.0.jar --spring.profiles.active=h2
 ```
+3. Application will start on: `http://localhost:8080`
 
 ### Run with Docker
 
@@ -108,7 +109,7 @@ Once the application is running, you can explore and test all endpoints here:
 - **Swagger UI:** `http://localhost:8080/swagger-ui.html`
 
 👉 Example:  
-To review the recipe endpoints, navigate to: ``Recipes API v1``
+To review the recipe endpoints, navigate to: ``Recipes API v1`` or ``Recipes API v2``
 
 📂 **Additional documentation**
 
@@ -126,9 +127,6 @@ It contains preconfigured endpoints, sample payloads, and environment variables 
 
 Planned features and improvements:
 
-- Refinement and simplification of API contracts
-- User registration and authentication (Basic Auth-based)
-- Query optimization and database indexing
-- Advanced filtering and pagination support
-- Improved test coverage with integration tests
+- User registration
+- More advanced recipe search
 - Basic user-facing UI for API interaction
