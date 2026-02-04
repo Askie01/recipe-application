@@ -3,19 +3,49 @@ title Create Recipe - Sequence
 
 autonumber
 
+skinparam backgroundColor #0E1117
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam dpi 160
+
 skinparam sequence {
   MessageAlign center
+  ArrowColor #58A6FF
+  LifeLineBorderColor #30363D
+  LifeLineBackgroundColor #161B22
+  ActorBorderColor #58A6FF
+  ActorBackgroundColor #0D1117
+  BoxBorderColor #30363D
+  BoxBackgroundColor #0D1117
 }
+
+skinparam TitleFontColor #C9D1D9
+skinparam SequenceGroupBorderColor #30363D
+skinparam SequenceGroupBackgroundColor #161B22
 skinparam NoteBackgroundColor #1C2330
 skinparam NoteBorderColor #E7E7E7
 skinparam NoteFontColor #F5F5F5
 skinparam ActorStyle awesome
+skinparam DefaultFontColor #C9D1D9
+
+skinparam BoundaryBorderColor #58A6FF
+skinparam BoundaryBackgroundColor #0D1117
+
+skinparam ControlBorderColor #58A6FF
+skinparam ControlBackgroundColor #0D1117
+
+skinparam DatabaseBorderColor #58A6FF
+skinparam DatabaseBackgroundColor #0D1117
+
+skinparam ParticipantBorderColor #58A6FF
+skinparam ParticipantBackgroundColor #0D1117
 
 actor Client
 boundary Application
 control RecipeRestControllerV1
 control RecipeServiceV1
 database database
+control GlobalExceptionHandler
 control GlobalExceptionHandler
 
 Client -> Application : POST /api/v1/recipes
