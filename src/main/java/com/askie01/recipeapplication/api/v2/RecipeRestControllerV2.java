@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v2/recipes")
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "api.recipe.v2.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "api.recipe.v2.enabled", havingValue = "true", matchIfMissing = true)
 public class RecipeRestControllerV2 {
 
     private final RecipeServiceV2 service;
