@@ -1,0 +1,35 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include RecipeServiceV2.puml
+!include RecipeToRecipeResponseBodyMapper.puml
+
+class RecipeRestControllerV2 {
+    - RecipeServiceV2 service
+    - RecipeToRecipeResponseBodyMapper mapper
+
+    + ResponseEntity<Void> createRecipe(@Valid @RequestBody RecipeRequestBody requestBody)
+    + ResponseEntity<RecipeResponseBody> getRecipe(@PathVariable Long id)
+    + ResponseEntity<List<RecipeResponseBody>> getRecipes(@RequestParam int pageNumber, @RequestParam int pageSize)
+    + ResponseEntity<List<RecipeResponseBody>> searchRecipes(@RequestParam String text, @RequestParam int pageNumber, @RequestParam int pageSize)
+    + ResponseEntity<Void> updateRecipe(@PathVariable Long id, @Valid @RequestBody RecipeRequestBody requestBody)
+    + ResponseEntity<Void> deleteRecipe(@PathVariable Long id)
+}
+
+RecipeRestControllerV2 --> RecipeServiceV2
+RecipeRestControllerV2 --> RecipeToRecipeResponseBodyMapper
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include RecipeRepositoryV2.puml
+!include RecipeRequestBodyToRecipeMapper.puml
+
+interface RecipeServiceV2 {
+    + void createRecipe(RecipeRequestBody requestBody)
+    + Recipe getRecipe(Long id)
+    + List<Recipe> getRecipes(Integer pageNumber, Integer pageSize)
+    + List<Recipe> searchRecipes(String text, Integer pageNumber, Integer pageSize)
+    + void updateRecipe(Long id, RecipeRequestBody requestBody)
+    + void deleteRecipe(Long id)
+}
+
+class DefaultRecipeServiceV2 implements RecipeServiceV2 {
+    - RecipeRepositoryV2 repository
+    - RecipeRequestBodyToRecipeMapper mapper
+
+    + void createRecipe(RecipeRequestBody requestBody)
+    + Recipe getRecipe(Long id)
+    + List<Recipe> getRecipes(Integer pageNumber, Integer pageSize)
+    + List<Recipe> searchRecipes(String text, Integer pageNumber, Integer pageSize)
+    + void updateRecipe(Long id, RecipeRequestBody requestBody)
+    - byte[] getDefaultImage()
+    + void deleteRecipe(Long id)
+}
+
+DefaultRecipeServiceV2 --> RecipeRepositoryV2
+DefaultRecipeServiceV2 --> RecipeRequestBodyToRecipeMapper
+@enduml
