@@ -24,6 +24,7 @@ public class SecurityFilterChainConfiguration {
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(AbstractHttpConfigurer::disable)
                 .build();
     }
 }
