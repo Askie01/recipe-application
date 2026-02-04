@@ -14,6 +14,3 @@ CREATE TABLE recipe
     updated_by   VARCHAR(255) DEFAULT NULL,
     version      BIGINT                          NOT NULL
 );
-
-ALTER TABLE recipe
-    ADD INDEX index_recipe_name_description (name, description);
