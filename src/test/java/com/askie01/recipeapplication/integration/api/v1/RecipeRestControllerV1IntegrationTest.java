@@ -66,7 +66,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         IngredientToIngredientDTOMapperConfiguration.class,
         MeasureUnitToMeasureUnitDTOMapperConfiguration.class,
         SecurityFilterChainConfiguration.class,
-        UserDetailsManagerConfiguration.class,
+        UserDetailsServiceConfiguration.class,
         PasswordEncoderConfiguration.class
 })
 @TestPropertySource(properties = {

@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RecipeServiceV2Configuration.class,
         RecipeRequestBodyToRecipeMapperConfiguration.class,
         RecipeToRecipeResponseBodyMapperConfiguration.class,
-        UserDetailsManagerConfiguration.class,
+        UserDetailsServiceConfiguration.class,
         PasswordEncoderConfiguration.class,
         SecurityFilterChainConfiguration.class
 })
