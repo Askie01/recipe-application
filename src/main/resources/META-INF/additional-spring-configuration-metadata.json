@@ -201,6 +201,12 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.mapper.create-customer-request-body-to-customer",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CreateCustomerRequestBodyToCustomer' mapper type.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.recipe",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
