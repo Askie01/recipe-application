@@ -66,7 +66,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         IngredientToIngredientDTOMapperConfiguration.class,
         MeasureUnitToMeasureUnitDTOMapperConfiguration.class,
         SecurityFilterChainConfiguration.class,
-        UserDetailsManagerConfiguration.class,
+        UserDetailsServiceConfiguration.class,
         PasswordEncoderConfiguration.class
 })
 @TestPropertySource(properties = {
@@ -99,7 +99,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         "component.mapper.category-to-categoryDTO-type=simple",
         "component.mapper.ingredient-to-ingredientDTO-type=simple",
         "component.mapper.measureUnit-to-measureUnitDTO-type=simple",
-        "component.manager.user-details=in-memory"
+        "component.service.user-details=in-memory"
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("RecipeRestControllerV1 integration tests")

@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.*;
         RecipeServiceV2Configuration.class,
         RecipeRequestBodyToRecipeMapperConfiguration.class,
         RecipeToRecipeResponseBodyMapperConfiguration.class,
-        UserDetailsManagerConfiguration.class,
+        UserDetailsServiceConfiguration.class,
         PasswordEncoderConfiguration.class,
         SecurityFilterChainConfiguration.class
 })
@@ -52,7 +52,7 @@ import static org.junit.jupiter.api.Assertions.*;
         "component.service.recipe-v2=default",
         "component.mapper.recipe-request-body-to-recipe-type=default",
         "component.mapper.recipe-to-recipe-response-body-type=default",
-        "component.manager.user-details=in-memory"
+        "component.service.user-details=in-memory"
 })
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("RecipeRestControllerV2 integration tests")

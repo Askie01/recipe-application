@@ -27,7 +27,10 @@ import static org.mockito.Mockito.*;
 @Transactional
 @SpringBootTest
 @AutoConfigureRestTestClient
-@TestPropertySource(properties = "api.recipe.v1.enabled=true")
+@TestPropertySource(properties = {
+        "api.recipe.v1.enabled=true",
+        "component.service.user-details=in-memory"
+})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @DisplayName("RecipeRestControllerLoggingAspect integration tests")
 @EnabledIfSystemProperty(named = "test.type", matches = "integration")
@@ -99,7 +102,7 @@ class RecipeRestControllerV1LoggingAspectIntegrationTest {
                 .body(source)
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
         verify(aspect, times(1)).logBeforeCreateRecipe(any());
         verify(aspect, times(1)).logAfterThrowingCreateRecipe(any());
     }
