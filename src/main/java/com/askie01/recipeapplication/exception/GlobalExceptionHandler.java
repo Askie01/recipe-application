@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -40,28 +41,36 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorHttpResponse> handleGlobalException(Exception exception,
                                                                    WebRequest request) {
-        final String exceptionMessage = exception.getMessage();
-        final LocalDateTime errorTimestamp = LocalDateTime.now();
-        final ErrorHttpResponse errorHttpResponse = ErrorHttpResponse.builder()
-                .path(request.getDescription(false))
-                .code(HttpResponseCode.INTERNAL_SERVER_ERROR)
-                .message(exceptionMessage)
-                .timestamp(errorTimestamp)
-                .build();
+        final ErrorHttpResponse errorHttpResponse = createErrorResponse(exception, request, HttpResponseCode.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(errorHttpResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(RecipeNotFoundException.class)
-    public ResponseEntity<ErrorHttpResponse> handleRecipeNotFoundException(RecipeNotFoundException exception,
-                                                                           WebRequest request) {
-        final String exceptionMessage = exception.getMessage();
+    @ExceptionHandler(value = {
+            RecipeNotFoundException.class,
+            UsernameNotFoundException.class
+    })
+    public ResponseEntity<ErrorHttpResponse> handleNotFoundException(Throwable throwable,
+                                                                     WebRequest request) {
+        final ErrorHttpResponse errorHttpResponse = createErrorResponse(throwable, request, HttpResponseCode.NOT_FOUND);
+        return new ResponseEntity<>(errorHttpResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorHttpResponse> handleBadRequestException(Throwable throwable,
+                                                                       WebRequest request) {
+        final ErrorHttpResponse errorHttpResponse = createErrorResponse(throwable, request, HttpResponseCode.BAD_REQUEST);
+        return new ResponseEntity<>(errorHttpResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorHttpResponse createErrorResponse(Throwable throwable, WebRequest request, Integer responseCode) {
+        final String path = request.getDescription(false);
+        final String exceptionMessage = throwable.getMessage();
         final LocalDateTime errorTimestamp = LocalDateTime.now();
-        final ErrorHttpResponse errorHttpResponse = ErrorHttpResponse.builder()
-                .path(request.getDescription(false))
-                .code(HttpResponseCode.NOT_FOUND)
+        return ErrorHttpResponse.builder()
+                .path(path)
+                .code(responseCode)
                 .message(exceptionMessage)
                 .timestamp(errorTimestamp)
                 .build();
-        return new ResponseEntity<>(errorHttpResponse, HttpStatus.NOT_FOUND);
     }
 }
