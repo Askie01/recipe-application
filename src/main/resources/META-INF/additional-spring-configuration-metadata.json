@@ -249,6 +249,12 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.service.user-details",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'UserDetailsService' implementation.",
+      "defaultValue": "default"
+    },
+    {
       "name": "api",
       "type": "java.lang.String",
       "description": "Property used to manage APIs."
