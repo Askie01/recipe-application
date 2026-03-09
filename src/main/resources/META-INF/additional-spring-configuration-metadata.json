@@ -255,6 +255,12 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.provider.authentication",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'AuthenticationProvider' implementation.",
+      "defaultValue": "dao"
+    },
+    {
       "name": "api",
       "type": "java.lang.String",
       "description": "Property used to manage APIs."
