@@ -213,6 +213,12 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.mapper.customer-to-customer-details-response-body",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CustomerToCustomerDetailsResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.recipe",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
