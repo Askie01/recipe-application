@@ -209,13 +209,19 @@
     {
       "name": "component.mapper.update-customer-details-request-body-to-customer",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct 'UpdateCustomerDetailsRequestBodyToCustomer' mapper type.",
+      "description": "Property used óto wire a correct 'UpdateCustomerDetailsRequestBodyToCustomer' mapper type.",
       "defaultValue": "default"
     },
     {
       "name": "component.mapper.customer-to-customer-details-response-body",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'CustomerToCustomerDetailsResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.mapper.customer-to-customer-profile-response-body",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CustomerToCustomerProfileResponseBody' mapper type.",
       "defaultValue": "default"
     },
     {
