@@ -12,13 +12,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityFilterChainConfiguration {
 
     private static final String RECIPE_API_V2 = "/api/v2/recipes/**";
+    private static final String CUSTOMERS_API_V1 = "/api/v1/customers/**";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
-        return http.authorizeHttpRequests(configuration -> configuration
+        return http.authorizeHttpRequests(requestConfiguration -> requestConfiguration
                         .requestMatchers(HttpMethod.POST, RECIPE_API_V2).authenticated()
                         .requestMatchers(HttpMethod.PUT, RECIPE_API_V2).authenticated()
                         .requestMatchers(HttpMethod.DELETE, RECIPE_API_V2).authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/customers/details").authenticated()
+                        .requestMatchers(HttpMethod.PUT, CUSTOMERS_API_V1).authenticated()
+                        .requestMatchers(HttpMethod.DELETE, CUSTOMERS_API_V1).authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults())

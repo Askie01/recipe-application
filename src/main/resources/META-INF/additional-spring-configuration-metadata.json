@@ -288,10 +288,10 @@
       "defaultValue": true
     },
     {
-      "name": "component.manager.user-details",
+      "name": "api.customer.v1.enabled",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct 'UserDetailsManager' implementation.",
-      "defaultValue": "in-memory"
+      "description": "Property used to enable/disable 'CustomerRestControllerV1' API.",
+      "defaultValue": true
     }
   ]
 }
