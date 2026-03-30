@@ -39,10 +39,7 @@ public class CustomerRestControllerV1 {
 
     @GetMapping("/details")
     public ResponseEntity<CustomerDetailsResponseBody> getCustomerDetails(Authentication authentication) {
-        System.out.println("Message from controller");
-        System.out.println("Authentication: " + authentication);
         final String username = authentication.getName();
-        System.out.println("Got: " + username);
         final Customer customer = service.getCustomer(username);
         final CustomerDetailsResponseBody responseBody = customerToCustomerDetailsMapper.mapToDTO(customer);
         return new ResponseEntity<>(responseBody, HttpStatus.OK);
@@ -55,10 +52,15 @@ public class CustomerRestControllerV1 {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PageResponse<CustomerProfileResponseBody>> searchCustomers(@RequestParam(required = false) String query,
+    public ResponseEntity<PageResponse<CustomerProfileResponseBody>> searchCustomers(@RequestParam(
+                                                                                             required = false,
+                                                                                             defaultValue = ""
+                                                                                     ) String query,
                                                                                      @PageableDefault(
                                                                                              sort = "username",
-                                                                                             direction = Sort.Direction.ASC
+                                                                                             direction = Sort.Direction.ASC,
+                                                                                             page = 0,
+                                                                                             size = 10
                                                                                      ) Pageable pageable) {
         final Page<CustomerProfileResponseBody> customerProfiles = service
                 .findCustomer(query, pageable)
