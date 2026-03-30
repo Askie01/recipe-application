@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "password")
 @EqualsAndHashCode
 public class CreateCustomerRequestBody {
 
