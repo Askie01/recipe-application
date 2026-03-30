@@ -58,9 +58,7 @@ public class CustomerRestControllerV1 {
                                                                                      ) String query,
                                                                                      @PageableDefault(
                                                                                              sort = "username",
-                                                                                             direction = Sort.Direction.ASC,
-                                                                                             page = 0,
-                                                                                             size = 10
+                                                                                             direction = Sort.Direction.ASC
                                                                                      ) Pageable pageable) {
         final Page<CustomerProfileResponseBody> customerProfiles = service
                 .findCustomer(query, pageable)
