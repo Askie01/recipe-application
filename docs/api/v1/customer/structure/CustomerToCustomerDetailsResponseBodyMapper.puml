@@ -1,0 +1,34 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include ToDTOMapper.puml
+
+interface CustomerToCustomerDetailsResponseBodyMapper extends Mapper, ToDTOMapper {
+    + void map(Customer source, CustomerDetailsResponseBody target)
+    + CustomerToCustomerDetails mapToDTO(Customer customer)
+}
+
+class DefaultCustomerToCustomerDetailsResponseBodyMapper implements CustomerToCustomerDetailsResponseBodyMapper {
+    + CustomerDetailsResponseBody mapToDTO(Customer customer)
+    + void map(Customer customer, CustomerDetailsResponseBody responseBody)
+    - void mapFirstName(Customer customer, CustomerDetailsResponseBody responseBody)
+    - void mapLastName(Customer customer, CustomerDetailsResponseBody responseBody)
+    - void mapEmail(Customer customer, CustomerDetailsResponseBody responseBody)
+    - void mapMobileNumber(Customer customer, CustomerDetailsResponseBody responseBody)
+}
+@enduml
