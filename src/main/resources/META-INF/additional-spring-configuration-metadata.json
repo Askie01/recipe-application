@@ -201,6 +201,36 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.mapper.create-customer-request-body-to-customer",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CreateCustomerRequestBodyToCustomer' mapper type.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.mapper.update-customer-details-request-body-to-customer",
+      "type": "java.lang.String",
+      "description": "Property used óto wire a correct 'UpdateCustomerDetailsRequestBodyToCustomer' mapper type.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.mapper.customer-to-customer-details-response-body",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CustomerToCustomerDetailsResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.mapper.customer-to-customer-profile-response-body",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CustomerToCustomerProfileResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.mapper.customer-to-user-details",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CustomerToUserDetails' mapper type.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.recipe",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
@@ -211,6 +241,24 @@
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeServiceV2' implementation.",
       "defaultValue": "default"
+    },
+    {
+      "name": "component.service.customer-v1",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'CustomerServiceV1' implementation.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.service.user-details",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'UserDetailsService' implementation.",
+      "defaultValue": "default"
+    },
+    {
+      "name": "component.provider.authentication",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'AuthenticationProvider' implementation.",
+      "defaultValue": "dao"
     },
     {
       "name": "api",
@@ -240,10 +288,10 @@
       "defaultValue": true
     },
     {
-      "name": "component.manager.user-details",
+      "name": "api.customer.v1.enabled",
       "type": "java.lang.String",
-      "description": "Property used to wire a correct 'UserDetailsManager' implementation.",
-      "defaultValue": "in-memory"
+      "description": "Property used to enable/disable 'CustomerRestControllerV1' API.",
+      "defaultValue": true
     }
   ]
 }

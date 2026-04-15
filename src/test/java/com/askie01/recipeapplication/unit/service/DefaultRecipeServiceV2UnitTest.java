@@ -12,6 +12,7 @@ import com.askie01.recipeapplication.service.RecipeServiceV2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -30,6 +31,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("DefaultRecipeServiceV2 unit tests")
+@EnabledIfSystemProperty(named = "test.type", matches = "unit")
 class DefaultRecipeServiceV2UnitTest {
 
     private RecipeRequestBody source;
