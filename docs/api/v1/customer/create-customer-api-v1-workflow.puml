@@ -1,0 +1,82 @@
+@startuml
+title Create customer - Sequence
+
+autonumber
+
+skinparam backgroundColor #0E1117
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam dpi 160
+
+skinparam sequence {
+  MessageAlign center
+  ArrowColor #58A6FF
+  LifeLineBorderColor #30363D
+  LifeLineBackgroundColor #161B22
+  ActorBorderColor #58A6FF
+  ActorBackgroundColor #0D1117
+  BoxBorderColor #30363D
+  BoxBackgroundColor #0D1117
+}
+
+skinparam TitleFontColor #C9D1D9
+skinparam SequenceGroupBorderColor #30363D
+skinparam SequenceGroupBackgroundColor #161B22
+skinparam NoteBackgroundColor #1C2330
+skinparam NoteBorderColor #E7E7E7
+skinparam NoteFontColor #F5F5F5
+skinparam ActorStyle awesome
+skinparam DefaultFontColor #C9D1D9
+
+skinparam BoundaryBorderColor #58A6FF
+skinparam BoundaryBackgroundColor #0D1117
+
+skinparam ControlBorderColor #58A6FF
+skinparam ControlBackgroundColor #0D1117
+
+skinparam DatabaseBorderColor #58A6FF
+skinparam DatabaseBackgroundColor #0D1117
+
+skinparam ParticipantBorderColor #58A6FF
+skinparam ParticipantBackgroundColor #0D1117
+
+actor User
+boundary Application
+control CustomerRestControllerV1
+control CustomerServiceV1
+database CustomersDatabase
+control CustomerRestControllerV1LoggingAspect
+control GlobalExceptionsHandler
+
+User -> Application : POST /api/v1/customers/register + requestBody
+Application -> CustomerRestControllerV1 : delegate request
+note right of CustomerRestControllerV1 : Validates request data
+
+alt Validation OK
+    note right of CustomerRestControllerV1LoggingAspect : log entry
+    CustomerRestControllerV1 -> CustomerServiceV1 : delegate request
+
+    alt Customer is new
+        CustomerServiceV1 -> CustomersDatabase : save customer
+        note right of CustomerRestControllerV1LoggingAspect : log response
+        CustomerRestControllerV1 -> Application : Http created (201)
+        Application -> User : Http created (201)
+
+    else Customer exists
+        CustomerRestControllerV1 -> CustomerRestControllerV1LoggingAspect : throw exception
+        note right of CustomerRestControllerV1LoggingAspect : log error
+        CustomerRestControllerV1LoggingAspect -> GlobalExceptionsHandler : re-throw exception
+        note right of GlobalExceptionsHandler : log error
+        CustomerRestControllerV1 -> Application : Http bad request (400)
+        Application -> User : Http bad request (400)
+    end
+
+else Validation failed
+    CustomerRestControllerV1 -> CustomerRestControllerV1LoggingAspect : throw exception
+    note right of CustomerRestControllerV1LoggingAspect : log error
+    CustomerRestControllerV1LoggingAspect -> GlobalExceptionsHandler : re-throw exception
+    note right of GlobalExceptionsHandler : log error
+    CustomerRestControllerV1 -> Application : Http bad request (400)
+    Application -> User : Http bad request (400)
+end
+@enduml
