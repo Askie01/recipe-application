@@ -1,0 +1,36 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include ToEntityMapper.puml
+
+interface CreateCustomerRequestBodyToCustomerMapper extends Mapper, ToEntityMapper {
+    + void map(CreateCustomerRequestBody source, Customer target)
+    + Customer mapToEntity(CreateCustomerRequestBody requestBody)
+}
+
+class DefaultCreateCustomerRequestBodyToCustomerMapper implements CreateCustomerRequestBodyToCustomerMapper {
+    + Customer mapToEntity(CreateCustomerRequestBody requestBody)
+    + void map(CreateCustomerRequestBody requestBody, Customer customer)
+    - void mapUsername(CreateCustomerRequestBody requestBody, Customer customer)
+    - void mapPassword(CreateCustomerRequestBody requestBody, Customer customer)
+    - void mapFirstName(CreateCustomerRequestBody requestBody, Customer customer)
+    - void mapLastName(CreateCustomerRequestBody requestBody, Customer customer)
+    - void mapEmail(CreateCustomerRequestBody requestBody, Customer customer)
+    - void mapMobileNumber(CreateCustomerRequestBody requestBody, Customer customer)
+}
+@enduml

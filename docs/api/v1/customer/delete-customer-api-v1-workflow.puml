@@ -1,0 +1,77 @@
+@startuml
+title Delete customer - Sequence
+
+autonumber
+
+skinparam backgroundColor #0E1117
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam dpi 160
+
+skinparam sequence {
+  MessageAlign center
+  ArrowColor #58A6FF
+  LifeLineBorderColor #30363D
+  LifeLineBackgroundColor #161B22
+  ActorBorderColor #58A6FF
+  ActorBackgroundColor #0D1117
+  BoxBorderColor #30363D
+  BoxBackgroundColor #0D1117
+}
+
+skinparam TitleFontColor #C9D1D9
+skinparam SequenceGroupBorderColor #30363D
+skinparam SequenceGroupBackgroundColor #161B22
+skinparam NoteBackgroundColor #1C2330
+skinparam NoteBorderColor #E7E7E7
+skinparam NoteFontColor #F5F5F5
+skinparam ActorStyle awesome
+skinparam DefaultFontColor #C9D1D9
+
+skinparam BoundaryBorderColor #58A6FF
+skinparam BoundaryBackgroundColor #0D1117
+
+skinparam ControlBorderColor #58A6FF
+skinparam ControlBackgroundColor #0D1117
+
+skinparam DatabaseBorderColor #58A6FF
+skinparam DatabaseBackgroundColor #0D1117
+
+skinparam ParticipantBorderColor #58A6FF
+skinparam ParticipantBackgroundColor #0D1117
+
+actor User
+boundary Application
+control CustomerRestControllerV1
+control CustomerServiceV1
+database CustomersDatabase
+control CustomerRestControllerV1LoggingAspect
+control GlobalExceptionsHandler
+
+User -> Application : DELETE /api/v1/customers
+note right of Application : authenticates user
+
+alt User authenticated
+    Application -> CustomerRestControllerV1 : delegate request
+    note right of CustomerRestControllerV1LoggingAspect : log entry
+    CustomerRestControllerV1 -> CustomerServiceV1 : delegate request
+
+    alt customer exists
+        CustomerServiceV1 -> CustomersDatabase : deletes customer
+        note right of CustomerRestControllerV1LoggingAspect : log response
+        CustomerRestControllerV1 -> Application : Http no content (204)
+        Application -> User : Http no content (204)
+
+    else customer doesn't exist
+        CustomerServiceV1 -> CustomerRestControllerV1LoggingAspect : throw exception
+        note right of CustomerRestControllerV1LoggingAspect : log error
+        CustomerRestControllerV1LoggingAspect -> GlobalExceptionsHandler : re-throw exception
+        note right of GlobalExceptionsHandler : log error
+        CustomerRestControllerV1 -> Application : Http not found (404)
+        Application -> User : Http not found (404)
+    end
+
+else User not authenticated
+    Application -> User : Http forbidden (403)
+end
+@enduml
