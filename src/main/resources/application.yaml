@@ -34,6 +34,8 @@ springdoc:
 
   swagger-ui:
     URLs:
+      - name: Customers API v1
+        url: /openapi/customers-v1-api.yaml
       - name: Recipes API v1
         url: /openapi/recipes-v1-api.yaml
       - name: Recipes API v2
