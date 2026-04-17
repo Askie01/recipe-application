@@ -249,6 +249,12 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.service.recipe-v3",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeServiceV3' implementation.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.customer-v1",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'CustomerServiceV1' implementation.",
