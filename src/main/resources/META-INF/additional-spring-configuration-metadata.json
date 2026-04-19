@@ -243,6 +243,12 @@
       "defaultValue": "default"
     },
     {
+      "name": "component.mapper.recipe-to-search-recipe-response-body",
+      "type": "java.lang.String",
+      "description": "Property used to wire a correct 'RecipeToSearchRecipeResponseBody' mapper type.",
+      "defaultValue": "default"
+    },
+    {
       "name": "component.service.recipe",
       "type": "java.lang.String",
       "description": "Property used to wire a correct 'RecipeService' implementation.",
