@@ -129,7 +129,7 @@ class RecipeRestControllerV3IntegrationTest {
                 .body(new CustomerRecipeRequestBody())
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .isBadRequest();
     }
 
     @Test
@@ -334,7 +334,7 @@ class RecipeRestControllerV3IntegrationTest {
                 .body(new CustomerRecipeRequestBody())
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .isBadRequest();
     }
 
     @Test
