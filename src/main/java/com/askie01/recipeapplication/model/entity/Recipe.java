@@ -20,7 +20,6 @@ import java.util.Set;
 @AllArgsConstructor
 @SuperBuilder
 @ToString
-@EqualsAndHashCode
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "recipe")
