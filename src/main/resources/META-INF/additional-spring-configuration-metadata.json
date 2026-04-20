@@ -312,6 +312,12 @@
       "defaultValue": true
     },
     {
+      "name": "api.recipe.v3.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Property used to enable/disable 'RecipeRestControllerV3' API.",
+      "defaultValue": true
+    },
+    {
       "name": "api.customer.v1.enabled",
       "type": "java.lang.String",
       "description": "Property used to enable/disable 'CustomerRestControllerV1' API.",
