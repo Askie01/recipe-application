@@ -1,0 +1,41 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include RecipeServiceV3.puml
+!include RecipeToSearchRecipeResponseBodyMapper.puml
+!include RecipeToCustomerRecipeResponseBodyMapper.puml
+
+class RecipeRestControllerV3 {
+    - RecipeServiceV3 service
+    - RecipeToSearchRecipeResponseBodyMapper recipeToSearchRecipeMapper
+    - RecipeToCustomerRecipeResponseBodyMapper recipeToCustomerRecipeMapper
+
+    + ResponseEntity<Void> createRecipe(Authentication authentication, CustomerRecipeRequestBody requestBody)
+    + ResponseEntity<SearchRecipeResponseBody> getRecipe(Long id)
+    + ResponseEntity<byte[]> getRecipeImage(Long id)
+    + ResponseEntity<PageResponse<CustomerRecipeResponseBody>> getUserRecipes(String username, Pageable pageable)
+    + ResponseEntity<PageResponse<SearchRecipeResponseBody>> searchRecipes(String query, Pageable pageable)
+    + ResponseEntity<Void> updateRecipeDetails(Authentication authentication, Long id, CustomerRecipeRequestBody requestBody)
+    + ResponseEntity<Void> updateRecipeImage(Authentication authentication, Long id, MultipartFile image)
+    + ResponseEntity<Void> restoreDefaultRecipeImage(Authentication authentication, Long id)
+    + ResponseEntity<Void> deleteRecipe(Authentication authentication, Long id)
+}
+
+RecipeRestControllerV3 --> RecipeServiceV3
+RecipeRestControllerV3 --> RecipeToSearchRecipeResponseBodyMapper
+RecipeRestControllerV3 --> RecipeToCustomerRecipeResponseBodyMapper
+@enduml
