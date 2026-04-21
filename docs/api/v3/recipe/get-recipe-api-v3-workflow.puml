@@ -1,0 +1,72 @@
+@startuml
+title Get recipe - Sequence
+
+autonumber
+
+skinparam backgroundColor #0E1117
+skinparam shadowing false
+skinparam roundcorner 12
+skinparam dpi 160
+
+skinparam sequence {
+  MessageAlign center
+  ArrowColor #58A6FF
+  LifeLineBorderColor #30363D
+  LifeLineBackgroundColor #161B22
+  ActorBorderColor #58A6FF
+  ActorBackgroundColor #0D1117
+  BoxBorderColor #30363D
+  BoxBackgroundColor #0D1117
+}
+
+skinparam TitleFontColor #C9D1D9
+skinparam SequenceGroupBorderColor #30363D
+skinparam SequenceGroupBackgroundColor #161B22
+skinparam NoteBackgroundColor #1C2330
+skinparam NoteBorderColor #E7E7E7
+skinparam NoteFontColor #F5F5F5
+skinparam ActorStyle awesome
+skinparam DefaultFontColor #C9D1D9
+
+skinparam BoundaryBorderColor #58A6FF
+skinparam BoundaryBackgroundColor #0D1117
+
+skinparam ControlBorderColor #58A6FF
+skinparam ControlBackgroundColor #0D1117
+
+skinparam DatabaseBorderColor #58A6FF
+skinparam DatabaseBackgroundColor #0D1117
+
+skinparam ParticipantBorderColor #58A6FF
+skinparam ParticipantBackgroundColor #0D1117
+
+actor User
+boundary Application
+control RecipeRestControllerV3
+control RecipeServiceV3
+database RecipeDatabase
+control RecipeRestControllerV3LoggingAspect
+control GlobalExceptionsHandler
+
+User -> Application : GET /api/v3/recipes/{id}
+Application -> RecipeRestControllerV3 : delegate request
+note right of RecipeRestControllerV3LoggingAspect : log entry
+RecipeRestControllerV3 -> RecipeServiceV3 : delegate request
+
+alt Recipe exists
+    RecipeServiceV3 -> RecipeDatabase : fetch recipe
+    RecipeDatabase -> RecipeServiceV3 : return recipe
+    RecipeServiceV3 -> RecipeRestControllerV3 : return recipe
+    note right of RecipeRestControllerV3LoggingAspect : log response
+    RecipeRestControllerV3 -> Application : Http ok (200) + recipe
+    Application -> User : Http ok (200) + recipe
+
+else Recipe doesn't exist
+    RecipeServiceV3 -> RecipeRestControllerV3LoggingAspect : throw exception
+    note right of RecipeRestControllerV3LoggingAspect : log error
+    RecipeRestControllerV3LoggingAspect -> GlobalExceptionsHandler : re-throw exception
+    note right of GlobalExceptionsHandler : log error
+    RecipeRestControllerV3 -> Application : Http not found (404)
+    Application -> User : Http not found (404)
+end
+@enduml

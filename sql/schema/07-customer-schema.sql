@@ -16,4 +16,7 @@ CREATE TABLE customer
 );
 
 ALTER TABLE customer
+    ADD CONSTRAINT unique_username_in_customer_table UNIQUE (username);
+
+ALTER TABLE customer
     ADD FULLTEXT INDEX fulltext_index_customer_username_first_name_last_name(first_name, last_name, username);

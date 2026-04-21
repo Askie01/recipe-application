@@ -49,9 +49,9 @@ class DefaultCustomerServiceV1 implements CustomerServiceV1 {
     + void deleteCustomer(String username)
 }
 
-CustomerServiceV1 --> CustomerRepositoryV1
-CustomerServiceV1 --> PasswordEncoder
-CustomerServiceV1 --> CreateCustomerRequestBodyToCustomerMapper
-CustomerServiceV1 --> UpdateCustomerDetailsRequestBodyToCustomerMapper
-CustomerServiceV1 --> ClassPathResource
+DefaultCustomerServiceV1 --> CustomerRepositoryV1
+DefaultCustomerServiceV1 --> PasswordEncoder
+DefaultCustomerServiceV1 --> CreateCustomerRequestBodyToCustomerMapper
+DefaultCustomerServiceV1 --> UpdateCustomerDetailsRequestBodyToCustomerMapper
+DefaultCustomerServiceV1 --> ClassPathResource
 @enduml

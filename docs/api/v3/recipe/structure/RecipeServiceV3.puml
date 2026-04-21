@@ -1,0 +1,56 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include RecipeRepositoryV3.puml
+!include CustomerRepositoryV1.puml
+!include CustomerRecipeRequestBodyToRecipeMapper.puml
+
+interface RecipeServiceV3 {
+    + void createRecipe(String username, CustomerRecipeRequestBody requestBody)
+    + Recipe getRecipe(Long id)
+    + byte[] getRecipeImage(Long id)
+    + Page<Recipe> getCustomerRecipes(String username, Pageable pageable)
+    + Page<Recipe> searchRecipes(String query, Pageable pageable)
+    + void updateRecipe(String username, Long id, CustomerRecipeRequestBody requestBody)
+    + void updateImage(String username, Long id, MultipartFile image)
+    + void restoreDefaultImage(String username, Long id)
+    + void deleteRecipe(String username, Long id)
+}
+
+class DefaultRecipeServiceV3 implements RecipeServiceV3 {
+    - RecipeRepositoryV3 recipeRepository
+    - CustomerRepositoryV1 customerRepository
+    - CustomerRecipeRequestBodyToRecipeMapper customerRecipeRequestBodyMapper
+    - ClassPathResource classPathResource
+
+    + void createRecipe(String username, CustomerRecipeRequestBody requestBody)
+    + Recipe getRecipe(Long id)
+    + byte[] getRecipeImage(Long id)
+    + Page<Recipe> getCustomerRecipes(String username, Pageable pageable)
+    + Page<Recipe> searchRecipes(String query, Pageable pageable)
+    + void updateRecipe(String username, Long id, CustomerRecipeRequestBody requestBody)
+    + void updateImage(String username, Long id, MultipartFile image)
+    + void restoreDefaultImage(String username, Long id)
+    + void deleteRecipe(String username, Long id)
+    - Recipe findCustomerRecipe(String username, Long id)
+}
+
+DefaultRecipeServiceV3 --> RecipeRepositoryV3
+DefaultRecipeServiceV3 --> CustomerRepositoryV1
+DefaultRecipeServiceV3 --> CustomerRecipeRequestBodyToRecipeMapper
+DefaultRecipeServiceV3 --> ClassPathResource
+@enduml
