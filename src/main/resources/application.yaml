@@ -40,3 +40,5 @@ springdoc:
         url: /openapi/recipes-v1-api.yaml
       - name: Recipes API v2
         url: /openapi/recipes-v2-api.yaml
+      - name: Recipes API v3
+        url: /openapi/recipes-v3-api.yaml

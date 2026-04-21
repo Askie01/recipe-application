@@ -20,7 +20,7 @@ skinparam class {
 !include CustomerRecipeRequestBodyToRecipeMapper.puml
 
 interface RecipeServiceV3 {
-    + void createRecipe(String username, CustomerRecipeRequestBody requestBody)
+    + Long createRecipe(String username, CustomerRecipeRequestBody requestBody)
     + Recipe getRecipe(Long id)
     + byte[] getRecipeImage(Long id)
     + Page<Recipe> getCustomerRecipes(String username, Pageable pageable)
@@ -37,7 +37,7 @@ class DefaultRecipeServiceV3 implements RecipeServiceV3 {
     - CustomerRecipeRequestBodyToRecipeMapper customerRecipeRequestBodyMapper
     - ClassPathResource classPathResource
 
-    + void createRecipe(String username, CustomerRecipeRequestBody requestBody)
+    + Long createRecipe(String username, CustomerRecipeRequestBody requestBody)
     + Recipe getRecipe(Long id)
     + byte[] getRecipeImage(Long id)
     + Page<Recipe> getCustomerRecipes(String username, Pageable pageable)
