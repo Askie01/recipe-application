@@ -58,7 +58,7 @@ The main goal of this project was to:
 ### How it started
 
 The project began with a simple goal:
-> “Build a small CRUD-based application for managing cooking recipes.”
+> “I've been cooking a lot recently, how can I manage my recipes?”
 
 Very quickly, it turned into something more serious once I started asking:
 
@@ -72,13 +72,17 @@ Very quickly, it turned into something more serious once I started asking:
 - Clear separation of responsibilities
 - A project that resembles something you’d see in a real codebase, not just a tutorial
 
-### How it turned out
+### How it turned out?
 
 The result is a backend-focused application with:
 
-- a well-defined domain
-- predictable API behavior
-- room for extension (auth, ratings, users, etc.)
+- a well-defined domain model for recipes and customers
+- predictable REST API behavior with clear resource structure
+- customer registration and customer profile management features
+- support for assigning, viewing, and managing customer-owned recipes
+- relational data handling between customers and recipes
+- input validation and structured error responses
+- room for extension (advanced security, ratings, rate-limiting, payments, etc.)
 
 ---
 
@@ -91,12 +95,12 @@ The result is a backend-focused application with:
 
 ### Run locally
 
-1. Download the latest application
-   JAR [there](https://github-registry-files.githubusercontent.com/1034018437/68fe1900-01fe-11f1-9180-16bdae7555cc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260204%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260204T192149Z&X-Amz-Expires=300&X-Amz-Signature=12da936d6bd366b1d3b6a32c46dc4588fb10fa695d4db9da5c224ffe94a9aa28&X-Amz-SignedHeaders=host&response-content-disposition=filename%3Drecipe-application-2.0.0.jar&response-content-type=application%2Foctet-stream)
+1. Download the latest application JAR [there](https://github.com/Askie01/recipe-application/packages/2831879?version=3.0.0) 
+   and select `recipe-application-3.0.0.jar`
 2. Run the application locally with no extra setup!
 
 ```bash
-java -jar recipe-application-2.0.0.jar
+java -jar recipe-application-4.0.0.jar
 ```
 
 3. Application will start on: `http://localhost:8080`
@@ -107,6 +111,8 @@ java -jar recipe-application-2.0.0.jar
 docker-compose up
 ```
 
+---
+
 ## 📘 API Documentation
 
 The API is documented using **Swagger / OpenAPI**.
@@ -116,7 +122,7 @@ Once the application is running, you can explore and test all endpoints here:
 - **Swagger UI:** `http://localhost:8080/swagger-ui.html`
 
 👉 Example:  
-To review the recipe endpoints, navigate to: ``Recipes API v1`` or ``Recipes API v2``
+To review the recipe endpoints, navigate to: ``Customers API v1`` or ``Recipes API v3``
 
 📂 **Additional documentation**
 
@@ -130,10 +136,44 @@ A ready-to-use Postman collection with example requests is available in
 the [Postman collection](https://www.postman.com/askie01/recipe-application/overview)
 It contains preconfigured endpoints, sample payloads, and environment variables for quick testing.
 
-## 🚧 Coming Soon
+---
 
-Planned features and improvements:
+## 📌 Final Notes / Project Status
 
-- User registration
-- More advanced recipe search
-- Basic user-facing UI for API interaction
+This project is being marked as completed and further development will be paused.
+
+The Recipe Application was intentionally designed as a simple, monolithic Spring Boot project 
+to focus on learning and implementing core backend concepts such as REST API design, 
+database relationships, and basic user management.
+
+As the main learning objectives have been achieved, continued development is no longer planned. 
+Instead, effort will shift toward a new, more advanced microservice-based project, 
+where the focus will be on scalability, distributed systems, service communication, 
+and cloud-ready architecture.
+
+---
+
+## 📚 What was learned during this project
+
+Throughout the development of this application, several important backend concepts were reinforced:
+
+Designing and building RESTful APIs using Spring Boot
+Working with relational databases and JPA entity relationships
+Handling one-to-many and many-to-many relationships in a real-world context
+Structuring layered architecture (controller, service, repository)
+Implementing validation and improving data integrity
+Writing maintainable and modular backend code
+Improving understanding of API error handling and response design
+
+---
+
+## 🚀 Next Steps
+
+The next phase of development will focus on:
+
+Microservice architecture
+Service-to-service communication
+Distributed system design
+Scalability and deployment strategies (Kubernetes, cloud environments)
+
+This project served as a solid foundation for transitioning into more advanced backend system design.
