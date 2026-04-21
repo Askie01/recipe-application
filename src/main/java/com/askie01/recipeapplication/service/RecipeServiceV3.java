@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface RecipeServiceV3 {
 
-    void createRecipe(String username, CustomerRecipeRequestBody requestBody);
+    Long createRecipe(String username, CustomerRecipeRequestBody requestBody);
 
     Recipe getRecipe(Long id);
 
