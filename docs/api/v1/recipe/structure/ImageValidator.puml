@@ -22,7 +22,7 @@ interface ImageValidator extends Validator {
 }
 
 class FiveMegaBytesImageValidator implements ImageValidator {
-    - FIVE_MEGA_BYTES = 5 * 1024 * 1024
+    - String FIVE_MEGA_BYTES = 5 * 1024 * 1024
 
     + boolean isValid(HasImage hasImage)
     - boolean hasImageSizeUpToFiveMegaBytes(HasImage hasImage)
