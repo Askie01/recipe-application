@@ -14,3 +14,6 @@ CREATE TABLE customer
     updated_by    VARCHAR(255) DEFAULT NULL,
     version       BIGINT       NOT NULL
 );
+
+ALTER TABLE customer
+    ADD CONSTRAINT unique_username_in_customer_table UNIQUE (username);
