@@ -157,13 +157,13 @@ and cloud-ready architecture.
 
 Throughout the development of this application, several important backend concepts were reinforced:
 
-Designing and building RESTful APIs using Spring Boot
-Working with relational databases and JPA entity relationships
-Handling one-to-many and many-to-many relationships in a real-world context
-Structuring layered architecture (controller, service, repository)
-Implementing validation and improving data integrity
-Writing maintainable and modular backend code
-Improving understanding of API error handling and response design
+- Designing and building RESTful APIs using Spring Boot
+- Working with relational databases and JPA entity relationships
+- Handling one-to-many and many-to-many relationships in a real-world context
+- Structuring layered architecture (controller, service, repository)
+- Implementing validation and improving data integrity
+- Writing maintainable and modular backend code
+- Improving understanding of API error handling and response design
 
 ---
 
@@ -171,9 +171,9 @@ Improving understanding of API error handling and response design
 
 The next phase of development will focus on:
 
-Microservice architecture
-Service-to-service communication
-Distributed system design
-Scalability and deployment strategies (Kubernetes, cloud environments)
+- Microservice architecture
+- Service-to-service communication
+- Distributed system design
+- Scalability and deployment strategies (Kubernetes, cloud environments)
 
 This project served as a solid foundation for transitioning into more advanced backend system design.
