@@ -19,8 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "image")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "recipe")

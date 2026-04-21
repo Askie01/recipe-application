@@ -1,0 +1,39 @@
+@startuml
+skinparam linetype ortho
+skinparam backgroundColor #1E1E1E
+skinparam defaultTextAlignment center
+skinparam ArrowColor #B0C4DE
+skinparam shadowing false
+skinparam FontColor #FFFFFF
+skinparam classFontColor #FFFFFF
+skinparam classAttributeFontColor #FFFFFF
+skinparam classMethodFontColor #FFFFFF
+
+skinparam class {
+  BackgroundColor #2D2D2D
+  BorderColor #8A8A8A
+  FontColor #E0E0E0
+}
+
+!include Mapper.puml
+!include ToDTOMapper.puml
+
+interface RecipeToCustomerRecipeResponseBodyMapper extends Mapper, ToDTOMapper {
+    + void map(Recipe source, CustomerRecipeResponseBody target)
+    + CustomerRecipeResponseBody mapToDTO(Recipe recipe)
+}
+
+class DefaultRecipeToCustomerRecipeResponseBodyMapper implements RecipeToCustomerRecipeResponseBodyMapper {
+    + CustomerRecipeResponseBody mapToDTO(Recipe recipe)
+    + void map(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapId(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapName(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapDifficulty(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapCategories(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapIngredients(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapServings(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapCookingTime(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapDescription(Recipe recipe, CustomerRecipeResponseBody responseBody)
+    - void mapInstructions(Recipe recipe, CustomerRecipeResponseBody responseBody)
+}
+@enduml
