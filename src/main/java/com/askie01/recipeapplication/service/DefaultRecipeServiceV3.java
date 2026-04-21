@@ -27,15 +27,17 @@ public class DefaultRecipeServiceV3 implements RecipeServiceV3 {
 
     @Override
     @SneakyThrows
-    public void createRecipe(String username, CustomerRecipeRequestBody requestBody) {
+    public Long createRecipe(String username, CustomerRecipeRequestBody requestBody) {
         final Customer customer = customerRepository
                 .findByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username: '" + username + "' does not exist"));
         final Recipe recipe = customerRecipeRequestBodyMapper.mapToEntity(requestBody);
         final byte[] defaultImage = classPathResource.getContentAsByteArray();
         recipe.setImage(defaultImage);
-        customer.getRecipes().add(recipe);
+        final Recipe savedRecipe = recipeRepository.save(recipe);
+        customer.getRecipes().add(savedRecipe);
         customerRepository.save(customer);
+        return savedRecipe.getId();
     }
 
     @Override

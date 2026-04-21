@@ -91,6 +91,8 @@ class DefaultRecipeServiceV3UnitTest {
                 .thenReturn(Optional.of(customer));
         when(mapper.mapToEntity(any(CustomerRecipeRequestBody.class)))
                 .thenReturn(recipe);
+        when(recipeRepository.save(any(Recipe.class)))
+                .thenReturn(recipe);
 
         service.createRecipe("username", requestBody);
         verify(customerRepository, times(1))

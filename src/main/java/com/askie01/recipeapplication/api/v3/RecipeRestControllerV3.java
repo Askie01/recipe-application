@@ -23,6 +23,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URI;
+
 @Validated
 @RestController
 @RequestMapping("/api/v3/recipes")
@@ -38,8 +40,10 @@ public class RecipeRestControllerV3 {
     public ResponseEntity<Void> createRecipe(Authentication authentication,
                                              @Valid @RequestBody CustomerRecipeRequestBody requestBody) {
         final String username = authentication.getName();
-        service.createRecipe(username, requestBody);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        final Long recipeId = service.createRecipe(username, requestBody);
+        return ResponseEntity
+                .created(URI.create("/api/v3/recipes/" + recipeId))
+                .build();
     }
 
     @GetMapping("/{id}")
