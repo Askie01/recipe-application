@@ -1,0 +1,585 @@
+openapi: 3.1.0
+info:
+  title: "Recipes API"
+  description: "REST API for managing customer recipes"
+  version: 3.0.0
+
+servers:
+  - url: 'http://localhost:8080'
+
+tags:
+  - name: Endpoints
+
+paths:
+  /api/v3/recipes:
+    post:
+      tags: [ Endpoints ]
+      summary: "Creates new customer recipe"
+      security:
+        - basicAuth: [ ]
+
+      requestBody:
+        required: true
+        description: "Create recipe request body"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRecipeRequestBody'
+
+            example:
+              name: "Simple recipe"
+              description: "Simple description"
+              difficulty: "EASY"
+              categories:
+                - "breakfast"
+                - "lunch"
+                - "dinner"
+
+              ingredients:
+                - name: "first ingredient"
+                  amount: 1.5
+                  unit: "grams"
+                - name: "second ingredient"
+                  amount: 3.5
+                  unit: "millimeters"
+
+              servings: 5.5
+              cookingTime: 25
+              instructions: "Mix everything together"
+
+      responses:
+        '201':
+          description: "Recipe created successfully"
+          headers:
+            Location:
+              description: "URI of the created recipe"
+              schema:
+                type: string
+
+    get:
+      tags: [ Endpoints ]
+      summary: "Retrieves customer recipes"
+      parameters:
+        - name: username
+          in: query
+          required: false
+          description: "Customer username"
+          schema:
+            type: string
+            example: "askie01"
+
+        - name: page
+          in: query
+          required: false
+          description: "Page number (0-based)"
+          schema:
+            type: integer
+            example: 0
+
+        - name: size
+          in: query
+          required: false
+          description: "Page size"
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        '200':
+          description: "Paged customer recipes"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse<CustomerRecipeResponseBody>'
+
+              example:
+                items:
+                  - id: 1
+                    name: "Simple recipe"
+                    description: "Simple description"
+                    difficulty: "EASY"
+                    categories:
+                      - "breakfast"
+                      - "lunch"
+                      - "dinner"
+
+                    ingredients:
+                      - name: "first ingredient"
+                        amount: 1.5
+                        unit: "grams"
+
+                      - name: "second ingredient"
+                        amount: 3.5
+                        unit: "millimeters"
+
+                    servings: 5.5
+                    cookingTime: 25
+                    instructions: "Mix everything together"
+
+                page: 0
+                size: 10
+                totalItems: 1
+                totalPages: 1
+                hasNext: false
+
+  /api/v3/recipes/{id}:
+    get:
+      tags: [ Endpoints ]
+      summary: "Retrieves recipe by ID"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Recipe ID"
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        '200':
+          description: "Customer recipe details"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchRecipeResponseBody'
+
+              example:
+                owner: "Askie01"
+                id: 1
+                name: "Simple recipe"
+                description: "Simple description"
+                difficulty: "EASY"
+                categories:
+                  - "breakfast"
+                  - "lunch"
+                  - "dinner"
+
+                ingredients:
+                  - name: "first ingredient"
+                    amount: 1.5
+                    unit: "grams"
+
+                  - name: "second ingredient"
+                    amount: 3.5
+                    unit: "millimeters"
+
+                servings: 5.5
+                cookingTime: 25
+                instructions: "Mix everything together"
+
+    put:
+      tags: [ Endpoints ]
+      summary: "Updates customer recipe details"
+      security:
+        - basicAuth: [ ]
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Recipe ID"
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        required: true
+        description: "Recipe details"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRecipeRequestBody'
+
+            example:
+              name: "Medium recipe"
+              description: "Medium description"
+              difficulty: "MEDIUM"
+              categories:
+                - "breakfast"
+                - "lunch"
+                - "dinner"
+
+              ingredients:
+                - name: "first ingredient"
+                  amount: 1.5
+                  unit: "grams"
+
+                - name: "second ingredient"
+                  amount: 3.5
+                  unit: "millimeters"
+
+              servings: 5.5
+              cookingTime: 25
+              instructions: "Mix everything together"
+
+      responses:
+        '204':
+          description: "Recipe updated successfully"
+
+    delete:
+      tags: [ Endpoints ]
+      summary: "Delete customer recipe"
+      security:
+        - basicAuth: [ ]
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Recipe ID"
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        '204':
+          description: "Recipe deleted successfully"
+
+  /api/v3/recipes/{id}/image:
+    get:
+      tags: [ Endpoints ]
+      summary: "Retrieves recipe image by ID"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Recipe ID"
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        '200':
+          description: "Recipe image"
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+
+    put:
+      tags: [ Endpoints ]
+      summary: "Updates customer recipe details"
+      security:
+        - basicAuth: [ ]
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Recipe ID"
+          schema:
+            type: integer
+            example: 1
+
+      requestBody:
+        required: true
+        description: "New recipe image"
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+
+      responses:
+        '204':
+          description: "Image updated successfully"
+
+  /api/v3/recipes/{id}/image/restore:
+    put:
+      tags: [ Endpoints ]
+      summary: "Restores default recipe image"
+      security:
+        - basicAuth: [ ]
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Recipe ID"
+          schema:
+            type: integer
+            example: 1
+
+      responses:
+        '204':
+          description: "Recipe image restored to default"
+
+  /api/v3/recipes/search:
+    get:
+      tags: [ Endpoints ]
+      summary: "Searches recipes"
+      parameters:
+        - name: query
+          in: query
+          required: false
+          description: "Search criteria"
+          schema:
+            type: string
+            example: "simple"
+
+        - name: page
+          in: query
+          required: false
+          description: "Page number (0-based)"
+          schema:
+            type: integer
+            example: 0
+
+        - name: size
+          in: query
+          required: false
+          description: "Page size"
+          schema:
+            type: integer
+            example: 10
+
+      responses:
+        '200':
+          description: "Paged recipe search result"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse<SearchRecipeResponseBody>'
+
+              example:
+                items:
+                  - owner: "askie01"
+                    id: 1
+                    name: "Simple recipe"
+                    description: "Simple description"
+                    difficulty: "EASY"
+                    categories:
+                      - "breakfast"
+                      - "lunch"
+                      - "dinner"
+
+                    ingredients:
+                      - name: "first ingredient"
+                        amount: 1.5
+                        unit: "grams"
+
+                      - name: "second ingredient"
+                        amount: 3.5
+                        unit: "millimeters"
+
+                    servings: 5.5
+                    cookingTime: 25
+                    instructions: "Mix everything together"
+
+                page: 0
+                size: 10
+                totalItems: 1
+                totalPages: 1
+                hasNext: false
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    CustomerRecipeRequestBody:
+      type: object
+      required:
+        - name,
+        - description,
+        - difficulty,
+        - categories,
+        - ingredients,
+        - servings,
+        - cookingTime,
+        - instructions
+
+      properties:
+        name:
+          type: string
+          minLength: 1
+
+        description:
+          type: string
+          minLength: 1
+
+        difficulty:
+          type: string
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+
+        categories:
+          type: array
+          items:
+            type: string
+
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientRequestBody'
+
+        servings:
+          type: number
+          format: double
+          minimum: 1
+
+        cookingTime:
+          type: integer
+          minimum: 0
+
+        instructions:
+          type: string
+          minLength: 1
+
+    IngredientRequestBody:
+      type: object
+      required:
+        - name
+        - amount
+        - unit
+
+      properties:
+        name:
+          type: string
+          minLength: 1
+
+        amount:
+          type: number
+          format: double
+          minimum: 0.1
+
+        unit:
+          type: string
+          minLength: 1
+
+    PageResponse<SearchRecipeResponseBody>:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchRecipeResponseBody'
+
+        page:
+          type: integer
+
+        size:
+          type: integer
+
+        totalItems:
+          type: integer
+
+        totalPages:
+          type: integer
+
+        hasNext:
+          type: boolean
+
+    SearchRecipeResponseBody:
+      type: object
+      properties:
+        name:
+          type: string
+
+        description:
+          type: string
+
+        difficulty:
+          type: string
+
+        categories:
+          type: array
+
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientResponseBody'
+
+        servings:
+          type: number
+          format: double
+
+        cookingTime:
+          type: integer
+
+        instructions:
+          type: string
+
+    PageResponse<CustomerRecipeResponseBody>:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerRecipeResponseBody'
+
+        page:
+          type: integer
+
+        size:
+          type: integer
+
+        totalItems:
+          type: integer
+
+        totalPages:
+          type: integer
+
+        hasNext:
+          type: boolean
+
+    CustomerRecipeResponseBody:
+      type: object
+      properties:
+        id:
+          type: integer
+
+        name:
+          type: string
+
+        description:
+          type: string
+
+        difficulty:
+          type: string
+          enum:
+            - EASY
+            - MEDIUM
+            - HARD
+
+        categories:
+          type: array
+          items:
+            type: string
+
+        ingredients:
+          type:
+            array
+          items:
+            $ref: '#/components/schemas/IngredientResponseBody'
+
+        servings:
+          type: number
+          format: double
+
+        cookingTime:
+          type: integer
+
+        instructions:
+          type: string
+
+    IngredientResponseBody:
+      type: object
+      properties:
+        name:
+          type: string
+
+        amount:
+          type: number
+          format: double
+
+        unit:
+          type: string
